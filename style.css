@@ -5,7 +5,6 @@
 #chat-corner {
 	position: fixed;
 	width: 300px;
-	height: 20px;
 	background-color: #cff293;
 	bottom: 0;
 	right: 10px;
@@ -14,3 +13,10 @@
 	cursor: pointer;
 }
 
+.chat-corner-open {
+	height: 200px;
+}
+
+.chat-corner-close {
+	height: 20px;
+}

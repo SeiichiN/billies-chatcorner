@@ -5,5 +5,8 @@
 
 $(function() {
 	$('body').append('<div id="chat-corner">わはは</div>');
+	$('#chat-corner').on('click', function () {
+		$('#chat-corner').addClass('chat-corner-open');
+	});
 });
 
