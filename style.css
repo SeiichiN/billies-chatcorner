@@ -1,0 +1,16 @@
+@charset "utf-8";
+/*  */
+
+
+#chat-corner {
+	position: fixed;
+	width: 300px;
+	height: 20px;
+	background-color: #cff293;
+	bottom: 0;
+	right: 10px;
+	border: solid 1px #aaaaaa;
+	border-radius: 5px 5px 0 0;
+	cursor: pointer;
+}
+
