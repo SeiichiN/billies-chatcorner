@@ -24,3 +24,23 @@
 	transition-duration: 0.4s;
 	transition-timing-function: ease-out;
 }
+
+#chatcorner-title {
+	text-align: center;
+	color: blue;
+}
+
+#chatcorner-body {
+	width: 96%;
+	margin: 0 auto;
+	height: 175px;
+	background-color: #f2e8cb;
+	border: solid 1px #aaa;
+	border-radius: 5px;
+	overflow-y: scroll;
+}
+
+#chatcorner-closeBtn {
+	float: right;
+	z-index: 11;
+}
