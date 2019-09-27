@@ -14,7 +14,7 @@
 }
 
 .chat-corner-open {
-	height: 200px;
+	height: 300px;
 	transition-duration: 0.4s;
 	transition-timing-function: ease-out;
 }
@@ -33,7 +33,7 @@
 #chatcorner-body {
 	width: 96%;
 	margin: 0 auto;
-	height: 175px;
+	height: 275px;
 	background-color: #f2e8cb;
 	border: solid 1px #aaa;
 	border-radius: 5px;
