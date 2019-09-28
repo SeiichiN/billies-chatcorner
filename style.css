@@ -41,6 +41,11 @@
 }
 
 #chatcorner-closeBtn {
-	float: right;
+	position: absolute;
+	right: 0;
+	top: 0;
 	z-index: 11;
+	width: 30px;
+	height: 30px;
+	background-color: #fff;
 }
