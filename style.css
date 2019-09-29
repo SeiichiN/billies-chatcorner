@@ -2,7 +2,7 @@
 /*  */
 
 
-#chat-corner {
+.chat-corner {
 	position: fixed;
 	width: 300px;
 	background-color: #cff293;
@@ -11,6 +11,7 @@
 	border: solid 1px #aaaaaa;
 	border-radius: 5px 5px 0 0;
 	cursor: pointer;
+	height: 20px;
 }
 
 .chat-corner-open {

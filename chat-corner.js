@@ -3,41 +3,63 @@
 // 2019.09.26
 //
 
-$(function() {
-	var mode, htmlbox, chatcorner_closeBtn;
-	
-	htmlbox = '<div id="chat-corner">'
-		+ '<div id="chatcorner-title"></div>'
-		+ '<div id="chatcorner-body"></div>'
-		+ '</div>';
+var billies_chatcorner = (function ($) {
+  var configMap = {
+	    extended_height: 300,
+	    extended_title: 'チャットコーナー',
+	    retracted_height: 20,
+	    retracted_title: 'チャット開始',
+	    template_html: '<div class="chat-corner"></div>'
+  },
+      
+      $chatSlider,
+      toggleSlider, onClickSlider,
+      initModule;
+  
 
-	chatcorner_closeBtn = '<div id="chatcorner-closeBtn">Ｘ</div>';
+  toggleSlider = function () {
+	var	slider_height = $chatSlider.height();
 
-	mode = 'closed';
-	// $('body').append('<div id="chat-corner">わはは</div>');
-	$('body').append(htmlbox);
-	$('#chatcorner-title').text('チャット開始');
+	if ( slider_height === configMap.retracted_height ) {
+	  $chatSlider
+		.animate( { height : configMap.extended_height } )
+		.attr( 'title', configMap.extended_title );
+	  return true;
+	}
+	else if ( slider_height === configMap.extended_height ) {
+	  $chatSlider
+		.animate( { height : configMap.retracted_height } )
+		.attr( 'title', configMap.retracted_title );
+	  return true;
+	}
 
-	$('#chat-corner').addClass('chat-corner-close');
+	// 上の条件以外 = スライダーが移行中の場合
+	return false;
+  };
 
-	$('#chatcorner-title').on('click', function () {
-		if (mode === 'closed') {
-			$('#chat-corner').removeClass('chat-corner-close');
-			$('#chat-corner').addClass('chat-corner-open');
-			$('#chatcorner-title').text('チャットコーナー');
-			$('#chat-corner').prepend(chatcorner_closeBtn);
-			// $('#chatcorner-title').prepend(chatcorner_closeBtn);
-			mode = 'opened';
-		}
-		else if (mode == 'opened') {
-			$('#chat-corner').removeClass('chat-corner-open');
-			$('#chat-corner').addClass('chat-corner-close');
-			$('#chatcorner-title').text('チャット開始');
-			$('#chatcorner-closeBtn').remove();
-			mode = 'closed';
-		}
-	});
+  onClickSlider = function (event) {
+	console.log('clicked!');
+	toggleSlider();
+	return false;
+  };
 
+  initModule = function ($container) {
+	$container.html( configMap.template_html );
 
-});
+	$chatSlider = $container.find( '.chat-corner' );
+
+	$chatSlider
+	  .attr( 'title', configMap.retracted_title )
+      .click( onClickSlider );
+
+	return true;
+  };
+
+  return { initModule : initModule };
+
+}(jQuery));
+
+jQuery(document).ready(
+  function () { billies_chatcorner.initModule(jQuery('.container'));}
+);
 
