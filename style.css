@@ -14,39 +14,3 @@
 	height: 20px;
 }
 
-.chat-corner-open {
-	height: 300px;
-	transition-duration: 0.4s;
-	transition-timing-function: ease-out;
-}
-
-.chat-corner-close {
-	height: 20px;
-	transition-duration: 0.4s;
-	transition-timing-function: ease-out;
-}
-
-#chatcorner-title {
-	text-align: center;
-	color: blue;
-}
-
-#chatcorner-body {
-	width: 96%;
-	margin: 0 auto;
-	height: 275px;
-	background-color: #f2e8cb;
-	border: solid 1px #aaa;
-	border-radius: 5px;
-	overflow-y: scroll;
-}
-
-#chatcorner-closeBtn {
-	position: absolute;
-	right: 0;
-	top: 0;
-	z-index: 11;
-	width: 30px;
-	height: 30px;
-	background-color: #fff;
-}

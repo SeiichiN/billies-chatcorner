@@ -3,6 +3,14 @@
 // 2019.09.26
 //
 
+/*jslint          browser : true, continue : true,
+  devel   : true, indent  : 2,    maxerr   : 50,
+  newcap  : true, nomen   : true, plusplus : true,
+  regexp  : true, sloppy  : true, vars     : true,
+  white   : true
+  */
+/*global $, billies_chatcorner:true */
+
 var billies_chatcorner = (function ($) {
   var configMap = {
 	    extended_height: 300,
@@ -16,7 +24,6 @@ var billies_chatcorner = (function ($) {
       toggleSlider, onClickSlider,
       initModule;
   
-
   toggleSlider = function () {
 	var	slider_height = $chatSlider.height();
 
@@ -38,7 +45,6 @@ var billies_chatcorner = (function ($) {
   };
 
   onClickSlider = function (event) {
-	console.log('clicked!');
 	toggleSlider();
 	return false;
   };

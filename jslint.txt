@@ -1,0 +1,24 @@
+『SPA』におけるJSLintの設定
+
+------------------------------------------------------
+/*jslint          browser : true, continue : true,
+  devel   : true, indent  : 2,    maxerr   : 50,
+  newcap  : true, nomen   : true, plusplus : true,
+  regexp  : true, sloppy  : true, vars     : true,
+  white   : true
+  */
+/*global $, spa, <other external vars> */
+------------------------------------------------------
+
+browser : true -- document, history, clearIntervalなどのブラウザキーワードを許可する。
+continue : true -- continue文を許可する
+devel : true -- alert, console などの開発キーワードを許可する。
+indent : 2 -- 2つのスペースでのインデントを期待する。
+maxerr : 50 -- 50個のエラーがあると、JSLint を停止する。
+newcap : true -- 先頭のアンダースコアを許容する。
+nomen : true -- 大文字でないコンストラクタを許容する。
+plusplus : true -- ++ と -- を許容する。
+regexp : true -- 便利であるが、危険な可能性のある正規表現構造を許可する。
+sloppy : true -- use strict プラグマを必要としない。
+vars : false -- 1つの関数スコープに複数の var文を許可しない。
+white : true -- JSLint のフォーマットチェックを無効にする。
