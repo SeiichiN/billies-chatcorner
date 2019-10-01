@@ -9,9 +9,9 @@
   regexp  : true, sloppy  : true, vars     : true,
   white   : true
   */
-/*global $, billies_chatcorner:true */
+/*global $, billiesChatcorner:true */
 
-var billies_chatcorner = (function ($) {
+var billiesChatcorner = (function ($) {
   var configMap = {
 	    extended_height: 300,
 	    extended_title: 'チャットコーナー',
