@@ -1,5 +1,5 @@
 /*
- * billies-chatcorner.js
+ * billiesChatcorner.js
  * ルート名前空間モジュール
  */
 /*jslint          browser : true, continue : true,
@@ -12,9 +12,7 @@
 
 var billiesChatcorner = (function () {
   var initModule = function ($container) {
-    $container.html(
-      '<h1>Hello World!</h1>'
-    );
+      billiesChatcorner.shell.initModule( $container );
   };
 
   return { initModule : initModule };
