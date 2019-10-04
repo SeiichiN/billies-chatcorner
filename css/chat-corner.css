@@ -19,6 +19,6 @@
 .billiesChatcorner-x-clearfloat {
   height:    0      !important;
   float:     none   !important;
-  visibilit: hidden !important;
+  visibility: hidden !important;
   clear:     both   !important;
 }

@@ -12,19 +12,57 @@
 /*global $, billiesChatcorner */
 
 billiesChatcorner.shell = (function () {
-	var
-	configMap = {
-	  main_html : String()
-      + '<div class="billiesChatcorner-shell-chat"></div>',
-      chat_extend_time : 1000,
-      chat_retract_time : 300,
-      chat_extend_height : 300,
-      chat_retract_height : 20
+	var configMap = {
+		anchor_schema_map : {
+			chat : { open : true, closed : true }
+		},
+		main_html : String()
+		+ '<div class="billiesChatcorner-shell-chat"></div>',
+		chat_extend_time : 1000,
+		chat_retract_time : 300,
+		chat_extend_height : 300,
+		chat_retract_height : 20,
+		chat_extended_title : 'チャットを閉じる',
+		chat_retracted_title : 'チャット開始'
 	},
-		stateMap = { $container : null },
+		stateMap = { 
+			$container : null,
+			anchor_map : {},
+			is_chat_retracted : true  // 格納状態 true:格納 false:拡大
+		},
 		jqueryMap = {},
 
-		setJqueryMap, initModule;
+		copyAnchorMap, changeAnchorPart, onHashchange, onClickChat,
+		setJqueryMap, initModule
+	;
+
+	copyAnchorMap = function () {
+		return $.extend( true, {}, stateMap.anchor_map );
+	};
+
+	changeAnchorPart = function () {
+		var anchor_map_revise = copyAnchorMap(),
+			bool_return = true,
+			key_name, key_name_dep;
+
+		KEYVAL:
+		for ( key_name in arg_map ) {
+			if ( arg_map.hasOwnProperty( key_name )) {
+				if ( key_name_indexOf( '_' ) === 0 ) { continue KEYVAL; }
+			}
+		}
+
+		anchor_map_revise[ key_name ] = arg_map[ key_name ];
+
+		key_name_dep = '_' + key_name;
+		if ( arg_map[ key_name_dep ] ) {
+			anchor_map_revise[ key_name_dep ] = arg_map[ key_name_dep ];
+		}
+		else {
+			delete anchor_map_revise[ key_name_dep ];
+			delete anchor_map_revise[ '_s' + key_name_dep];
+		}
+	};
 
 	setJqueryMap = function () {
 		var $container = stateMap.$container;
@@ -34,6 +72,8 @@ billiesChatcorner.shell = (function () {
       };
 	};
 
+	// do_extend -- true: 拡大   false: 格納
+	// callback -- 拡大したあとに開発者が実行したい関数を渡すことができる。
   toggleChat = function ( do_extend, callback ) {
     var px_chat_ht = jqueryMap.$chat.height(),
         is_open = px_chat_ht === configMap.chat_extend_height,
@@ -48,6 +88,10 @@ billiesChatcorner.shell = (function () {
         { height : configMap.chat_extend_height },
         configMap.chat_extend_time,
         function () {
+			jqueryMap.$chat.attr(
+				'title', configMap.chat_extended_title
+			);
+			stateMap.is_chat_retracted = false;  // 格納状態ではない
           if ( callback ) { callback( jqueryMap.$chat ); }
         }
       );
@@ -59,16 +103,37 @@ billiesChatcorner.shell = (function () {
       { height : configMap.chat_retract_height },
       configMap.chat_retract_time,
       function () {
+		  jqueryMap.$chat.attr(
+			'title', configMap.chat_retracted_title
+		  );
+		  stateMap.is_chat_retracted = true;   // 格納状態である
         if ( callback ) { callback( jqueryMap.$chat ); }
       }
     );
     return true;
   };
 
+	// マウスクリックを捕捉
+	onClickChat = function (event) {
+		if (toggleChat( stateMap.is_chat_retracted )) {
+			$.uriAnchor.setAnchor({
+				chat : ( stateMap.is_chat_retracted ? 'open' : 'closed' )
+			});
+		}
+		return false;
+	};
+
 	initModule = function ( $container ) {
 		stateMap.$container = $container;
 		$container.html( configMap.main_html );
 		setJqueryMap();
+
+		// チャットスライダーの初期化
+		// マウスクリックをバインド
+		stateMap.is_chat_retracted = true;
+		jqueryMap.$chat
+			.attr( 'title', configMap.chat_retracted_title )
+			.click( onClickChat );
 	};
 
   setTimeout( function () { toggleChat( true );}, 3000);
