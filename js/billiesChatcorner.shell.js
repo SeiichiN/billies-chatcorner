@@ -36,11 +36,28 @@ billiesChatcorner.shell = (function () {
 		setJqueryMap, initModule
 	;
 
+	// stateMap.anchor_map のコピー
 	copyAnchorMap = function () {
 		return $.extend( true, {}, stateMap.anchor_map );
 	};
 
-	changeAnchorPart = function () {
+	// URIアンカー要素部分を変更
+	// 引数：
+	//   arg_map -- 変更しあいURIアンカー部分を表すマップ
+	// 戻り値： boolean
+	//   true -- URIのアンカー部分が更新された
+	//   false -- URIのアンカー部分を更新できなかった
+	// 動作：
+	// 現在のアンカーを stateMap.anchor_map に格納する。
+	// エンコーディングの説明は uriAnchor を参照。
+	// このメソッドは
+	//   * copyAnchorMap()を使って子のマップのコピーを作成する
+	//   * arg_mapを使ってキーバリューを修正する
+	//   * エンコーディングの独立値と従属値の区別を管理する
+	//   * uriAnchorを使ってURIの変更を試みる
+	//   * 成功時には true、失敗時には false を返す
+	//
+	changeAnchorPart = function ( arg_map ) {
 		var anchor_map_revise = copyAnchorMap(),
 			bool_return = true,
 			key_name, key_name_dep;
@@ -49,19 +66,31 @@ billiesChatcorner.shell = (function () {
 		for ( key_name in arg_map ) {
 			if ( arg_map.hasOwnProperty( key_name )) {
 				if ( key_name_indexOf( '_' ) === 0 ) { continue KEYVAL; }
+
+				anchor_map_revise[ key_name ] = arg_map[ key_name ];
+
+				key_name_dep = '_' + key_name;
+				if ( arg_map[ key_name_dep ] ) {
+					anchor_map_revise[ key_name_dep ] = arg_map[ key_name_dep ];
+				}
+				else {
+					delete anchor_map_revise[ key_name_dep ];
+					delete anchor_map_revise[ '_s' + key_name_dep];
+				}
 			}
 		}
 
-		anchor_map_revise[ key_name ] = arg_map[ key_name ];
+		// URIの更新。成功しなければもとにもどす
+		try {
+			$.uriAnchor.setAnchor( anchor_map_revise );
+		}
+		catch ( error ) {
+			// URIを既存の状態に置き換える
+			$.uriAnchor.setAnchor( stateMap.anchor_map, null, true );
+			bool_return = false;
+		}
 
-		key_name_dep = '_' + key_name;
-		if ( arg_map[ key_name_dep ] ) {
-			anchor_map_revise[ key_name_dep ] = arg_map[ key_name_dep ];
-		}
-		else {
-			delete anchor_map_revise[ key_name_dep ];
-			delete anchor_map_revise[ '_s' + key_name_dep];
-		}
+		return bool_return;
 	};
 
 	setJqueryMap = function () {
