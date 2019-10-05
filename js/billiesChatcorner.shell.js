@@ -222,7 +222,7 @@ jQuery( function ($) {
 
       billiesChatcorner.chat.configModule( {} );
       billiesChatcorner.chat.initModule( jqueryMap.$chat );
-
+      
       $(window)
         .bind( 'hashchange', onHashChange )
         .trigger( 'hashchange' );
