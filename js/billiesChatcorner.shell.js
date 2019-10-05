@@ -220,6 +220,9 @@ jQuery( function ($) {
         schema_map : configMap.anchor_schema_map
       });
 
+      billiesChatcorner.chat.configModule( {} );
+      billiesChatcorner.chat.initModule( jqueryMap.$chat );
+
       $(window)
         .bind( 'hashchange', onHashChange )
         .trigger( 'hashchange' );
