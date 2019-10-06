@@ -16,7 +16,7 @@ jQuery( function ($) {
     //--[ プロパティ：設定値 ]---------------------------------------------
     var configMap = {
 	  anchor_schema_map : {
-	    chat : { open : true, closed : true }
+	    chat : { opened : true, closed : true }
 	  },
 	  main_html : String()
 		        + '<div class="billiesChatcorner-shell-chat"></div>',
@@ -30,9 +30,7 @@ jQuery( function ($) {
 
     },
 	    stateMap = { 
-		  $container : null,
 		  anchor_map : {},
-		  is_chat_retracted : true  // 格納状態 true:格納 false:拡大
 	    },
 	    jqueryMap = {},
 
@@ -157,7 +155,8 @@ jQuery( function ($) {
       var anchor_map_previous = copyAnchorMap(),
           anchor_map_proposed,
           _s_chat_previous, _s_chat_proposed,
-          s_chat_proposed;
+          s_chat_proposed,
+          is_ok = true;
 
       // アンカーの解析
       try {
@@ -178,18 +177,34 @@ jQuery( function ($) {
         || _s_chat_previous !== _s_chat_proposed ) {
         s_chat_proposed = anchor_map_proposed.chat;
         switch ( s_chat_proposed ) {
-          case 'open':
-            toggleChat( true );
+          case 'opened':
+            is_ok = billiesChatcorner.chat.setSliderPosition( 'opened' );
+            // toggleChat( true );
             break;
           case 'closed':
-            toggleChat( false );
+            is_ok = billiesChatcorner.chat.setSliderPosition( 'closed' );
+            // toggleChat( false );
             break;
           default:
-            toggleChat( false );
+            // toggleChat( false );
+            billiesChatcorner.chat.setSliderPosition( 'closed' );
             delete anchor_map_proposed.chat;
             $.uriAnchor.setAnchor( anchor_map_proposed, null, true );
         }
       }
+
+      // スライダーの変更が拒否された場合にアンカーを元に戻す処理
+      if ( ! is_ok) {
+        if ( anchor_map_previous ) {
+          $.uriAnchor.setAnchor( anchor_map_previous, null, true );
+          stateMap.anchor_map = anchor_map_previous;
+        } else {
+          delete anchor_map_proposed.chat;
+          $.uriAnchor.setAnchor( anchor_map_proposed, null, true );
+        }
+      }
+
+      return false;
     };
 
     //--[ setChatAnchor ]------------------------------------------
@@ -204,8 +219,8 @@ jQuery( function ($) {
     //   * false -- 要求されたアンカー部分が更新されなかった
     // 例外発行：なし
     //
-    setChatAnchor = function ( type ) {
-
+    setChatAnchor = function ( positon_type ) {
+      return changeAnchorPart( { chat : position_type } );
     };
 
     //--[ setJqueryMap ]--------------------------------------------
@@ -214,7 +229,7 @@ jQuery( function ($) {
 	  var $container = stateMap.$container;
 	  jqueryMap = {
         $container : $container,
-        $chat : $container.find('.billiesChatcorner-shell-chat')
+        // $chat : $container.find('.billiesChatcorner-shell-chat')
       };
     };
 
@@ -236,6 +251,17 @@ jQuery( function ($) {
     };
 
     //--[ initModule ]--------------------------------------------
+    // 用例：billiesChatcorner.shell.initModule( $('#app_div_id') );
+    // 目的：ユーザに機能を提供するようにチャットに指示する
+    // 引数：
+    //   * $append_target (例：$('#app_div_id'))
+    //     一つのDOMコンテナを表すjQueryコレクション
+    // 動作：
+    //   $containerにUIのシェルを含め、機能モジュールを構成して初期化する
+    //   シェルはURIアンカーやCookieの管理などのブラウザ全体に及ぶ問題を
+    //   担当する
+    // 戻り値：なし
+    // 例外発行：なし
     //
     initModule = function ( $container ) {
 	  stateMap.$container = $container;

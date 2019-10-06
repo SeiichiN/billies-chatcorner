@@ -95,6 +95,104 @@ jQuery( function ($) {
       };
     };
 
+    //--[ setPxSizes ]---------------------------------------------------
+    //
+    setPxSizes = function () {
+      var px_per_em, opened_height_em;
+
+      px_per_em = getEmSize( jqueryMap.$slider.get(0) );
+
+      opened_height_em = configMap.slider_opened_em;
+
+      stateMap.px_per_em = px_per_em;
+      stateMap.slider_closed_px = configMap.slider_closed_em * px_per_em;
+      stateMap.slider_opened_px = opened_height_em * px_per_em;
+      jqueryMap.$sizer.css({
+        height: ( opened_height_em - 2 ) * px_per_em
+      });
+    };
+
+    //--[ setSliderPosition ]-----------------------------------------------
+    // 用例：billiesChatcorner.chat.setSliderPosition( 'closed' );
+    // 目的：チャットスライダーが要求された状態になるようにする。
+    // 引数：
+    //   * position_type -- enum( 'closed', 'opened', または 'hidden')
+    //   * callback -- アニメーションの最後のオプションのコールバック。
+    //     （コールバックは引数としてスライダーDOM要素を受け取る）
+    // 動作：
+    //   スライダーが要求に合致している場合は、現在のままにする。
+    //   それ以外の場合は、アニメーションを使って要求された状態にする。
+    // 戻り値：
+    //   * true -- 要求された状態を実現
+    //   * false -- 要求された状態を実現していない
+    // 例外発行：なし
+    //
+    setSliderPosition = function ( type, callback ) {
+      var height_px, animate_time, slider_title, toggle_text;
+
+      // スライダーがすでに要求された位置にある場合は true を返す
+      if ( stateMap.position_type === position_type ) {
+        return true
+      }
+
+      // アニメーションパラメータを用意する
+      switch ( position_type ) {
+        case 'opened':
+          height_px = stateMap.slider_opened_px;
+          animate_time = configMap.slider_open_time;
+          slider_title = configMap.slider_opened_title;
+          toggle_text = '=';
+          break;
+
+        case 'hidden':
+          height_px = 0;
+          animate_time = configMap.slider_open_px;
+          slider_title = '';
+          toggle_text = '+';
+          break;
+
+        case 'closed':
+          height_x = stateMap.slider_closed_px;
+          animate_time = configMap.slider_close_time;
+          slider_title = configMap.slider_closed_title;
+          toggle_text = '+';
+          break;
+
+          // 未知のposition_typeに対処する
+        default:
+          return false;
+      }
+
+      // スライダー位置をアニメーションで変更する
+      stateMap.position_type = '';
+      jqueryMap.$slider.animate(
+        { height : height_px },
+        animate_time,
+        function () {
+          jqueryMap.$toggle.prop( 'title', slider_title );
+          jqueryMap.$toggle.text( toggle_text );
+          stateMap.position_type = position_type;
+          if ( callback ) { callback( jqueryMap.$slider ); }
+        }
+      );
+      return true;
+    };
+
+    //--[ onClickToggle ]-------------------------------------------
+    //
+    onClickToggle = function (event) {
+      var set_chat_anchor = configMap.set_chat_anchor;
+
+      if ( stateMap.position_type === 'opened' ) {
+        set_chat_anchor( 'closed' );
+      }
+      else if ( statemap.position_type === 'closed' ) {
+        set_chat_anchor( 'opened' );
+      }
+
+      return false;
+    };
+    
     //--[ configModule ]-----------------------------
     // 用例： billiesChatcorner.chat.configModule( {slider_open_em : 18} );
     // 目的：初期化前にモジュールを構成する
@@ -123,24 +221,6 @@ jQuery( function ($) {
       return true;
     };
 
-    //--[ setSliderPosition ]-----------------------------------------------
-    // 用例：billiesChatcorner.chat.setSliderPosition( 'closed' );
-    // 目的：チャットスライダーが要求された状態になるようにする。
-    // 引数：
-    //   * position_type -- enum( 'closed', 'opened', または 'hidden')
-    //   * callback -- アニメーションの最後のオプションのコールバック。
-    //     （コールバックは引数としてスライダーDOM要素を受け取る）
-    // 動作：
-    //   スライダーが要求に合致している場合は、現在のままにする。
-    //   それ以外の場合は、アニメーションを使って要求された状態にする。
-    // 戻り値：
-    //   * true -- 要求された状態を実現
-    //   * false -- 要求された状態を実現していない
-    // 例外発行：なし
-    //
-    setSliderPosition = function ( type, callback ) {
-
-    };
 
     //--[ initModule ]----------------------------------------------------
     // 用例：billiesChatcorner.chat.initModule( $('#div_id') );
@@ -156,14 +236,22 @@ jQuery( function ($) {
     // 戻り値： true -- 成功 / false -- 失敗
     // 例外発行：なし
     //
-    initModule = function ($container) {
-      $container.html( configMap.main_html );
-      stateMap.$container = $container;
+    initModule = function ($append_target) {
+      $append_target.append( configMap.main_html );
+      stateMap.$append_target = $append_target;
       setJqueryMap();
+      setPxSizes();
+
+      // チャットスライダーをデフォルトのタイトルと状態で初期化する
+      jqueryMap.$toggle.prop( 'title', configMap.slider_closed_title );
+      jqueryMap.$head.click( onClickToggle );
+      stateMap.position_type = 'closed';
+      
       return true;
     };
 
     return {
+      setSliderPosition : setSliderPosition,
       configModule : configModule,
       initModule : initModule
     };
