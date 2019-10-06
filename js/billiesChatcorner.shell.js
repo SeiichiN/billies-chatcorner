@@ -1,4 +1,4 @@
-1/*
+/*
  * billiesChatcorner.shell.js
  * billiesChatcorner のシェルモジュール
  */
@@ -9,22 +9,25 @@
    regexp  : true, sloppy  : true, vars     : true,
    white   : true
  */
-/*global $, billiesChatcorner */
+/*global $, jQuery, billiesChatcorner */
 
 jQuery( function ($) {
   billiesChatcorner.shell = (function () {
+    //--[ プロパティ：設定値 ]---------------------------------------------
     var configMap = {
 	  anchor_schema_map : {
 	    chat : { open : true, closed : true }
 	  },
 	  main_html : String()
 		        + '<div class="billiesChatcorner-shell-chat"></div>',
-	  chat_extend_time : 1000,
+
+      chat_extend_time : 1000,
 	  chat_retract_time : 300,
 	  chat_extend_height : 300,
-	  chat_retract_height : 20,
+	  chat_retract_height : 32,
 	  chat_extended_title : 'チャットを閉じる',
 	  chat_retracted_title : 'チャット開始'
+
     },
 	    stateMap = { 
 		  $container : null,
@@ -33,15 +36,63 @@ jQuery( function ($) {
 	    },
 	    jqueryMap = {},
 
-	    copyAnchorMap, changeAnchorPart, onHashchange, onClickChat,
-	    setJqueryMap, initModule
+	    copyAnchorMap, changeAnchorPart, onHashChange, onClickChat,
+	    setJqueryMap, initModule, toggleChat, setChatAnchor
     ;
 
+    //--[ toggleChat ]-------------------------------------------------
+    // do_extend -- true: 拡大   false: 格納
+    // callback -- 拡大したあとに開発者が実行したい関数を渡すことができる。
+    toggleChat = function ( do_extend, callback ) {
+      var px_chat_ht = jqueryMap.$chat.height(),
+          is_open = px_chat_ht === configMap.chat_extend_height,
+          is_closed = px_chat_ht === configMap.chat_retract_height,
+          is_sliding = ! is_open && ! is_closed;
+
+      if ( is_sliding ) {
+        console.log(px_chat_ht);
+      }
+      
+      if ( is_sliding ) { return false; }
+
+      // チャットスライダーの拡大開始
+      if ( do_extend ) {
+        jqueryMap.$chat.animate (
+          { height : configMap.chat_extend_height },
+          configMap.chat_extend_time,
+          function () {
+		    jqueryMap.$chat.attr(
+			  'title', configMap.chat_extended_title
+		    );
+		    stateMap.is_chat_retracted = false;  // 格納状態ではない
+            if ( callback ) { callback( jqueryMap.$chat ); }
+          }
+        );
+        return true;
+      }
+
+      // チャットスライダーの格納開始
+      jqueryMap.$chat.animate(
+        { height : configMap.chat_retract_height },
+        configMap.chat_retract_time,
+        function () {
+		  jqueryMap.$chat.attr(
+		    'title', configMap.chat_retracted_title
+		  );
+		  stateMap.is_chat_retracted = true;   // 格納状態である
+          if ( callback ) { callback( jqueryMap.$chat ); }
+        }
+      );
+      return true;
+    };
+
+    //--[ copyAnchorMap ]---------------------------------------------------
     // stateMap.anchor_map のコピー
     copyAnchorMap = function () {
 	  return $.extend( true, {}, stateMap.anchor_map );
     };
 
+    //--[ changeAnchorPart ]---------------------------------------------------
     // URIアンカー要素部分を変更
     // 引数：
     //   arg_map -- 変更したいURIアンカー部分を表すマップ
@@ -94,7 +145,7 @@ jQuery( function ($) {
 	  return bool_return;
     };
 
-    // イベントハンドラ：onHashChange
+    //--[ イベントハンドラ：onHashChange ]------------------------------
     // 引数： event -- jQueryイベントオブジェクト
     // 戻り値： false
     // 動作：
@@ -140,7 +191,25 @@ jQuery( function ($) {
         }
       }
     };
-    
+
+    //--[ setChatAnchor ]------------------------------------------
+    // 用例：setChatAnchor( 'closed' );
+    // 目的：アンカーのチャットコンポーネントを変更する。
+    // 引数：
+    //   * position_type -- closed / opened
+    // 動作：
+    //   可能ならURIアンカーパラメータ「chat」を要求値に変更する
+    // 戻り値：
+    //   * true -- 要求されたアンカー部分が更新された
+    //   * false -- 要求されたアンカー部分が更新されなかった
+    // 例外発行：なし
+    //
+    setChatAnchor = function ( type ) {
+
+    };
+
+    //--[ setJqueryMap ]--------------------------------------------
+    //
     setJqueryMap = function () {
 	  var $container = stateMap.$container;
 	  jqueryMap = {
@@ -149,48 +218,9 @@ jQuery( function ($) {
       };
     };
 
-    // do_extend -- true: 拡大   false: 格納
-    // callback -- 拡大したあとに開発者が実行したい関数を渡すことができる。
-    toggleChat = function ( do_extend, callback ) {
-      var px_chat_ht = jqueryMap.$chat.height(),
-          is_open = px_chat_ht === configMap.chat_extend_height,
-          is_closed = px_chat_ht === configMap.chat_retract_height,
-          is_sliding = ! is_open && ! is_closed;
-
-      if ( is_sliding ) { return false; }
-
-      // チャットスライダーの拡大開始
-      if ( do_extend ) {
-        jqueryMap.$chat.animate (
-          { height : configMap.chat_extend_height },
-          configMap.chat_extend_time,
-          function () {
-		    jqueryMap.$chat.attr(
-			  'title', configMap.chat_extended_title
-		    );
-		    stateMap.is_chat_retracted = false;  // 格納状態ではない
-            if ( callback ) { callback( jqueryMap.$chat ); }
-          }
-        );
-        return true;
-      }
-
-      // チャットスライダーの格納開始
-      jqueryMap.$chat.animate(
-        { height : configMap.chat_retract_height },
-        configMap.chat_retract_time,
-        function () {
-		  jqueryMap.$chat.attr(
-		    'title', configMap.chat_retracted_title
-		  );
-		  stateMap.is_chat_retracted = true;   // 格納状態である
-          if ( callback ) { callback( jqueryMap.$chat ); }
-        }
-      );
-      return true;
-    };
-
+    //--[ onClickChat ]--------------------------------------------
     // マウスクリックを捕捉
+    //
     onClickChat = function (event) {
       changeAnchorPart({
 	    chat : ( stateMap.is_chat_retracted ? 'open' : 'closed' )
@@ -205,6 +235,8 @@ jQuery( function ($) {
 	  return false;
     };
 
+    //--[ initModule ]--------------------------------------------
+    //
     initModule = function ( $container ) {
 	  stateMap.$container = $container;
 	  $container.html( configMap.main_html );
@@ -228,6 +260,8 @@ jQuery( function ($) {
         .trigger( 'hashchange' );
     };
 
+    //--[ オープンするメソッド ]----------------------------------
+    //
     return { initModule : initModule };
   }());
 });
