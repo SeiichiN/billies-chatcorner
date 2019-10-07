@@ -20,14 +20,14 @@ jQuery( function ($) {
 	  },
 	  main_html : String()
 		        + '<div class="billiesChatcorner-shell-chat"></div>',
-
+/*
       chat_extend_time : 1000,
 	  chat_retract_time : 300,
 	  chat_extend_height : 300,
 	  chat_retract_height : 32,
 	  chat_extended_title : 'チャットを閉じる',
 	  chat_retracted_title : 'チャット開始'
-
+*/
     },
 	    stateMap = { 
 		  anchor_map : {},
@@ -41,6 +41,7 @@ jQuery( function ($) {
     //--[ toggleChat ]-------------------------------------------------
     // do_extend -- true: 拡大   false: 格納
     // callback -- 拡大したあとに開発者が実行したい関数を渡すことができる。
+	  /*
     toggleChat = function ( do_extend, callback ) {
       var px_chat_ht = jqueryMap.$chat.height(),
           is_open = px_chat_ht === configMap.chat_extend_height,
@@ -83,6 +84,7 @@ jQuery( function ($) {
       );
       return true;
     };
+	*/
 
     //--[ copyAnchorMap ]---------------------------------------------------
     // stateMap.anchor_map のコピー
@@ -219,7 +221,7 @@ jQuery( function ($) {
     //   * false -- 要求されたアンカー部分が更新されなかった
     // 例外発行：なし
     //
-    setChatAnchor = function ( positon_type ) {
+    setChatAnchor = function ( position_type ) {
       return changeAnchorPart( { chat : position_type } );
     };
 
@@ -268,8 +270,22 @@ jQuery( function ($) {
 	  $container.html( configMap.main_html );
 	  setJqueryMap();
 
+		// 我々のスキーマを使うように uriAnchor を設定する
+		$.uriAnchor.configModule({
+			schema_map : configMap.anchor_schema_map
+		});
+
+		// 機能モジュールを設定して初期化する
+		billiesChatcorner.chat.configModule({
+			set_chat_anchor : setChatAnchor,
+			chat_model : billiesChatcorner.model.chat,
+			people_model : billiesChatcorner.model.people
+		});
+		billiesChatcorner.chat.initModule( jqueryMap.$container );
+
 	  // チャットスライダーの初期化
 	  // マウスクリックをバインド
+		/*
 	  stateMap.is_chat_retracted = true;
 	  jqueryMap.$chat
 			   .attr( 'title', configMap.chat_retracted_title )
@@ -280,7 +296,8 @@ jQuery( function ($) {
 
       billiesChatcorner.chat.configModule( {} );
       billiesChatcorner.chat.initModule( jqueryMap.$chat );
-      
+      */
+
       $(window)
         .bind( 'hashchange', onHashChange )
         .trigger( 'hashchange' );

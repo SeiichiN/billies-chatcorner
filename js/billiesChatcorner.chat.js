@@ -71,6 +71,7 @@ jQuery( function ($) {
     //--[ getEmSize ]-----( utility )---------------------------------
     //
     getEmSize = function ( elem ) {
+		console.log(elem);
       return Number(
         getComputedStyle( elem, '').fontSize.match(/\d*\.?\d*/)[0]
       );
@@ -127,7 +128,7 @@ jQuery( function ($) {
     //   * false -- 要求された状態を実現していない
     // 例外発行：なし
     //
-    setSliderPosition = function ( type, callback ) {
+    setSliderPosition = function ( position_type, callback ) {
       var height_px, animate_time, slider_title, toggle_text;
 
       // スライダーがすでに要求された位置にある場合は true を返す
@@ -186,7 +187,7 @@ jQuery( function ($) {
       if ( stateMap.position_type === 'opened' ) {
         set_chat_anchor( 'closed' );
       }
-      else if ( statemap.position_type === 'closed' ) {
+      else if ( stateMap.position_type === 'closed' ) {
         set_chat_anchor( 'opened' );
       }
 
