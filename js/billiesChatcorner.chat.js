@@ -71,7 +71,6 @@ jQuery( function ($) {
     //--[ getEmSize ]-----( utility )---------------------------------
     //
     getEmSize = function ( elem ) {
-		console.log(elem);
       return Number(
         getComputedStyle( elem, '').fontSize.match(/\d*\.?\d*/)[0]
       );
@@ -153,7 +152,7 @@ jQuery( function ($) {
           break;
 
         case 'closed':
-          height_x = stateMap.slider_closed_px;
+          height_px = stateMap.slider_closed_px;
           animate_time = configMap.slider_close_time;
           slider_title = configMap.slider_closed_title;
           toggle_text = '+';
