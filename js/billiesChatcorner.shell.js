@@ -19,15 +19,8 @@ jQuery( function ($) {
 	    chat : { opened : true, closed : true }
 	  },
 	  main_html : String()
-		        + '<div class="billiesChatcorner-shell-chat"></div>',
-/*
-      chat_extend_time : 1000,
-	  chat_retract_time : 300,
-	  chat_extend_height : 300,
-	  chat_retract_height : 32,
-	  chat_extended_title : 'チャットを閉じる',
-	  chat_retracted_title : 'チャット開始'
-*/
+      // 『SPA』ではさまざまな要素をセットしているが、この場合は不要だと思う。
+      //        + '<div class="billiesChatcorner-shell-chat"></div>',
     },
 	    stateMap = { 
 		  anchor_map : {},
@@ -38,53 +31,6 @@ jQuery( function ($) {
 	    setJqueryMap, initModule, toggleChat, setChatAnchor
     ;
 
-    //--[ toggleChat ]-------------------------------------------------
-    // do_extend -- true: 拡大   false: 格納
-    // callback -- 拡大したあとに開発者が実行したい関数を渡すことができる。
-	  /*
-    toggleChat = function ( do_extend, callback ) {
-      var px_chat_ht = jqueryMap.$chat.height(),
-          is_open = px_chat_ht === configMap.chat_extend_height,
-          is_closed = px_chat_ht === configMap.chat_retract_height,
-          is_sliding = ! is_open && ! is_closed;
-
-      if ( is_sliding ) {
-        console.log(px_chat_ht);
-      }
-      
-      if ( is_sliding ) { return false; }
-
-      // チャットスライダーの拡大開始
-      if ( do_extend ) {
-        jqueryMap.$chat.animate (
-          { height : configMap.chat_extend_height },
-          configMap.chat_extend_time,
-          function () {
-		    jqueryMap.$chat.attr(
-			  'title', configMap.chat_extended_title
-		    );
-		    stateMap.is_chat_retracted = false;  // 格納状態ではない
-            if ( callback ) { callback( jqueryMap.$chat ); }
-          }
-        );
-        return true;
-      }
-
-      // チャットスライダーの格納開始
-      jqueryMap.$chat.animate(
-        { height : configMap.chat_retract_height },
-        configMap.chat_retract_time,
-        function () {
-		  jqueryMap.$chat.attr(
-		    'title', configMap.chat_retracted_title
-		  );
-		  stateMap.is_chat_retracted = true;   // 格納状態である
-          if ( callback ) { callback( jqueryMap.$chat ); }
-        }
-      );
-      return true;
-    };
-	*/
 
     //--[ copyAnchorMap ]---------------------------------------------------
     // stateMap.anchor_map のコピー
@@ -267,8 +213,9 @@ jQuery( function ($) {
     //
     initModule = function ( $container ) {
 	  stateMap.$container = $container;
-	  $container.html( configMap.main_html );
-	  setJqueryMap();
+      // main_htmlに何もないから、コメントアウトした
+	  // $container.html( configMap.main_html );
+      setJqueryMap();
 
 		// 我々のスキーマを使うように uriAnchor を設定する
 		$.uriAnchor.configModule({

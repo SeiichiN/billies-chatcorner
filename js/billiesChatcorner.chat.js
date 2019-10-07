@@ -18,7 +18,9 @@ jQuery( function ($) {
                 + '<div class="billiesChatcorner-chat">'
                   + '<div class="billiesChatcorner-chat-head">'
                     + '<div class="billiesChatcorner-chat-head-toggle">+</div>'
-                    + '<div class="billiesChatcorner-chat-head-title">チャット</div>'
+                    + '<div class="billiesChatcorner-chat-head-title">'
+                      // + 'チャット'
+                    + '</div>'
                   + '</div>'
                   + '<div class="billiesChatcorner-chat-closer">X</div>'
                   + '<div class="billiesChatcorner-chat-sizer">'
@@ -47,7 +49,7 @@ jQuery( function ($) {
       slider_opened_em : 16,
       slider_closed_em : 2,
       slider_opened_title : 'クリックで閉じる',
-      clider_closed_title : 'クリックで開く',
+      slider_closed_title : 'クリックで開く',
 
       chat_model : null,
       people_model : null,
@@ -171,6 +173,7 @@ jQuery( function ($) {
         function () {
           jqueryMap.$toggle.prop( 'title', slider_title );
           jqueryMap.$toggle.text( toggle_text );
+          console.log(jqueryMap.$toggle);
           stateMap.position_type = position_type;
           if ( callback ) { callback( jqueryMap.$slider ); }
         }

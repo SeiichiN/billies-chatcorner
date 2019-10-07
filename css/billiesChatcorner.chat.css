@@ -5,7 +5,7 @@
  */
 
 .billiesChatcorner-chat {
-  position: absolute;
+  position: fixed;
   width: 300px;
   background-color: #cff293;
   bottom: 0;
