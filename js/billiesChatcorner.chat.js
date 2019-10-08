@@ -44,12 +44,14 @@ jQuery( function ($) {
 
       slider_open_time : 250,
       slider_close_time : 250,
-      slider_opened_em : 16,
+      slider_opened_em : 18,
       slider_closed_em : 2,
       slider_opened_title : 'クリックで閉じる',
       slider_closed_title : 'クリックで開く',
 	  slider_opened_title_text : 'チャット',
 	  slider_closed_title_text : 'チャット開始',
+      slider_opened_min_em : 10,
+      slider_closed_min_em : 20,
 
       chat_model : null,
       people_model : null,
@@ -67,7 +69,7 @@ jQuery( function ($) {
 
         setJqueryMap, configModule, initModule,
         setSliderPosition, getEmSize, setPxSizes,
-        onClickToggle
+        onClickToggle, removeSlider, handleResize
     ;
 
     //--[ getEmSize ]-----( utility )---------------------------------
@@ -100,11 +102,19 @@ jQuery( function ($) {
     //--[ setPxSizes ]---------------------------------------------------
     //
     setPxSizes = function () {
-      var px_per_em, opened_height_em;
+      var px_per_em, opened_height_em, window_height_em;
 
       px_per_em = getEmSize( jqueryMap.$slider.get(0) );
 
-      opened_height_em = configMap.slider_opened_em;
+      window_height_em = Math.floor(
+        ( $(window).height() / px_per_em ) + 0.5
+      );
+
+      opened_height_em =
+        window_height_em > configMap.window_height_min_em ?
+        configMap.slider_opened_em :
+        configMap.slider_opened_min_em;
+      
 
       stateMap.px_per_em = px_per_em;
       stateMap.slider_closed_px = configMap.slider_closed_em * px_per_em;
@@ -112,6 +122,29 @@ jQuery( function ($) {
       jqueryMap.$sizer.css({
         height: ( opened_height_em - 2 ) * px_per_em
       });
+    };
+
+    //--[ handleResize ]---------------------------------------------------
+    // 目的：
+    //   ウィンドウリサイズイベントに対し、必要に応じてこのモジュールが提供する
+    //   表示を調整する
+    // 動作：
+    //   ウィンドウの高さや幅が所定のしきい値を下回ったら
+    //   縮小したウィンドウサイズに合わせてチャットスライダーのサイズを変更する
+    // 戻り値：ブール値
+    //   * false -- リサイズを考慮していない
+    //   * true  -- リサイズを考慮した
+    // 例外発行：なし
+    //
+    handleResize = function () {
+      // スライダーコンテナがなければ何もしない
+      if ( ! jqueryMap.$slider ) { return false; }
+
+      setPxSizes();
+      if ( stateMap.position_type === 'opened' ) {
+        jqueryMap.$slider.css( { height : stateMap.slider_opened_px } );
+      }
+      return true;
     };
 
     //--[ setSliderPosition ]-----------------------------------------------
@@ -177,7 +210,6 @@ jQuery( function ($) {
           jqueryMap.$toggle.prop( 'title', slider_title );
           jqueryMap.$toggle.text( toggle_text );
 		  jqueryMap.$title.text( slider_title_text );
-          console.log(jqueryMap.$toggle);
           stateMap.position_type = position_type;
           if ( callback ) { callback( jqueryMap.$slider ); }
         }
@@ -258,10 +290,39 @@ jQuery( function ($) {
       return true;
     };
 
+    //--[ removeSlider ]-------------------------------------------------
+    // 目的：
+    //   * DOM要素chatSliderを削除する
+    //   * 初期状態に戻す
+    //   * コールバックや他のデータへのポインタを削除する
+    // 引数：なし
+    // 戻り値：true
+    // 例外発行：なし
+    //
+    removeSlider = function () {
+      // 初期化と状態を解除する
+      // DOMコンテナを削除する。これはイベントのバインディングも削除する
+      if ( jqueryMap.$slider ) {
+        jqueryMap.$slider.remove();
+        jqueryMap = {};
+      }
+      stateMap.$append_target = null;
+      stateMap.position_type = 'closed';
+
+      // 主な構成を解除する
+      configMap.chat_model = null;
+      configMap.people_model = null;
+      configMap.set_chat_anchor = null;
+      return true;
+    };
+    
+
     return {
       setSliderPosition : setSliderPosition,
       configModule : configModule,
-      initModule : initModule
+      initModule : initModule,
+      removeSlider : removeSlider,
+      handleResize : handleResize
     };
   }());
 
