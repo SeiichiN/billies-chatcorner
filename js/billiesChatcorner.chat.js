@@ -18,9 +18,7 @@ jQuery( function ($) {
                 + '<div class="billiesChatcorner-chat">'
                   + '<div class="billiesChatcorner-chat-head">'
                     + '<div class="billiesChatcorner-chat-head-toggle">+</div>'
-                    + '<div class="billiesChatcorner-chat-head-title">'
-                      // + 'チャット'
-                    + '</div>'
+                    + '<div class="billiesChatcorner-chat-head-title"></div>'
                   + '</div>'
                   + '<div class="billiesChatcorner-chat-closer">X</div>'
                   + '<div class="billiesChatcorner-chat-sizer">'
@@ -50,6 +48,8 @@ jQuery( function ($) {
       slider_closed_em : 2,
       slider_opened_title : 'クリックで閉じる',
       slider_closed_title : 'クリックで開く',
+	  slider_opened_title_text : 'チャット',
+	  slider_closed_title_text : 'チャット開始',
 
       chat_model : null,
       people_model : null,
@@ -130,7 +130,7 @@ jQuery( function ($) {
     // 例外発行：なし
     //
     setSliderPosition = function ( position_type, callback ) {
-      var height_px, animate_time, slider_title, toggle_text;
+      var height_px, animate_time, slider_title, toggle_text, slider_title_text;
 
       // スライダーがすでに要求された位置にある場合は true を返す
       if ( stateMap.position_type === position_type ) {
@@ -143,6 +143,7 @@ jQuery( function ($) {
           height_px = stateMap.slider_opened_px;
           animate_time = configMap.slider_open_time;
           slider_title = configMap.slider_opened_title;
+		  slider_title_text = configMap.slider_opened_title_text;
           toggle_text = '=';
           break;
 
@@ -150,6 +151,7 @@ jQuery( function ($) {
           height_px = 0;
           animate_time = configMap.slider_open_px;
           slider_title = '';
+		  slider_title_text = '';
           toggle_text = '+';
           break;
 
@@ -157,6 +159,7 @@ jQuery( function ($) {
           height_px = stateMap.slider_closed_px;
           animate_time = configMap.slider_close_time;
           slider_title = configMap.slider_closed_title;
+		  slider_title_text = configMap.slider_closed_title_text;
           toggle_text = '+';
           break;
 
@@ -173,6 +176,7 @@ jQuery( function ($) {
         function () {
           jqueryMap.$toggle.prop( 'title', slider_title );
           jqueryMap.$toggle.text( toggle_text );
+		  jqueryMap.$title.text( slider_title_text );
           console.log(jqueryMap.$toggle);
           stateMap.position_type = position_type;
           if ( callback ) { callback( jqueryMap.$slider ); }
@@ -247,6 +251,7 @@ jQuery( function ($) {
 
       // チャットスライダーをデフォルトのタイトルと状態で初期化する
       jqueryMap.$toggle.prop( 'title', configMap.slider_closed_title );
+	  jqueryMap.$title.text( configMap.slider_closed_title_text );
       jqueryMap.$head.click( onClickToggle );
       stateMap.position_type = 'closed';
       
