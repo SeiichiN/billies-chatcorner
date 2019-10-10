@@ -1,0 +1,28 @@
+/*
+ * billiesChatcorner.css
+ */
+
+/** リセット開始 */
+* {
+	margin: 0;
+	padding: 0;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+	margin-bottom: 6pt;
+}
+
+ol, ul, dl {
+	list-style-position: inside;
+}
+
+/**** 標準セレクタ開始 ****************/
+body {
+	font: 10px 'Trebuchet MS', Verdana, Helvetica, Arial, sans-serif;
+}
+
+/**** billiesChatcorner 名前空間セレクタ開始 *************/
+#billiesChatcorner

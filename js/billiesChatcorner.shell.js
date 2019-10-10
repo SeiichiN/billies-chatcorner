@@ -21,14 +21,18 @@ jQuery( function ($) {
 	  main_html : String()
       // 『SPA』ではさまざまな要素をセットしているが、この場合は不要だと思う。
       //        + '<div class="billiesChatcorner-shell-chat"></div>',
+
+	  resize_interval : 200,  // リサイズイベントを捕捉する間隔
     },
 	    stateMap = { 
+		  $container : undefinned,
 		  anchor_map : {},
+		  resize_idto : undefined
 	    },
 	    jqueryMap = {},
 
 	    copyAnchorMap, changeAnchorPart, onHashChange, onClickChat,
-	    setJqueryMap, initModule, toggleChat, setChatAnchor
+	    setJqueryMap, initModule, setChatAnchor, onResize
     ;
 
 
@@ -198,6 +202,20 @@ jQuery( function ($) {
 	  return false;
     };
 
+	//--[ onResize ]-----------------------------------------------
+	//
+	onResize = function () {
+		if ( stateMap.resize_idto ) { return true; }
+
+		spa.chat.handleResize();
+		stateMap.resize_idto = setTimeout(
+			function () { stateMap.resize_idto = undefined; },
+			configMap.resize_interval
+		);
+
+		return true;
+	};
+
     //--[ initModule ]--------------------------------------------
     // 用例：billiesChatcorner.shell.initModule( $('#app_div_id') );
     // 目的：ユーザに機能を提供するようにチャットに指示する
@@ -246,6 +264,7 @@ jQuery( function ($) {
       */
 
       $(window)
+		.bind( 'resize', onResize )
         .bind( 'hashchange', onHashChange )
         .trigger( 'hashchange' );
     };

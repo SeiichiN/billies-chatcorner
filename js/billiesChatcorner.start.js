@@ -1,4 +1,4 @@
 jQuery(function ($) {
-  $('body').append('<div id="chat-corner"></div>');
-  billiesChatcorner.initModule( $('#chat-corner') );
+  $('body').append('<div id="billiesChatcorner"></div>');
+  billiesChatcorner.initModule( $('#billiesChatcorner') );
 });
