@@ -44,14 +44,14 @@ jQuery( function ($) {
 
       slider_open_time : 250,
       slider_close_time : 250,
-      slider_opened_em : 18,
+      slider_opened_em : 26, // チャットスライダーオープン時の高さ
       slider_closed_em : 2,
       slider_opened_title : 'クリックで閉じる',
       slider_closed_title : 'クリックで開く',
 	  slider_opened_title_text : 'チャット',
 	  slider_closed_title_text : 'チャット開始',
       slider_opened_min_em : 10,
-      slider_closed_min_em : 20,
+      window_height_min_em : 20,
 
       chat_model : null,
       people_model : null,
@@ -73,6 +73,9 @@ jQuery( function ($) {
     ;
 
     //--[ getEmSize ]-----( utility )---------------------------------
+    // 要素elemのfontsizeを取得する
+    // 引数：要素
+    // 戻り値：数値
     //
     getEmSize = function ( elem ) {
       return Number(
@@ -104,8 +107,14 @@ jQuery( function ($) {
     setPxSizes = function () {
       var px_per_em, opened_height_em, window_height_em;
 
+      // .billiesChatcorner-chatのフォントサイズはデフォルトでは 16
+      // つまり、1emあたり16px
       px_per_em = getEmSize( jqueryMap.$slider.get(0) );
-
+      
+      // windowの高さを em換算で求める
+      // $(window).height() -- windowの高さ
+      // 仮にwindowの高さが880pxなら、880/16 で 55 となる。
+      // 0.5を足してfloor、つまり、四捨五入。
       window_height_em = Math.floor(
         ( $(window).height() / px_per_em ) + 0.5
       );
@@ -114,7 +123,6 @@ jQuery( function ($) {
         window_height_em > configMap.window_height_min_em ?
         configMap.slider_opened_em :
         configMap.slider_opened_min_em;
-      
 
       stateMap.px_per_em = px_per_em;
       stateMap.slider_closed_px = configMap.slider_closed_em * px_per_em;
