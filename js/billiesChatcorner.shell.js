@@ -18,14 +18,14 @@ jQuery( function ($) {
 	  anchor_schema_map : {
 	    chat : { opened : true, closed : true }
 	  },
-	  main_html : String()
+	  main_html : String(),
       // 『SPA』ではさまざまな要素をセットしているが、この場合は不要だと思う。
       //        + '<div class="billiesChatcorner-shell-chat"></div>',
 
 	  resize_interval : 200,  // リサイズイベントを捕捉する間隔
     },
 	    stateMap = { 
-		  $container : undefinned,
+		  $container : undefined,
 		  anchor_map : {},
 		  resize_idto : undefined
 	    },
