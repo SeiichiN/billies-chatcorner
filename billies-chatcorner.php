@@ -27,5 +27,6 @@ function billies_chatcorner_add_files () {
   wp_enqueue_script('js-billies-chatcorner-chat', plugins_url('js/billiesChatcorner.chat.js', __FILE__), array('jquery'), false, false);
   
   wp_enqueue_script('js-billies-chatcorner-start', plugins_url('js/billiesChatcorner.start.js', __FILE__), array('jquery'), false, true);
+  // wp_enqueue_script('js-gevent-test', plugins_url('js/gevent.test.js', __FILE__), array('jquery'), false, true);
 }
 add_action('wp_enqueue_scripts', 'billies_chatcorner_add_files');

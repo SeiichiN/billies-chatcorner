@@ -1,5 +1,6 @@
 // genent.test.js
   // gevent test
+jQuery(function ($) {
   $('body').append('<div id="billiesChatcorner-chat-list-box">');
 
   var $listbox = $('#billiesChatcorner-chat-list-box');
@@ -31,7 +32,8 @@
   );
 
   $listbox.remove();
-  $.event.gevent.publish(
+  $.gevent.publish(
     'billiesChatcorner-listchange',
     [ {} ]
   );
+});
