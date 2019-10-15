@@ -8,6 +8,8 @@
  * URL: http://www.billies-works.com/
  */
 
+require_once('billies-chatcorner-admin.php');
+
 function billies_chatcorner_add_files () {
   wp_enqueue_style('css-billies-chatcorner-chat', plugins_url('css/billiesChatcorner.chat.css', __FILE__));
   wp_enqueue_style('css-billies-chatcorner-shell', plugins_url('css/billiesChatcorner.shell.css', __FILE__));
@@ -30,3 +32,5 @@ function billies_chatcorner_add_files () {
   // wp_enqueue_script('js-gevent-test', plugins_url('js/gevent.test.js', __FILE__), array('jquery'), false, true);
 }
 add_action('wp_enqueue_scripts', 'billies_chatcorner_add_files');
+
+
