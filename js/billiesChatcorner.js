@@ -8,7 +8,7 @@
   regexp  : true, sloppy  : true, vars     : true,
   white   : true
   */
-/*global $, billiesChatcorner:true */
+/*global jQuery, $, billiesChatcorner:true */
 
 var billiesChatcorner = (function () {
   var initModule = function ($container) {

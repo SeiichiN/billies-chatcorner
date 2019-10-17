@@ -1,6 +1,6 @@
 /*
- * billiesChatcornerAdmin.shell.js
- * billiesChatcornerAdmin のシェルモジュール
+ * billiesChatcorner.admin.shell.js
+ * billiesChatcorner.admin のシェルモジュール
  */
 
 /*jslint          browser : true, continue : true,
@@ -9,26 +9,26 @@
    regexp  : true, sloppy  : true, vars     : true,
    white   : true
  */
-/*global $, jQuery, billiesChatcornerAdmin */
+/*global $, jQuery, billiesChatcorner */
 
 jQuery( function ($) {
-  billiesChatcornerAdmin.shell = (function () {
+  billiesChatcorner.admin.shell = (function () {
     //--[ プロパティ：設定値 ]---------------------------------------------
     var configMap = {
 	  main_html : String()
-                + '<div class="billiesChatcornerAdmin-shell-head">'
-                  + '<div class="billiesChatcornerAdmin-shell-head-logo"></div>'
-                  + '<div class="billiesChatcornerAdmin-shell-head-acct"></div>'
-                  + '<div class="billiesChatcornerAdmin-shell-head-search"></div>'
+                + '<div class="billiesChatcorner-admin-shell-head">'
+                  + '<div class="billiesChatcorner-admin-shell-head-logo"></div>'
+                  + '<div class="billiesChatcorner-admin-shell-head-acct"></div>'
+                  + '<div class="billiesChatcorner-admin-shell-head-search"></div>'
                 + '</div>'
-                + '<div class="billiesChatcornerAdmin-shell-main">'
-                  + '<div class="billiesChatcornerAdmin-shell-main-nav"></div>'
-                  + '<div class="billiesChatcornerAdmin-shell-main-content">'
-                    + '<div class="billiesChatcornerAdmin-shell-main-content-chat"></div>'
+                + '<div class="billiesChatcorner-admin-shell-main">'
+                  + '<div class="billiesChatcorner-admin-shell-main-nav"></div>'
+                  + '<div class="billiesChatcorner-admin-shell-main-content">'
+                    + '<div class="billiesChatcorner-admin-shell-main-content-chat"></div>'
                   + '</div>'
                 + '</div>'
-                + '<div class="billiesChatcornerAdmin-shell-foot"></div>'
-                + '<div class="billiesChatcornerAdmin-shell-modal"></div>'
+                + '<div class="billiesChatcorner-admin-shell-foot"></div>'
+                + '<div class="billiesChatcorner-admin-shell-modal"></div>'
     },
 	    stateMap = { 
 		  $container : undefined,
@@ -47,7 +47,7 @@ jQuery( function ($) {
 	  var $container = stateMap.$container;
 	  jqueryMap = {
         $container : $container,
-        $chat : $container.find('.billiesChatcornerAdmin-shell-main-content-chat')
+        $chat : $container.find('.billiesChatcorner-admin-shell-main-content-chat')
       };
     };
 
@@ -88,11 +88,11 @@ jQuery( function ($) {
 
 
 	  // 機能モジュールを設定して初期化する
-	  billiesChatcornerAdmin.chat.configModule({
-		chat_model : billiesChatcornerAdmin.model.chat,
-		people_model : billiesChatcornerAdmin.model.people
+	  billiesChatcorner.admin.chat.configModule({
+		chat_model : billiesChatcorner.admin.model.chat,
+		people_model : billiesChatcorner.admin.model.people
 	  });
-	  billiesChatcornerAdmin.chat.initModule( jqueryMap.$chat );
+	  billiesChatcorner.admin.chat.initModule( jqueryMap.$chat );
 
       
 /*

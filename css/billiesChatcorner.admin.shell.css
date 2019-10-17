@@ -3,7 +3,7 @@
  * シェルスタイル
  */
 
-.billiesChatcornerAdmin-shell-head {
+.billiesChatcorner-admin-shell-head {
   position: absolute;
   top: 0;
   left: 0;
@@ -11,7 +11,7 @@
   height: 40px;
 }
 
-.billiesChatcornerAdmin-shell-head-logo {
+.billiesChatcorner-admin-shell-head-logo {
   position: absolute;
   top: 4px;
   left: 4px;
@@ -20,7 +20,7 @@
   background: orange;
 }
 
-.billiesChatcornerAdmin-shell-head-acct {
+.billiesChatcorner-admin-shell-head-acct {
   position: absolute;
   top: 4px;
   right: 0;
@@ -29,7 +29,7 @@
   background: green;
 }
 
-.billiesChatcornerAdmin-shell-head-search {
+.billiesChatcorner-admin-shell-head-search {
   position: absolute;
   top: 4px;
   right: 64px;
@@ -38,7 +38,7 @@
   background: blue;
 }
 
-.billiesChatcornerAdmin-shell-main {
+.billiesChatcorner-admin-shell-main {
   position: absolute;
   top: 40px;
   left: 0;
@@ -46,25 +46,25 @@
   right: 0;
 }
 
-.billiesChatcornerAdmin-shell-main-nav,
-.billiesChatcornerAdmin-shell-main-content {
+.billiesChatcorner-admin-shell-main-nav,
+.billiesChatcorner-admin-shell-main-content {
   position: absolute;
   top: 0;
   bottom: 0;
 }
 
-.billiesChatcornerAdmin-shell-main-nav {
+.billiesChatcorner-admin-shell-main-nav {
   width: 250px;
   background: #eee;
 }
 
-.billiesChatcornerAdmin-shell-main-content {
+.billiesChatcorner-admin-shell-main-content {
   left: 250px;
   right: 0;
   background: #ddd;
 }
 
-.billiesChatcornerAdmin-shell-main-content-chat {
+.billiesChatcorner-admin-shell-main-content-chat {
   left: 0;
   top: 0;
   right: 0;
@@ -75,7 +75,7 @@
   z-index: 1;
 }
 
-.billiesChatcornerAdmin-shell-foot {
+.billiesChatcorner-admin-shell-foot {
   position: absolute;
   left: 0;
   bottom: 0;
@@ -84,7 +84,7 @@
   background: #eee;
 }
 
-.billiesChatcornerAdmin-shell-modal {
+.billiesChatcorner-admin-shell-modal {
   position: absolute;
   margin-top: -200px;
   margin-left: -200px;

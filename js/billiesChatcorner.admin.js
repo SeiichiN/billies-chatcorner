@@ -8,11 +8,16 @@
   regexp  : true, sloppy  : true, vars     : true,
   white   : true
   */
-/*global $, billiesChatcornerAdmin:true */
+/*global jQuery, $, billiesChatcorner */
 
-var billiesChatcornerAdmin = (function () {
+var billiesChatcorner = (function () {
+  var admin = {};
+  var util = {};
+});
+
+billiesChatcorner.admin = (function () {
   var initModule = function ($container) {
-      billiesChatcornerAdmin.shell.initModule( $container );
+      billiesChatcorner.admin.shell.initModule( $container );
   };
 
   return { initModule : initModule };

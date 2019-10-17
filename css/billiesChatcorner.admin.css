@@ -30,7 +30,7 @@ body {
 }
 
 /**** billiesChatcorner 名前空間セレクタ開始 *************/
-#billiesChatcornerAdmin {
+#billiesChatcorner-admin {
   position: absolute;
   top: 24px;
   right: 8px;

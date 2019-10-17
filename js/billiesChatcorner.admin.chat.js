@@ -12,7 +12,7 @@
 /*global $, jQuery, billiesChatcornerAdmin */
 
 jQuery( function ($) {
-  billiesChatcornerAdmin.chat = (function () {
+  billiesChatcorner.admin.chat = (function () {
     //--[ プロパティ：設定値 ]---------------------------------------------
     var configMap = {
       main_html : String()
@@ -43,7 +43,7 @@ jQuery( function ($) {
     // @exception:
     //   なし
     configModule = function ( input_map ) {
-      billiesChatcornerAdmin.util.setConfigMap({
+      billiesChatcorner.util.setConfigMap({
         input_map : input_map,
         settable_map : configMap.settable_map,
         config_map : configMap
