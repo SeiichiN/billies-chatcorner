@@ -25,7 +25,8 @@ jQuery( function ($) {
 
         isFakeData = true,
 
-        personProto, makePerson, people, initModule;
+        personProto, makePerson, people, initModule,
+        chat;
 
     personProto = {
       get_is_user : function () {
@@ -48,6 +49,7 @@ jQuery( function ($) {
       }
 
       person = Object.create( personProto );
+
       person.cid = cid;
       person.name = name;
       person.css_map = css_map;
@@ -57,9 +59,47 @@ jQuery( function ($) {
       stateMap.people_cid_map[ cid ] = person;
 
       stateMap.people_db.insert( person );
+      
       return person;
     };
+
+    people = {
+      get_db      : function () { return stateMap.people_db; },
+      get_cid_map : function () { return stateMap.people_cid_map; }
+    };
+
+    chat = {};
     
-    return {};
+    initModule = function () {
+      var i, people_list, person_map;
+
+      // anonymous-user initialize
+      stateMap.anon_user = makePerson ({
+        cid : configMap.anon_id,
+        id  : configMap.anon_id,
+        name : 'anonymous'
+      });
+      stateMap.user = stateMap.anon_user;
+
+      if ( isFakeData ) {
+        people_list = billiesChatcorner.admin.fake.getPeopleList();
+        for ( i = 0; i < people_list.length; i++ ) {
+          person_map = people_list[ i ];
+          makePerson({
+            cid     : person_map._id,
+            css_map : person_map.css_map,
+            id      : person_map._id,
+            name    : person_map.name
+          });
+ //         console.log(stateMap.people_db);
+        }
+      }
+    };
+    
+    return {
+      initModule : initModule,
+      people     : people,
+      chat       : chat
+    };
   }());
 });

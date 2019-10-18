@@ -98,7 +98,7 @@ jQuery( function ($) {
         $sizer  : $slider.find( '.billiesChatcorner-chat-sizer' ),
         $msgs   : $slider.find( '.billiesChatcorner-chat-msgs' ),
         $box    : $slider.find( '.billiesChatcorner-chat-box' ),
-        $input  : $slider.find( '.billiesChatcorner-chat-box input[type="text"]' ),
+        $input  : $slider.find( '.billiesChatcorner-chat-box input[type="text"]' )
       };
     };
 

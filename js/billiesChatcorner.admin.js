@@ -10,14 +10,16 @@
   */
 /*global jQuery, $, billiesChatcorner */
 
-var billiesChatcorner = (function () {
-  var admin = {};
-  var util = {};
-});
+var billiesChatcorner = {
+  admin : {},
+  util : {},
+  util_b : {}
+};
 
 billiesChatcorner.admin = (function () {
   var initModule = function ($container) {
-      billiesChatcorner.admin.shell.initModule( $container );
+    billiesChatcorner.admin.model.initModule( $container );
+    billiesChatcorner.admin.shell.initModule( $container );
   };
 
   return { initModule : initModule };

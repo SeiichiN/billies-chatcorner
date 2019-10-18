@@ -1,25 +1,25 @@
 @charset "utf-8";
 
 /*
- * billiesChatcornerAdmin.chat.css
+ * billiesChatcorner.admin.chat.css
  */
 
-.billiesChatcornerAdmin-shell-main-content-chat {
+
+.billiesChatcorner-admin-shell-main-content-chat {
   position: absolute;
-  width: 300px;
+  /* width: 300px; */
   background-color: #cff293;
   bottom: 0;
   right: 0;
   border: solid 1px #aaaaaa;
   border-radius: 5px 5px 0 0;
   cursor: pointer;
-  height: 2em;
+  /* height: 2em; */
   box-shadow: 0 0 0.75em 0 #aaa;
   z-index: 1101;
 }
-/*
-.billiesChatcornerAdmin-shell-head,
-.billiesChatcornerAdmin-shell-closer {
+
+.billiesChatcorner-admin-chat-head  {
   position: absolute;
   top: 0;
   height: 2em;
@@ -33,36 +33,28 @@
   text-align: center;
 }
 
-.billiesChatcornerAdmin-shell-head {
+.billiesChatcorner-admin-chat-head {
   left: 0;
-  right: 2em;
+  right: 0;
   border-radius: 5px 0 0 0;
 }
 
-.billiesChatcornerAdmin-shell-closer {
-  right: 0;
-  width: 2em;
-}
-
-.billiesChatcornerAdmin-shell-closer:hover {
-  background: #800;
-}
-
-.billiesChatcornerAdmin-shell-head-title {
+.billiesChatcorner-admin-chat-head-title {
   position: absolute;
   left: 50%;
   width: 10em;
   margin-left: -4em;
 }
 
-.billiesChatcornerAdmin-shell-sizer {
+.billiesChatcorner-admin-chat-sizer {
   position: absolute;
   top: 2em;
   left: 0;
   right: 0;
+  height: 96%;
 }
 
-.billiesChatcorner-chat-msgs {
+.billiesChatcorner-admin-chat-msgs {
   position: absolute;
   top: 1em;
   left: 1em;
@@ -74,7 +66,7 @@
   overflow-y: scroll;
 }
 
-.billiesChatcorner-chat-box {
+.billiesChatcorner-admin-chat-box {
   position: absolute;
   height: 2em;
   left: 1em;
@@ -84,23 +76,24 @@
   background: #888;
 }
 
-.billiesChatcorner-chat-box input[type="text"] {
+.billiesChatcorner-admin-chat-box input[type="text"] {
   float: left;
-  width: 75%;
+  width: 90%;
   height: 100%;
   padding: 0.5em;
   border: 0;
   background: #ddd;
   color: #404040;
+  box-sizing: border-box;
 }
 
-.billiesChatcorner-chat-box input[type="text"]:focus {
+.billiesChatcorner-admin-chat-box input[type="text"]:focus {
   background: #fff;
 }
 
-.billiesChatcorner-chat-box div {
-  float: left;
-  width: 25%;
+.billiesChatcorner-admin-chat-box div {
+  float: right;
+  width: 9%;
   height: 2em;
   line-height: 1.9em;
   text-align: center;
@@ -109,14 +102,13 @@
   cursor: pointer;
 }
 
-.billliesChatcorner-chat-box div:hover {
+.billliesChatcorner-admin-chat-box div:hover {
   background-color: #444;
   color: #ff0;
 }
 
-.billiesChatcorner-chat-head:hover,
-.billiesChatcorner-chat-head-toggle {
+.billiesChatcorner-admin-chat-head:hover  {
   background: #aaa;
 }
 
-*/
+

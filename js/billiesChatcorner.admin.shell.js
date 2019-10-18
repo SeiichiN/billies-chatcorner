@@ -35,8 +35,9 @@ jQuery( function ($) {
 	    },
 	    jqueryMap = {},
 
-	    copyAnchorMap, changeAnchorPart, onHashChange, onClickChat,
-	    setJqueryMap, initModule, setChatAnchor, onResize
+//	    copyAnchorMap, changeAnchorPart, onHashChange,
+//        initModule, setChatAnchor, onResize,
+        onClickChat, setJqueryMap
     ;
 
 
@@ -47,7 +48,8 @@ jQuery( function ($) {
 	  var $container = stateMap.$container;
 	  jqueryMap = {
         $container : $container,
-        $chat : $container.find('.billiesChatcorner-admin-shell-main-content-chat')
+        $chat : $container.find('.billiesChatcorner-admin-shell-main-content-chat'),
+        $modal : $container.find('.billiesChatcorner-admin-shell-modal')
       };
     };
 
@@ -55,9 +57,9 @@ jQuery( function ($) {
     // マウスクリックを捕捉
     //
     onClickChat = function (event) {
-      changeAnchorPart({
-	    chat : ( stateMap.is_chat_retracted ? 'open' : 'closed' )
-      });
+//      changeAnchorPart({
+//	    chat : ( stateMap.is_chat_retracted ? 'open' : 'closed' )
+//      });
       /*
          if (toggleChat( stateMap.is_chat_retracted )) {
 	     $.uriAnchor.setAnchor({
@@ -85,6 +87,9 @@ jQuery( function ($) {
 	  stateMap.$container = $container;
 	  $container.html( configMap.main_html );
       setJqueryMap();
+      jqueryMap.$modal.css({
+        display : 'none'
+      });
 
 
 	  // 機能モジュールを設定して初期化する

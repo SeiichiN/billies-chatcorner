@@ -16,7 +16,7 @@ billiesChatcorner.admin.fake = (function () {
   var getPeopleList;
 
   getPeopleList = function () {
-    return {
+    return [
       {
         name : 'Betty',
         _id : 'id_01',
@@ -37,8 +37,9 @@ billiesChatcorner.admin.fake = (function () {
         _id : 'id_04',
         css_map : { top: 140, left: 20, 'background-color': 'rgb(192, 128, 128)' }
       }
-    };
+    ];
   };
-}());
 
+  return { getPeopleList : getPeopleList };
+}());
 
