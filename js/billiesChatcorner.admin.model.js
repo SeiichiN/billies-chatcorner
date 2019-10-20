@@ -34,7 +34,7 @@ jQuery( function ($) {
 
         isFakeData = true,
 
-        personProto, makePerson, people, initModule,
+        personProto, makePerson, people, chat, initModule,
         makeCid, clearPeopleDb, completeLogin, removePerson
     ;
 
