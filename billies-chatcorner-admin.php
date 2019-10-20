@@ -20,6 +20,7 @@ function billies_chatcorner_admin_add_files () {
 
   wp_enqueue_script('js-billies-chatcorner-jq-taffy', plugins_url('js/jq/taffy.js', __FILE__), array(), false, false);
   wp_enqueue_script('js-billies-chatcorner-jq-gevent', plugins_url('js/jq/jquery.event.gevent.js', __FILE__), array('jquery'), false, false);
+  wp_enqueue_script('js-billies-chatcorner-jq-event-ue', plugins_url('js/jq/jquery.event.ue.js', __FILE__), array('jquery'), false, false);
   
   wp_enqueue_script('js-billies-chatcorner-admin', plugins_url('js/billiesChatcorner.admin.js', __FILE__), array('jquery'), false, false);
   wp_enqueue_script('js-billies-chatcorner-util', plugins_url('js/billiesChatcorner.util.js', __FILE__), array(), false, false);
@@ -39,7 +40,7 @@ function billiesChatcorner_admin_page () {
 ?>
 
   <div id="billiesChatcorner-admin-wrap">
-    <h1>Billies Chatcorner 管理者ページ</h1>
+<!--    <h1>Billies Chatcorner 管理者ページ</h1>  -->
 
   </div>
   

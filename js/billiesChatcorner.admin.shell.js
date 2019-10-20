@@ -17,9 +17,11 @@ jQuery( function ($) {
     var configMap = {
 	  main_html : String()
                 + '<div class="billiesChatcorner-admin-shell-head">'
-                  + '<div class="billiesChatcorner-admin-shell-head-logo"></div>'
+                  + '<div class="billiesChatcorner-admin-shell-head-logo">'
+                    + '<h1>Billies Chatcorner</h1>'
+                    + '<p>JavaScript</p>'
+                  + '</div>'
                   + '<div class="billiesChatcorner-admin-shell-head-acct"></div>'
-                  + '<div class="billiesChatcorner-admin-shell-head-search"></div>'
                 + '</div>'
                 + '<div class="billiesChatcorner-admin-shell-main">'
                   + '<div class="billiesChatcorner-admin-shell-main-nav"></div>'
@@ -49,7 +51,8 @@ jQuery( function ($) {
 	  jqueryMap = {
         $container : $container,
         $chat : $container.find('.billiesChatcorner-admin-shell-main-content-chat'),
-        $modal : $container.find('.billiesChatcorner-admin-shell-modal')
+        $modal : $container.find('.billiesChatcorner-admin-shell-modal'),
+        $acct  : $container.find('.billiesChatcorner-admin-shell-head-acct')
       };
     };
 
@@ -70,6 +73,36 @@ jQuery( function ($) {
 	  return false;
     };
 
+    //--[ onTapAcct ]-----------------------------------------------
+    //
+    onTapAcct = function (event) {
+      var acct_text, user_name,
+          user = billiesChatcorner.admin.model.people.get_user();
+
+      if (user.get_is_anon()) {
+        user_name = prompt('ログイン');
+        billiesChatcorner.admin.model.people.login( user_name );
+        jqueryMap.$acct.text( '...処理中...' );
+      }
+      else {
+        billiesChatcorner.admin.model.people.logout();
+      }
+      return false;
+    };
+
+    //--[ onLogin ]---------------------------------------------------
+    //
+    onLogin = function ( event, login_user ) {
+      jqueryMap.$acct.text( login_user.name );
+    };
+
+    //--[ onLogout ]--------------------------------------------------
+    //
+    onLogout = function ( event, logout_user ) {
+      jqueryMap.$acct.text( 'ログイン' );
+    };
+
+    
     //--[ initModule ]--------------------------------------------
     // 用例：billiesChatcorner.shell.initModule( $('#app_div_id') );
     // 目的：ユーザに機能を提供するようにチャットに指示する
@@ -99,6 +132,11 @@ jQuery( function ($) {
 	  });
 	  billiesChatcorner.admin.chat.initModule( jqueryMap.$chat );
 
+      // ログイン処理
+      jQuery.gevent.subscribe( $container, 'billiesChatcorner-login', onLogin);
+      jQuery.gevent.subscribe( $container, 'billiesChatcorner-logout', onLogout);
+      // utap -- jquery.event.ue.js
+      jqueryMap.$acct.text('ログイン').bind( 'utap', onTapAcct );
       
 /*
       $(window)

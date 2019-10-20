@@ -245,7 +245,7 @@ jQuery( function ($) {
       return false;
     };
 
-        //--[ onTapAcct ]-----------------------------------------------
+    //--[ onTapAcct ]-----------------------------------------------
     //
     onTapAcct = function (event) {
       console.log('onTapAcct in');
@@ -274,7 +274,6 @@ jQuery( function ($) {
     onLogout = function ( event, logout_user ) {
       jqueryMap.$acct.text( 'ログイン' );
     };
-    
 
 
     //--[ configModule ]-----------------------------

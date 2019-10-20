@@ -3,6 +3,10 @@
  * シェルスタイル
  */
 
+#billiesChatcorner-admin-wrap {
+  margin-top: 10px;
+}
+
 .billiesChatcorner-admin-shell-head {
   position: absolute;
   top: 0;
@@ -14,28 +18,34 @@
 .billiesChatcorner-admin-shell-head-logo {
   position: absolute;
   top: 4px;
-  left: 4px;
+  left: 8px;
   height: 32px;
-  width: 128px;
-  background: orange;
+  width: 200px;
+}
+
+.billiesChatcorner-admin-shell-head-logo h1 {
+  font : 800 22px/22px Arial, Helvetica, sans-serif;
+  margin : 0;
+}
+
+.billiesChatcorner-admin-shell-head-logo p {
+  font : 800 10px/10px Arial, Helvetica, sans-serif;
+  margin : 0;
 }
 
 .billiesChatcorner-admin-shell-head-acct {
   position: absolute;
   top: 4px;
   right: 0;
-  height: 32px;
-  width: 64px;
-  background: green;
-}
-
-.billiesChatcorner-admin-shell-head-search {
-  position: absolute;
-  top: 4px;
-  right: 64px;
-  height: 32px;
-  width: 248px;
-  background: blue;
+  line-height: 32px;
+  width: 210px;
+  background: #888;
+  cursor: pointer;
+  text-align: center;
+  color: #fff;
+  font-size: 1.2em;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .billiesChatcorner-admin-shell-main {
