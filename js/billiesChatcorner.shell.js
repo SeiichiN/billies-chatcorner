@@ -18,7 +18,11 @@ jQuery( function ($) {
 	  anchor_schema_map : {
 	    chat : { opened : true, closed : true }
 	  },
-	  main_html : String(),
+	  main_html : String()
+                + '<div class="billiesChatcorner-shell">'
+                  + '<div class="billiesChatcorner-shell-acct"></div>'
+                + '</div>'
+      ,
       // 『SPA』ではさまざまな要素をセットしているが、この場合は不要だと思う。
       //        + '<div class="billiesChatcorner-shell-chat"></div>',
 
@@ -180,7 +184,7 @@ jQuery( function ($) {
     setJqueryMap = function () {
 	  var $container = stateMap.$container;
 	  jqueryMap = {
-        $container : $container,
+        $container : $container
         // $chat : $container.find('.billiesChatcorner-shell-chat')
       };
     };
@@ -216,6 +220,7 @@ jQuery( function ($) {
 		return true;
 	};
 
+
     //--[ initModule ]--------------------------------------------
     // 用例：billiesChatcorner.shell.initModule( $('#app_div_id') );
     // 目的：ユーザに機能を提供するようにチャットに指示する
@@ -231,37 +236,36 @@ jQuery( function ($) {
     //
     initModule = function ( $container ) {
 	  stateMap.$container = $container;
-      // main_htmlに何もないから、コメントアウトした
-	  // $container.html( configMap.main_html );
+	  $container.html( configMap.main_html );
       setJqueryMap();
 
-		// 我々のスキーマを使うように uriAnchor を設定する
-		$.uriAnchor.configModule({
-			schema_map : configMap.anchor_schema_map
-		});
+	  // 我々のスキーマを使うように uriAnchor を設定する
+	  $.uriAnchor.configModule({
+		schema_map : configMap.anchor_schema_map
+	  });
 
-		// 機能モジュールを設定して初期化する
-		billiesChatcorner.chat.configModule({
-			set_chat_anchor : setChatAnchor,
-			chat_model : billiesChatcorner.model.chat,
-			people_model : billiesChatcorner.model.people
-		});
-		billiesChatcorner.chat.initModule( jqueryMap.$container );
+	  // 機能モジュールを設定して初期化する
+	  billiesChatcorner.chat.configModule({
+		set_chat_anchor : setChatAnchor,
+		chat_model : billiesChatcorner.model.chat,
+		people_model : billiesChatcorner.model.people
+	  });
+	  billiesChatcorner.chat.initModule( jqueryMap.$container );
 
 	  // チャットスライダーの初期化
 	  // マウスクリックをバインド
-		/*
-	  stateMap.is_chat_retracted = true;
-	  jqueryMap.$chat
-			   .attr( 'title', configMap.chat_retracted_title )
-			   .click( onClickChat );
-      $.uriAnchor.configModule({
-        schema_map : configMap.anchor_schema_map
-      });
+	  /*
+	     stateMap.is_chat_retracted = true;
+	     jqueryMap.$chat
+		 .attr( 'title', configMap.chat_retracted_title )
+		 .click( onClickChat );
+         $.uriAnchor.configModule({
+         schema_map : configMap.anchor_schema_map
+         });
 
-      billiesChatcorner.chat.configModule( {} );
-      billiesChatcorner.chat.initModule( jqueryMap.$chat );
-      */
+         billiesChatcorner.chat.configModule( {} );
+         billiesChatcorner.chat.initModule( jqueryMap.$chat );
+       */
 
       $(window)
 		.bind( 'resize', onResize )

@@ -19,21 +19,22 @@
 */
 /*global jQuery */
 
+
 (function ($) {
   $.uriAnchor = (function () {
     //---------------- BEGIN MODULE SCOPE VARIABLES --------------
     var
-      configMap = {
-        clean0_regex     : /^[#!]*/,
-        clean1_regex     : /\?[^?]*$/,
-        settable_map_key : { schema_map : true },
-        schema_map       : null
-      },
+    configMap = {
+      clean0_regex     : /^[#!]*/,
+      clean1_regex     : /\?[^?]*$/,
+      settable_map_key : { schema_map : true },
+      schema_map       : null
+    },
 
-      getErrorReject,   getVarType,       getCleanAnchorString,
-      parseStringToMap, makeAnchorString, setAnchor,
-      makeAnchorMap,    configModule
-      ;
+getErrorReject,   getVarType,       getCleanAnchorString,
+parseStringToMap, makeAnchorString, setAnchor,
+makeAnchorMap,    configModule
+    ;
     //----------------- END MODULE SCOPE VARIABLES ---------------
 
     //------------------- BEGIN UTILITY METHODS ------------------
@@ -56,24 +57,24 @@
     // Begin internal utility to clean bookmark
     getCleanAnchorString = function () {
       return String( document.location.href.split('#')[1] || '' )
-        // remove any leading pounds or bangs
+      // remove any leading pounds or bangs
         .replace( configMap.clean0_regex , '' )
-        // snip off after question-mark ( a ClickStreet bug )
+      // snip off after question-mark ( a ClickStreet bug )
         .replace( configMap.clean1_regex , '' )
-        ;
+      ;
     };
     // End internal utility to clean bookmark
 
     // Begin internal utility /parseStringToMap/
     parseStringToMap = function ( arg_map  ) {
       var
-        input_string    = arg_map.input_string    || '',
-        delimit_char    = arg_map.delimit_char    || '&',
-        delimit_kv_char = arg_map.delimit_kv_char || '=',
-        output_map      = {},
+      input_string    = arg_map.input_string    || '',
+delimit_char    = arg_map.delimit_char    || '&',
+delimit_kv_char = arg_map.delimit_kv_char || '=',
+output_map      = {},
 
-        splitter_array, i, key_val_array
-        ;
+splitter_array, i, key_val_array
+      ;
 
       splitter_array = input_string.split( delimit_char );
 
@@ -85,8 +86,8 @@
         }
         else if ( key_val_array.length === 2  ) {
           output_map[decodeURIComponent( key_val_array[0] )]
-            = decodeURIComponent( key_val_array[1] )
-            ;
+          = decodeURIComponent( key_val_array[1] )
+          ;
         }
       }
       return output_map;
@@ -99,22 +100,22 @@
     // in setAnchor
     makeAnchorString = function ( anchor_map_in, option_map_in  ) {
       var
-        anchor_map          = anchor_map_in || {},
-        option_map          = option_map_in || {},
-        delimit_char        = option_map.delimit_char        || '&',
-        delimit_kv_char     = option_map.delimit_kv_char     || '=',
-        sub_delimit_char    = option_map.sub_delimit_char    || ':',
-        dep_delimit_char    = option_map.dep_delimit_char    || '|',
-        dep_kv_delimit_char = option_map.dep_kv_delimit_char || ',',
-        schema_map         = configMap.schema_map,
-        key_val_array       = [],
+      anchor_map          = anchor_map_in || {},
+option_map          = option_map_in || {},
+delimit_char        = option_map.delimit_char        || '&',
+delimit_kv_char     = option_map.delimit_kv_char     || '=',
+sub_delimit_char    = option_map.sub_delimit_char    || ':',
+dep_delimit_char    = option_map.dep_delimit_char    || '|',
+dep_kv_delimit_char = option_map.dep_kv_delimit_char || ',',
+schema_map         = configMap.schema_map,
+key_val_array       = [],
 
-        schema_map_val, schema_map_dep, schema_map_dep_val,
-        key_name, key_value, class_name, output_kv_string,
-        sub_key_name, dep_map, dep_key_name, dep_key_value,
+schema_map_val, schema_map_dep, schema_map_dep_val,
+key_name, key_value, class_name, output_kv_string,
+sub_key_name, dep_map, dep_key_name, dep_key_value,
 
-        dep_kv_array
-        ;
+dep_kv_array
+      ;
 
       if ( getVarType( anchor_map ) !== 'Object' ) {
         return false;
@@ -166,11 +167,11 @@
           }
           // String and Number
           else {
-             output_kv_string
-                += encodeURIComponent( key_name )
-                +  delimit_kv_char
-                +  encodeURIComponent( key_value )
-                ;
+            output_kv_string
+            += encodeURIComponent( key_name )
+            +  delimit_kv_char
+            +  encodeURIComponent( key_value )
+            ;
           }
 
           sub_key_name = '_' + key_name;
@@ -227,7 +228,7 @@
             // append dependent arguments if there are any
             if ( dep_kv_array.length > 0  ) {
               output_kv_string
-                += sub_delimit_char + dep_kv_array.join( dep_delimit_char )
+              += sub_delimit_char + dep_kv_array.join( dep_delimit_char )
               ;
             }
           }
@@ -355,14 +356,14 @@
     //
     setAnchor = function ( anchor_map, option_map, replace_flag  ) {
       var
-        anchor_string = makeAnchorString( anchor_map, option_map  ),
-        uri_array, uri_string
-        ;
+      anchor_string = makeAnchorString( anchor_map, option_map  ),
+uri_array, uri_string
+      ;
 
       uri_array = document.location.href.split( '#',2 );
       uri_string = anchor_string
-        ? uri_array[0] + '#!' + anchor_string : uri_array[0]
-        ;
+                 ? uri_array[0] + '#!' + anchor_string : uri_array[0]
+      ;
 
       if ( replace_flag  ) {
         if ( anchor_string  ) {
@@ -428,9 +429,9 @@
 
     makeAnchorMap = function () {
       var
-        anchor_string = getCleanAnchorString(),
-        anchor_map, idx, keys_array, key_name, key_value, dep_array
-        ;
+      anchor_string = getCleanAnchorString(),
+anchor_map, idx, keys_array, key_name, key_value, dep_array
+      ;
 
       if ( anchor_string === ''  ) { return {}; }
 
@@ -480,9 +481,9 @@
     // Set configuration options
     configModule = function ( arg_map  ) {
       var
-        settable_map = configMap.settable_map_key,
-        key_name, error
-        ;
+      settable_map = configMap.settable_map_key,
+key_name, error
+      ;
 
       for ( key_name in arg_map ) {
         if ( arg_map.hasOwnProperty( key_name )) {
@@ -493,7 +494,7 @@
             error         = new Error();
             error.name    = 'Bad Input';
             error.message = 'Setting config key |' + key_name
-              + '| is not supported';
+                          + '| is not supported';
             throw error;
           }
         }
@@ -512,3 +513,4 @@
     //------------------- END PUBLIC METHODS ---------------------
   }());
 } ( jQuery ));
+

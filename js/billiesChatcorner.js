@@ -12,7 +12,8 @@
 
 var billiesChatcorner = (function () {
   var initModule = function ($container) {
-      billiesChatcorner.shell.initModule( $container );
+    billiesChatcorner.model.initModule( $container );
+    billiesChatcorner.shell.initModule( $container );
   };
 
   return { initModule : initModule };

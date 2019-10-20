@@ -1,5 +1,5 @@
 /*
- * billiesChatcorner.admin.fake.js
+ * billiesChatcorner.fake.js
  * フェイクモジュール
  */
 
@@ -11,39 +11,18 @@
   */
 /*global jQuery, $, billiesChatcorner */
 
-billiesChatcorner.admin.fake = (function () {
+billiesChatcorner.fake = (function () {
   'use strict';
   var getPeopleList, fakeIdSerial, makeFakeId, mockSio;
 
-  fakeIdSerial = 5;
+  fakeIdSerial = 2;
 
   makeFakeId = function () {
     return 'id_' + String( fakeIdSerial++ );
   };
 
   getPeopleList = function () {
-    return [
-      {
-        name : 'Betty',
-        _id : 'id_01',
-        css_map : { top: 20, left: 20, 'background-color': 'rgb(128, 128, 128)' }
-      },
-      {
-        name : 'Mike',
-        _id : 'id_02',
-        css_map : { top: 60, left: 20, 'background-color': 'rgb(128, 255, 128)' }
-      },
-      {
-        name : 'Pebbles',
-        _id : 'id_03',
-        css_map : { top: 100, left: 20, 'background-color': 'rgb(128, 192, 192)' }
-      },
-      {
-        name : 'Wilma',
-        _id : 'id_04',
-        css_map : { top: 140, left: 20, 'background-color': 'rgb(192, 128, 128)' }
-      }
-    ];
+    return [ { name : 'Billie', _id : 'id_01' } ];
   };
 
   mockSio = (function () {
@@ -58,8 +37,7 @@ billiesChatcorner.admin.fake = (function () {
         setTimeout( function () {
           callback_map.userupdate(
             [{ _id     : makeFakeId(),
-               name    : data.name,
-               css_map : data.css_map }]
+               name    : data.name    }]
           );
         }, 3000);
       }

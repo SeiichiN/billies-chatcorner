@@ -13,6 +13,8 @@
 
 jQuery( function ($) {
   billiesChatcorner.chat = (function () {
+    'usr strict';
+    
     var configMap = {
       main_html : String()
                 + '<div class="billiesChatcorner-chat">'
@@ -20,6 +22,7 @@ jQuery( function ($) {
                     + '<div class="billiesChatcorner-chat-head-toggle">+</div>'
                     + '<div class="billiesChatcorner-chat-head-title"></div>'
                   + '</div>'
+                  + '<div class="billiesChatcorner-chat-acct"></div>'
                   + '<div class="billiesChatcorner-chat-closer">X</div>'
                   + '<div class="billiesChatcorner-chat-sizer">'
                     + '<div class="billiesChatcorner-chat-msgs"></div>'
@@ -69,7 +72,8 @@ jQuery( function ($) {
 
         setJqueryMap, configModule, initModule,
         setSliderPosition, getEmSize, setPxSizes,
-        onClickToggle, removeSlider, handleResize
+        onClickToggle, removeSlider, handleResize,
+        onTapAcct, onLogin, onLogout
     ;
 
     //--[ getEmSize ]-----( utility )---------------------------------
@@ -98,7 +102,8 @@ jQuery( function ($) {
         $sizer  : $slider.find( '.billiesChatcorner-chat-sizer' ),
         $msgs   : $slider.find( '.billiesChatcorner-chat-msgs' ),
         $box    : $slider.find( '.billiesChatcorner-chat-box' ),
-        $input  : $slider.find( '.billiesChatcorner-chat-box input[type="text"]' )
+        $input  : $slider.find( '.billiesChatcorner-chat-box input[type="text"]' ),
+        $acct   : $slider.find( '.billiesChatcorner-chat-acct' )
       };
     };
 
@@ -239,7 +244,39 @@ jQuery( function ($) {
 
       return false;
     };
+
+        //--[ onTapAcct ]-----------------------------------------------
+    //
+    onTapAcct = function (event) {
+      console.log('onTapAcct in');
+      var acct_text, user_name,
+          user = billiesChatcorner.model.people.get_user();
+
+      if (user.get_is_anon()) {
+        user_name = prompt('ログイン');
+        billiesChatcorner.model.people.login( user_name );
+        jqueryMap.$acct.text( '...処理中...' );
+      }
+      else {
+        billiesChatcorner.model.people.logout();
+      }
+      return false;
+    };
+
+    //--[ onLogin ]---------------------------------------------------
+    //
+    onLogin = function ( event, login_user ) {
+      jqueryMap.$acct.text( login_user.name );
+    };
+
+    //--[ onLogout ]--------------------------------------------------
+    //
+    onLogout = function ( event, logout_user ) {
+      jqueryMap.$acct.text( 'ログイン' );
+    };
     
+
+
     //--[ configModule ]-----------------------------
     // 用例： billiesChatcorner.chat.configModule( {slider_open_em : 18} );
     // 目的：初期化前にモジュールを構成する
@@ -294,6 +331,11 @@ jQuery( function ($) {
 	  jqueryMap.$title.text( configMap.slider_closed_title_text );
       jqueryMap.$head.click( onClickToggle );
       stateMap.position_type = 'closed';
+
+      // ログイン処理
+      jQuery.gevent.subscribe( $append_target, 'billiesChatcorner-login', onLogin );
+      jQuery.gevent.subscribe( $append_target, 'billiesChatcorner-logout', onLogout );
+      jqueryMap.$acct.text('ログイン').bind( 'utap', onTapAcct);
       
       return true;
     };
