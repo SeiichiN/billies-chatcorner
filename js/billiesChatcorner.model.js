@@ -28,12 +28,13 @@ jQuery( function ($) {
           cid_serial     : 0,
           people_cid_map : {},
           people_db      : TAFFY(),
-          user           : null
+          user           : null,
+          is_connected   : false
         },
 
         isFakeData = true,
 
-        personProto, makePerson, people, initModule,
+        personProto, makePerson, people, chat, initModule,
         makeCid, clearPeopleDb, completeLogin, removePerson
     ;
 
@@ -82,7 +83,7 @@ jQuery( function ($) {
       delete stateMap.people_cid_map[ user_map.cid ];
       stateMap.user.cid = user_map._id;
       stateMap.user.id = user_map._id;
-//      stateMap.user.css_map = user_map.css_map;
+      stateMap.user.css_map = user_map.css_map;
       stateMap.people_cid_map[ user_map._id ] = stateMap.user;
 
       // チャットに参加するイベント発火
@@ -100,7 +101,7 @@ jQuery( function ($) {
     makePerson = function ( person_map ) {
       var person,
           cid = person_map.cid,
-//          css_map = person_map.css_map,
+          css_map = person_map.css_map,
           id = person_map.id,
           name = person_map.name;
 
@@ -112,7 +113,7 @@ jQuery( function ($) {
 
       person.cid = cid;
       person.name = name;
-//      person.css_map = css_map;
+      person.css_map = css_map;
 
       if ( id ) { person.id = id; }
 
@@ -166,7 +167,7 @@ jQuery( function ($) {
 
         stateMap.user = makePerson({
           cid     : makeCid(),
-//          css_map : { top: 25, left: 25, 'background-color': '#8f8' },
+          css_map : { top: 25, left: 25, 'background-color': '#8f8' },
           name    : name
         });
 
@@ -174,7 +175,7 @@ jQuery( function ($) {
 
         sio.emit( 'adduser', {
           cid     : stateMap.user.cid,
-//          css_map : stateMap.user.css_map,
+          css_map : stateMap.user.css_map,
           name    : stateMap.user.name
         });
       };
@@ -201,6 +202,125 @@ jQuery( function ($) {
       };
     }());   // people
 
+    //--[ chat ]------------------------------------------------------
+    // chatオブジェクトAPI
+    // -------------------
+    // public method
+    //   * join() -- チャットルームに参加する。
+    //       グローバルカスタムイベント listchange, updatechat
+    //       バックエンドとのプロトコルの確立。
+    //       anon_user の場合は、false を返す。
+    //   * get_chatee() -- ユーザがチャットしている相手の person オブジェクト
+    //       を返す。
+    //   * set_chatee( <person_id> ) -- チャット相手を設定する。
+    //       person_id がリストに存在しない場合は、null を返す。
+    //       グローバルカスタムイベント setchatee を発行。
+    //   * send_msg( <msg_text> ) -- チャット相手にメセジを送信。
+    //       グローバルカスタムイベント updatechat を発行。
+    //       anon_user, 相手がnull ならば、false を返す。
+    //   * update_avatar( <update_avtr_map> ) -- バックエンドに
+    //       update_avtr_map を送信する。これにより更新されたユーザリスト
+    //       とアバター情報を含む listchange イベントを発行。
+    //       update_avtr_map 形式 -- {person_id : person_id, css_map : css_map }
+    //
+    // このオブジェクトが発行するグローバルカスタムイベント
+    //   * billiesChatcorner-setchatee -- 新しいチャット相手が設定されたときに
+    //       発行される。
+    //       { old_chatee : <old_chatee_person_object>,
+    //         new_chatee : <new_chatee_person_object> }
+    //   * billiesChatcorner-listchange -- ユーザがチャットに参加、退出したとき
+    //       内容が変わったとき（アバター詳細が変わったとき）に発行される。
+    //   * billiesChatcorner-updatechat -- 新しいメッセージを送受信したとき。
+    //       以下の内容をデータとして提供。
+    //       { dest_id   : <chatee_id>
+    //         dest_name : <chatee_name>
+    //         sender_id : <sender_id>
+    //         msg_text  : <message_content> }
+    //
+    chat = (function () {
+      var _publish_listchange,
+          _update_list,
+          _leave_chat,
+          join_chat;
+
+      //--[ _update_list ]-----------------------------------
+      //
+      _update_list = function( arg_list ) {
+        var i, person_map, make_person_map,
+            people_list = arg_list[ 0 ];
+
+        clearPeopleDb();
+
+        PERSON:
+                          for (i = 0; i < people_list.length; i++) {
+                            person_map = people_list[ i ];
+
+                            if (! person_map.name) { continue PERSON; }
+
+                            // ユーザを特定したら、css_map を更新して残りをとばす
+                            if ( stateMap.user &&
+                                 stateMap.user.id === person_map._id ) {
+                              stateMap.user.css_map = person_map.css_map;
+                              continue PERSON;
+                            }
+
+                            make_person_map = {
+                              cid     : person_map._id,
+                              css_map : person_map.css_map,
+                              id      : person_map._id,
+                              name    : person_map.name
+                            };
+
+                            makePerson( make_person_map );
+                          }
+
+        stateMap.people_db.sort( 'name' );
+      };
+
+      //--[ _publish_listchange ]----------------------------
+      //
+      _publish_listchange = function ( arg_list ) {
+        _update_list( arg_list );
+        jQuery.gevent.publish( 'billiesChatcorner-listchange', [ arg_list ] );
+      };
+
+      //--[ _leave_chat ]------------------------------------
+      //
+      _leave_chat = function () {
+        var sio = isFakeData
+                ? billiesChatcorner.fake.mocksio
+                : billiesChatcorner.data.getSio();
+
+        stateMap.is_connected = false;
+        if ( sio ) { sio.emit( 'leavechat' ); }
+      };
+
+      //--[ join_chat ]-------------------------------------
+      join_chat = function () {
+        var sio;
+
+        if ( stateMap.is_connected ) { return false; }
+
+        if ( stateMap.user.get_is_anon() ) {
+          console.warn( 'User must be defined before joining chat' );
+          return false;
+        }
+
+        sio = isFakeData
+            ? billiesChatcorner.fake.mockSio
+            : billiesChatcorner.data.getSio();
+        sio.on( 'listchange', _publish_listchange );
+        stateMap.is_connected = true;
+        return true;
+      };
+
+      return {
+        _leave : _leave_chat,
+        join   : join_chat
+      };
+    }());
+
+
     initModule = function () {
       var i, people_list, person_map;
 
@@ -212,6 +332,7 @@ jQuery( function ($) {
       });
       stateMap.user = stateMap.anon_user;
 
+      /*
       if ( isFakeData ) {
         people_list = billiesChatcorner.fake.getPeopleList();
 
@@ -224,6 +345,7 @@ jQuery( function ($) {
           });
         }
       }
+      */
     };
     
     return {

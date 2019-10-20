@@ -80,6 +80,7 @@ jQuery( function ($) {
     //
     completeLogin = function ( user_list ) {
       var user_map = user_list[0];
+      
       delete stateMap.people_cid_map[ user_map.cid ];
       stateMap.user.cid = user_map._id;
       stateMap.user.id = user_map._id;
@@ -309,7 +310,7 @@ jQuery( function ($) {
         sio = isFakeData
             ? billiesChatcorner.admin.fake.mockSio
             : billiesChatcorner.data.getSio();
-        sio.on( 'listchange', _publish_listchange );
+        sio.on( 'billiesChatcorner-listchange', _publish_listchange );
         stateMap.is_connected = true;
         return true;
       };
