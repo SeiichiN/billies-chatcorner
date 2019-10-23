@@ -74,6 +74,8 @@ jQuery( function ($) {
     };
 
     //--[ completeLogin ]-----------------------------------
+    // ログイン処理
+    //   ログインしたら、stateMap.userを確定する。
     // @param:
     //   user_list -- Array
     //                [{ _id:--, css_map:{top:--,left:--,background-color:--} }]
@@ -245,6 +247,12 @@ jQuery( function ($) {
           join_chat;
 
       //--[ _update_list ]-----------------------------------
+      // @param:
+      //   arg_list -- 0 [ 0: {name: "Betty",   _id: "id_01", css_map: {...}},
+      //                   1: {name: "Mike",    _id: "id_02", css_map: {...}},
+      //                   2: {name: "Pebbles", _id: "id_03", css_map: {...}},
+      //                   3: {name: "Wilma",   _id: "id_04", css_map: {...}},
+      //                   4: {name: "Sayuri",  _id: "id_05", css_map: {...}}]
       //
       _update_list = function( arg_list ) {
         var i, person_map, make_person_map,
@@ -310,6 +318,8 @@ jQuery( function ($) {
         sio = isFakeData
             ? billiesChatcorner.admin.fake.mockSio
             : billiesChatcorner.data.getSio();
+        // イベント待受 -- billiesChatcorner-listchange が来れば、
+        // _publish_listchange を実行
         sio.on( 'billiesChatcorner-listchange', _publish_listchange );
         stateMap.is_connected = true;
         return true;
