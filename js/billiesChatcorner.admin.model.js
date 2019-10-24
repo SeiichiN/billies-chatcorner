@@ -320,7 +320,7 @@ jQuery( function ($) {
             : billiesChatcorner.data.getSio();
         // イベント待受 -- billiesChatcorner-listchange が来れば、
         // _publish_listchange を実行
-        sio.on( 'billiesChatcorner-listchange', _publish_listchange );
+        sio.on( 'listchange', _publish_listchange );
         stateMap.is_connected = true;
         return true;
       };

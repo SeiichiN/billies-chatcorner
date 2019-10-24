@@ -211,7 +211,7 @@ jQuery( function ($) {
 	onResize = function () {
 		if ( stateMap.resize_idto ) { return true; }
 
-		spa.chat.handleResize();
+		billiesChatcorner.chat.handleResize();
 		stateMap.resize_idto = setTimeout(
 			function () { stateMap.resize_idto = undefined; },
 			configMap.resize_interval

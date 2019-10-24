@@ -351,6 +351,7 @@ jQuery( function ($) {
     return {
       initModule : initModule,
       people     : people,
+	  chat       : chat
     };
   }());
 });
