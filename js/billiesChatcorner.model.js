@@ -9,9 +9,9 @@
    regexp  : true, sloppy  : true, vars     : true,
    white   : true
  */
-/*global jQuery, $, billiesChatcorner */
+/*global jQuery, $, billiesChatcorner, TAFFY */
 
-jQuery( function ($) {
+jQuery( function () {
   billiesChatcorner.model = (function () {
     'use strict';
     
@@ -299,7 +299,10 @@ jQuery( function ($) {
       join_chat = function () {
         var sio;
 
-        if ( stateMap.is_connected ) { return false; }
+        if ( stateMap.is_connected ) { 
+		  console.log(stateMap);
+		  return false;
+		}
 
         if ( stateMap.user.get_is_anon() ) {
           console.warn( 'User must be defined before joining chat' );
@@ -322,7 +325,6 @@ jQuery( function ($) {
 
 
     initModule = function () {
-      var i, people_list, person_map;
 
       // anonymous-user initialize
       stateMap.anon_user = makePerson ({
@@ -333,6 +335,8 @@ jQuery( function ($) {
       stateMap.user = stateMap.anon_user;
 
       /*
+      var i, people_list, person_map;
+
       if ( isFakeData ) {
         people_list = billiesChatcorner.fake.getPeopleList();
 
