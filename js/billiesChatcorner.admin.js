@@ -18,7 +18,7 @@ var billiesChatcorner = {
 
 billiesChatcorner.admin = (function () {
   var initModule = function ($container) {
-    billiesChatcorner.admin.model.initModule( $container );
+    billiesChatcorner.model.initModule( $container );
     billiesChatcorner.admin.shell.initModule( $container );
   };
 

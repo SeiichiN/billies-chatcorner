@@ -77,15 +77,15 @@ jQuery( function ($) {
     //
     onTapAcct = function (event) {
       var acct_text, user_name,
-          user = billiesChatcorner.admin.model.people.get_user();
+          user = billiesChatcorner.model.people.get_user();
 
       if (user.get_is_anon()) {
         user_name = prompt('ログイン');
-        billiesChatcorner.admin.model.people.login( user_name );
+        billiesChatcorner.model.people.login( user_name );
         jqueryMap.$acct.text( '...処理中...' );
       }
       else {
-        billiesChatcorner.admin.model.people.logout();
+        billiesChatcorner.model.people.logout();
       }
       return false;
     };
@@ -127,8 +127,8 @@ jQuery( function ($) {
 
 	  // 機能モジュールを設定して初期化する
 	  billiesChatcorner.admin.chat.configModule({
-		chat_model : billiesChatcorner.admin.model.chat,
-		people_model : billiesChatcorner.admin.model.people
+		chat_model : billiesChatcorner.model.chat,
+		people_model : billiesChatcorner.model.people
 	  });
 	  billiesChatcorner.admin.chat.initModule( jqueryMap.$chat );
 
