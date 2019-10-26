@@ -188,17 +188,16 @@ jQuery( function ($) {
       };
 
       logout = function () {
-        var is_removed,
-            user = stateMap.user;
+        var user = stateMap.user;
 
         chat._leave();                                  // <--- add
         // @param  -- user -- [{  }]
         // @return -- true
         is_removed = removePerson( user );
         stateMap.user = stateMap.anon_user;
+        clearPeopleDb();
 
         jQuery.gevent.publish( 'billiesChatcorner-logout', [ user ] );
-        return is_removed;
       };
 
       return {
@@ -253,6 +252,7 @@ jQuery( function ($) {
           
           join_chat,
           get_chatee, send_msg, set_chatee,                    // <-- add
+          update_avator,
 
           chatee = null       // <-- add ... ユーザがチャットしている相手   
       ;
@@ -266,7 +266,7 @@ jQuery( function ($) {
       //                   4: {name: "Sayuri",  _id: "id_05", css_map: {...}}]
       //
       _update_list = function( arg_list ) {
-        var i, person_map, make_person_map,
+        var i, person_map, make_person_map, person,
             people_list = arg_list[ 0 ],
             is_chatee_online = false;                         // <-- add
 
@@ -292,9 +292,12 @@ jQuery( function ($) {
                               name    : person_map.name
                             };
 
+                            person = makePerson( make_person_map );
+
                             //                                   V-- add
                             if ( chatee && chatee.id === make_person_map.id ) {
                               is_chatee_online = true;
+                              chatee = person;
                             }
 
                             makePerson( make_person_map );
@@ -424,13 +427,31 @@ jQuery( function ($) {
         return true;
       };
       
+      //--[ update_avator ]-------------------------------------
+      // @param:
+      //   avator_upate_map
+      //     { person_id : <string>,
+      //       css_map   : { top                : <int>,
+      //                     left               : <int>,
+      //                     'background-color' : <string> }}
+      //
+      update_avator = function ( avator_update_map ) {
+        var sio = isFakeData
+                ? billiesChatcorner.fake.mockSio
+                : billiesChatcorner.data.getSio();
+
+        if ( sio ) {
+          sio.emit( 'updateavator', avator_update_map );
+        }
+      };
       
       return {
-        _leave     : _leave_chat,
-        join       : join_chat,
-        get_chatee : get_chatee,                             // <-- add
-        send_msg   : send_msg,                               // <-- add
-        set_chatee : set_chatee                              // <-- add
+        _leave        : _leave_chat,
+        join          : join_chat,
+        get_chatee    : get_chatee,                             // <-- add
+        send_msg      : send_msg,                               // <-- add
+        set_chatee    : set_chatee,                             // <-- add
+        update_avator : update_avator
       };
     }());
 

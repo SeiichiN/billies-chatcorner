@@ -27,6 +27,10 @@ function billies_chatcorner_add_files () {
   wp_enqueue_script('js-billies-chatcorner-util_b', plugins_url('js/billiesChatcorner.util_b.js', __FILE__), array('jquery'), false, false);
   wp_enqueue_script('js-billies-chatcorner-shell', plugins_url('js/billiesChatcorner.shell.js', __FILE__), array('jquery'), false, false);
   wp_enqueue_script('js-billies-chatcorner-chat', plugins_url('js/billiesChatcorner.chat.js', __FILE__), array('jquery'), false, false);
+
+  // Client Page
+  $pageMode = ['mode' => 'client-page'];
+  wp_localize_script('js-billies-chatcorner-fake', 'billiesChatcorner_page_mode', $pageMode);
   
   wp_enqueue_script('js-billies-chatcorner-start', plugins_url('js/billiesChatcorner.start.js', __FILE__), array('jquery'), false, true);
   // wp_enqueue_script('js-gevent-test', plugins_url('js/gevent.test.js', __FILE__), array('jquery'), false, true);

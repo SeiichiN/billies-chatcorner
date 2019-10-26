@@ -21,28 +21,52 @@ billiesChatcorner.fake = (function () {
     return 'id_' + String( fakeIdSerial++ );
   };
 
-  peopleList = [
-    {
-      name : 'Billie',
-      _id : 'id_01',
-      css_map : { top: 20, left: 20, 'background-color': 'rgb(128, 128, 128)' }
-    },
-    {
-      name : 'Mike',
-      _id : 'id_02',
-      css_map : { top: 60, left: 20, 'background-color': 'rgb(128, 255, 128)' }
-    },
-    {
-      name : 'Pebbles',
-      _id : 'id_03',
-      css_map : { top: 100, left: 20, 'background-color': 'rgb(128, 192, 192)' }
-    },
-    {
-      name : 'Wilma',
-      _id : 'id_04',
-      css_map : { top: 140, left: 20, 'background-color': 'rgb(192, 128, 128)' }
-    }
-  ];
+  console.log(billiesChatcorner_page_mode.mode);
+
+  switch (billiesChatcorner_page_mode.mode) {
+    case 'admin-page':
+      peopleList = [
+        {
+          name : 'Billie',
+          _id : 'id_01',
+          css_map : { top: 20, left: 20, 'background-color': 'rgb(128, 128, 128)' }
+        },
+        {
+          name : 'Mike',
+          _id : 'id_02',
+          css_map : { top: 60, left: 20, 'background-color': 'rgb(128, 255, 128)' }
+        },
+        {
+          name : 'Pebbles',
+          _id : 'id_03',
+          css_map : { top: 100, left: 20, 'background-color': 'rgb(128, 192, 192)' }
+        },
+        {
+          name : 'Wilma',
+          _id : 'id_04',
+          css_map : { top: 140, left: 20, 'background-color': 'rgb(192, 128, 128)' }
+        }
+      ];
+      break;
+    case 'client-page':
+      peopleList = [
+        {
+          name : 'Billie',
+          _id : 'id_01',
+          css_map : { top: 20, left: 20, 'background-color': 'rgb(128, 128, 128)' }
+        },
+      ];
+      break;
+    default:
+      peopleList = [
+        {
+          name : 'Taro',
+          _id : 'id_01',
+          css_map : { top: 20, left: 20, 'background-color': 'rgb(128, 128, 128)' }
+        },
+      ];
+  }
+  
 
   //==[ mockSio ]===========================================================
   mockSio = (function () {
@@ -61,7 +85,7 @@ billiesChatcorner.fake = (function () {
     // フロントへの送信
     //
     emit_sio = function ( msg_type, data ) {
-      var person_map;
+      var person_map, i;
 
       // peopleList に ログインユーザーを加える
       if ( msg_type === 'adduser' && callback_map.userupdate ) {
@@ -101,6 +125,17 @@ billiesChatcorner.fake = (function () {
         }
 
         send_listchange();
+      }
+
+      if ( msg_type === 'updateavator' && callback_map.listchange ) {
+        for ( i = 0; i < peopleList.length; i++) {
+          if ( peopleList[ i ]._id === data.person_id ) {
+            peopleList[ i ].css_map = data.css_map
+            break;
+          }
+        }
+
+        callback_map.listchange( [ peopleList ] );
       }
     };
 
