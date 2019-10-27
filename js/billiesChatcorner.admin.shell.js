@@ -100,6 +100,7 @@ jQuery( function ($) {
     //
     onLogout = function ( event, logout_user ) {
       jqueryMap.$acct.text( 'ログイン' );
+      billiesChatcorner.admin.chat.onChatLogout();
     };
 
     

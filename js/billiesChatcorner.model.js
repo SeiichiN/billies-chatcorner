@@ -67,7 +67,6 @@ jQuery( function ($) {
       stateMap.people_db = TAFFY();
       stateMap.people_cid_map = {};
       if (user) {
-        console.log( user );
         stateMap.people_db.insert( user );
         stateMap.people_cid_map[ user.cid ] = user;
       }
@@ -155,7 +154,7 @@ jQuery( function ($) {
     // get_cid_map() -- { top:--, left:--, background-color:-- }
     //
     people = (function () {
-      var get_by_cid, get_db, get_user, login, logout;
+      var get_by_cid, get_db, get_user, login, logout, is_removed;
 
       get_by_cid = function ( cid ) {
         return stateMap.people_cid_map[ cid ];
@@ -272,12 +271,16 @@ jQuery( function ($) {
 
         clearPeopleDb();
 
+        console.log('stateMap.user: ' + stateMap.user.name);
+        
         PERSON:
                           for (i = 0; i < people_list.length; i++) {
                             person_map = people_list[ i ];
 
                             if (! person_map.name) { continue PERSON; }
 
+                            console.log(person_map.name);
+                            
                             // ユーザがリストにあれば、css_map を更新して残りをとばす
                             if ( stateMap.user &&
                                  stateMap.user.id === person_map._id ) {
@@ -292,7 +295,8 @@ jQuery( function ($) {
                               name    : person_map.name
                             };
 
-                            person = makePerson( make_person_map );
+                            // この記述は、いつ紛れ込んだんだろう？
+                            // person = makePerson( make_person_map );
 
                             //                                   V-- add
                             if ( chatee && chatee.id === make_person_map.id ) {

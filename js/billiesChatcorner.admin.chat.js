@@ -61,7 +61,7 @@ jQuery( function ($) {
         setJqueryMap, configModule, setPxSizes, initModule,
         scrollChat, writeChat, writeAlert, clearChat,
         onSubmitMsg, onListchange, onSetchatee, onUpdatechat,
-        onTapList
+        onTapList, onChatLogout
     ;
 
 
@@ -149,7 +149,7 @@ jQuery( function ($) {
     //--[ clearChat ]---------------------------------------------------
     //
     clearChat = function () {
-      jqueryMap.$msg_log.empty();
+      jqueryMap.$msg_log_a.empty();
     };
 
     //--[ onSubmitMsg ]------------------------------------------------
@@ -219,8 +219,6 @@ jQuery( function ($) {
     //
     onTapList = function ( event) {
       var $tapped = jQuery( event.elem_target ), chatee_id;
-
-      console.log('tapped');
     };
 
     //--[ configModule ]-------------------------------------------------
@@ -243,7 +241,14 @@ jQuery( function ($) {
     //
 //    onLogin = function ( event, login_user ) {
 //      console.log( login_user.name + ' さんがログインしました。' );
-//    };
+    //    };
+
+    //--[ onChatLogout ]-----------------------------------------------------
+    //
+    onChatLogout = function (event, logout_user) {
+      console.log(logout_user.name + ' さんがログアウトしました。');
+      clearChat();
+    };
 
     //--[ initModule ]---------------------------------------------------
     // @param:
@@ -267,7 +272,7 @@ jQuery( function ($) {
       jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-setchatee' , onSetchatee );
       jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-updatechat', onUpdatechat );
 //      jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-login', onLogin );
-      jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-logout', onLogout );
+//      jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-logout', onChatLogout );
 
       jqueryMap.$list_box_a.on( 'utap', onTapList );
       jqueryMap.$send_a.bind( 'utap', onSubmitMsg );
@@ -281,7 +286,8 @@ jQuery( function ($) {
     //--[ public ]-----------------------------------------------
     return {
       configModule : configModule,
-      initModule : initModule
+      initModule : initModule,
+      onChatLogout : onChatLogout
     };
   }());
 });
