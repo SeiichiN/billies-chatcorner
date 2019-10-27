@@ -53,7 +53,7 @@ billiesChatcorner.util_b = ( function () {
   //
   encodeHtml = function ( input_arg_str, exclude_amp ) {
     // String()を使うことで、replaceメソッドが使えるようになる。
-    var input_str = String( inpug_arg_str ),
+    var input_str = String( input_arg_str ),
         regex, lookup_map
     ;
 

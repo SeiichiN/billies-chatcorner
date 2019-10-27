@@ -54,47 +54,82 @@
   height: 96%;
 }
 
-.billiesChatcorner-admin-chat-msgs {
+.billiesChatcorner-admin-chat-list {
+  position: absolute;
+  width: 10em;
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+
+
+.billiesChatcorner-admin-chat-msg {
+  position: absolute;
+  top: 0;
+  left: 10em;
+  bottom: 0;
+  right: 0;
+}
+
+.billiesChatcorner-admin-chat-msg-log,
+.billiesChatcorner-admin-chat-list-box {
   position: absolute;
   top: 1em;
-  left: 1em;
+  overflow-x: hidden;
+}
+
+.billiesChatcorner-admin-chat-msg-log {
+  left: 0;
   right: 1em;
   bottom: 4em;
   padding: 0.5em;
-  border: solid thin #888;
-  overflow-x: hidden;
+  border: solid 1px #888;
   overflow-y: scroll;
 }
 
-.billiesChatcorner-admin-chat-box {
+.billiesChatcorner-admin-chat-msg-log-msg {
+  background-color: #eee;
+}
+
+.billiesChatcorner-admin-chat-msg-log-me {
+  font-weight: bold;
+  color: #484;
+  text-align: right;
+}
+
+.billiesChatcorner-admin-chat-msg-in {
   position: absolute;
   height: 2em;
-  left: 1em;
+  left: 0;
   right: 1em;
   bottom: 1em;
   border: solid thin #888;
   background: #888;
 }
 
-.billiesChatcorner-admin-chat-box input[type="text"] {
-  float: left;
-  width: 90%;
+.billiesChatcorner-admin-chat-msg-in input[type="text"] {
+  position: absolute;
+  width: 75%;
   height: 100%;
-  padding: 0.5em;
+  line-height: 100%;
+  padding: 0 0.5em;
   border: 0;
   background: #ddd;
   color: #404040;
   box-sizing: border-box;
 }
 
-.billiesChatcorner-admin-chat-box input[type="text"]:focus {
-  background: #fff;
+.billiesChatcorner-admin-chat-msg-in input[type="text"]:focus {
+  background: #ff8;
+  color: #222;
 }
 
-.billiesChatcorner-admin-chat-box div {
-  float: right;
-  width: 9%;
-  height: 2em;
+.billiesChatcorner-admin-chat-msg-send {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 25%;
+  height: 100%;
   line-height: 1.9em;
   text-align: center;
   color: #fff;
@@ -102,7 +137,7 @@
   cursor: pointer;
 }
 
-.billliesChatcorner-admin-chat-box div:hover {
+.billliesChatcorner-admin-chat-msg-send:hover {
   background-color: #444;
   color: #ff0;
 }
@@ -110,5 +145,4 @@
 .billiesChatcorner-admin-chat-head:hover  {
   background: #aaa;
 }
-
 

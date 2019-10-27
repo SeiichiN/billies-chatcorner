@@ -248,7 +248,6 @@ jQuery( function ($) {
     //--[ onTapAcct ]-----------------------------------------------
     //
     onTapAcct = function (event) {
-      console.log('onTapAcct in');
       var acct_text, user_name,
           user = billiesChatcorner.model.people.get_user();
 

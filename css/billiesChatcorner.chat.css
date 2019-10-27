@@ -43,9 +43,13 @@
 .billiesChatcorner-chat-acct {
   right: 2em;
   left: 10.5em;
-  background-color: #888;
-  color: #ce5a5a;
+  background-color: #aaa;
+  color: #5aa518;
+}
+
+.billiesChatcorner-chat-acct:hover {
   text-shadow: 0 1px 1px #cff293;
+  background-color: #a8a8a8;
 }
 
 .billiesChatcorner-chat-closer {
