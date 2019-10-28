@@ -404,7 +404,7 @@ billiesChatcorner.model = (function () {
           dest_id   : chatee.id,
           dest_name : chatee.name,
           sender_id : stateMap.user.id,
-          mag_text  : msg_text
+          msg_text  : msg_text
         };
         
         _publish_updatechat( [ msg_map ] );

@@ -61,7 +61,7 @@ jQuery( function ($) {
         setJqueryMap, configModule, setPxSizes, initModule,
         scrollChat, writeChat, writeAlert, clearChat,
         onSubmitMsg, onListchange, onSetchatee, onUpdatechat,
-        onTapList, onChatLogout
+        onTapList, onChatLogin, onChatLogout
     ;
 
 
@@ -136,6 +136,7 @@ jQuery( function ($) {
     };
 
     //--[ writeAlert ]--------------------------------------------------
+    // 発言以外の出力を表示する
     //
     writeAlert = function ( alert_text ) {
       jqueryMap.$msg_log_a.append(
@@ -147,6 +148,7 @@ jQuery( function ($) {
     };
 
     //--[ clearChat ]---------------------------------------------------
+    // ログ領域を初期化する
     //
     clearChat = function () {
       jqueryMap.$msg_log_a.empty();
@@ -156,7 +158,7 @@ jQuery( function ($) {
     //
     onSubmitMsg = function ( event ) {
       var msg_text = jqueryMap.$input_a.val();
-      
+
       if ( msg_text.trim() === '' ) { return false; }
 
       configMap.chat_model.send_msg( msg_text );
@@ -186,14 +188,14 @@ jQuery( function ($) {
         }
 
         list_html = list_html
-                  + '<div id="XXX" class="billiesChatcorner-chat-list-name'
+                  + '<div class="billiesChatcorner-admin-chat-list-name'
                   + select_class + '" data-id="' + person.id + '">'
                   + billiesChatcorner.util_b.encodeHtml( person.name )
                   + '</div>';
 
         if ( ! list_html ) {
           list_html = String()
-                    + '<div class="billiesChatcorner-chat-list-note">'
+                    + '<div class="billiesChatcorner-admin-chat-list-note">'
                     + 'To chat alone is the fate of all great souls...<br><br>'
                     + 'No one is online'
                     + '</div>';
@@ -203,7 +205,7 @@ jQuery( function ($) {
       });
     };
 
-    //--[ setChatee ]-----------------------------------------------------
+    //--[ onSetChatee ]-----------------------------------------------------
     //
     onSetchatee = function ( event, arg_map ) {
       var new_chatee = arg_map.new_chatee,
@@ -222,7 +224,7 @@ jQuery( function ($) {
       }
 
       jqueryMap.$list_box_a
-               .find( '.billiesChatcorner-chat-list-name' )
+               .find( '.billiesChatcorner-admin-chat-list-name' )
                .removeClass( 'billiesChatcorner-x-select' )
                .end()
                .find( '[data-id=' + arg_map.new_chatee.id + ']' )
@@ -265,6 +267,16 @@ jQuery( function ($) {
     //
     onTapList = function ( event) {
       var $tapped = jQuery( event.elem_target ), chatee_id;
+
+      if ( ! $tapped.hasClass( 'billiesChatcorner-admin-chat-list-name' )) {
+        return false;
+      }
+
+      chatee_id = $tapped.attr( 'data-id' );
+      if ( ! chatee_id ) { return false; }
+
+      configMap.chat_model.set_chatee( chatee_id );
+      return false;
     };
 
     //--[ configModule ]-------------------------------------------------
@@ -283,9 +295,9 @@ jQuery( function ($) {
       return true;
     };
 
-    //--[ onLogin ]------------------------------------------------------
+    //--[ onChatLogin ]------------------------------------------------------
     //
-//    onLogin = function ( event, login_user ) {
+//    onChatLogin = function ( event, login_user ) {
 //      console.log( login_user.name + ' さんがログインしました。' );
     //    };
 
@@ -318,7 +330,7 @@ jQuery( function ($) {
       jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-listchange', onListchange );
       jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-setchatee' , onSetchatee );
       jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-updatechat', onUpdatechat );
-//      jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-login', onLogin );
+//      jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-chatLogin', onChatLogin );
       jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-chatLogout', onChatLogout );
 
       jqueryMap.$list_box_a.on( 'utap', onTapList );

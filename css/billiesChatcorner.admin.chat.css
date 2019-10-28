@@ -97,6 +97,45 @@
   text-align: right;
 }
 
+.billiesChatcorner-admin-chat-msg-log-alert {
+  font-style: italic;
+  background: #a88;
+  color: #fff;
+}
+
+.billiesChatcorner-admin-chat-list-box {
+  left: 1em;
+  right: 1em;
+  bottom: 1em;
+  overflow-y: auto;
+  border-width: thin 0 thin thin;
+  border-style: solid;
+  border-color: #888;
+  background-color: #888;
+  color: #ddd;
+  border-radius: 0.5em 0 0 0;
+}
+
+.billiesChatcorner-admin-chat-list-name,
+.billiesChatcorner-admin-chat-list-note {
+  width: 100%;
+  padding: 0.1em 0.5em;
+}
+
+.billiesChatcorner-admin-chat-list-name {
+  cursor: pointer;
+}
+
+.billiesChatcorner-admin-chat-list-name:hover {
+  background-color: #aaa;
+  color: #888;
+}
+
+.billiesChatcorner-admin-chat-list-name.billiesChatcorner-x-select {
+  background-color: #fff;
+  color: #444;
+}
+
 .billiesChatcorner-admin-chat-msg-in {
   position: absolute;
   height: 2em;
