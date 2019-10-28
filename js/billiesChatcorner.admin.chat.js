@@ -245,9 +245,10 @@ jQuery( function ($) {
 
     //--[ onChatLogout ]-----------------------------------------------------
     //
-    onChatLogout = function (event, logout_user) {
-      console.log(logout_user.name + ' さんがログアウトしました。');
+    onChatLogout = function (event) {
+      // console.log(logout_user.name + ' さんがログアウトしました。');
       clearChat();
+	  console.log('ClearChat!');
     };
 
     //--[ initModule ]---------------------------------------------------
@@ -272,7 +273,7 @@ jQuery( function ($) {
       jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-setchatee' , onSetchatee );
       jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-updatechat', onUpdatechat );
 //      jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-login', onLogin );
-//      jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-logout', onChatLogout );
+      jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-chatLogout', onChatLogout );
 
       jqueryMap.$list_box_a.on( 'utap', onTapList );
       jqueryMap.$send_a.bind( 'utap', onSubmitMsg );

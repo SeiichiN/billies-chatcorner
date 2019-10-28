@@ -1,202 +1,206 @@
 /*
- * billiesChatcorner.model.js
- * billiesChatcorner のモデルモジュール
- */
+* billiesChatcorner.model.js
+* billiesChatcorner のモデルモジュール
+*/
 
 /*jslint          browser : true, continue : true,
-   devel   : true, indent  : 2,    maxerr   : 50,
-   newcap  : true, nomen   : true, plusplus : true,
-   regexp  : true, sloppy  : true, vars     : true,
-   white   : true
- */
-/*global $, jQuery, billiesChatcorner, TAFFY */
+ devel   : true, indent  : 2,    maxerr   : 50,
+ newcap  : true, nomen   : true, plusplus : true,
+ regexp  : true, sloppy  : true, vars     : true,
+ white   : true
+*/
+/*global $, jQuery, billiesChatcorner, TAFFY, billiesChatcorner_page_mode */
 
 jQuery( function ($) {
-  billiesChatcorner.model = (function () {
-    'use strict';
-    
-    //--[ プロパティ：設定値 ]---------------------------------------------
-    // Personオブジェクト
-    //   cid -- クライアントid。文字列。常に定義され、クライアントデータが
-    //          バックエンドと同期していない場合のみid属性と異なる。
-    //    id -- 一意のid。オブジェクトがバックエンドと同期していない場合、
-    //          未定義になることがある。
-    //
-    var configMap = { anon_id : 'a0' },
-        stateMap = {
-          anon_user      : null,
-          cid_serial     : 0,
-          people_cid_map : {},
-          people_db      : TAFFY(),
-          user           : null,
-          is_connected   : false
-        },
+billiesChatcorner.model = (function () {
+  'use strict';
+  
+  //--[ プロパティ：設定値 ]---------------------------------------------
+  // Personオブジェクト
+  //   cid -- クライアントid。文字列。常に定義され、クライアントデータが
+  //          バックエンドと同期していない場合のみid属性と異なる。
+  //    id -- 一意のid。オブジェクトがバックエンドと同期していない場合、
+  //          未定義になることがある。
+  //
+  var configMap = { anon_id : 'a0' },
+	  stateMap = {
+		anon_user      : null,
+		cid_serial     : 0,
+		people_cid_map : {},
+		people_db      : TAFFY(),
+		user           : null,
+		is_connected   : false
+	  },
 
-        isFakeData = true,
+	  isFakeData = true,
 
-        personProto, makePerson, people, chat, initModule,
-        makeCid, clearPeopleDb, completeLogin, removePerson
-    ;
+	  personProto, makePerson, people, chat, initModule,
+	  makeCid, clearPeopleDb, completeLogin, removePerson
+  ;
 
-    //--[ personProto ]---------------------------------------
-    //
-    personProto = {
-      // オブジェクトが現在のuserである場合、true
-      get_is_user : function () {
-        return this.cid === stateMap.user.cid;
-      },
-      // オブジェクトが匿名userである場合、true
-      get_is_anon : function () {
-        return this.cid === stateMap.anon_user.cid;
-      }
-    };
+  //--[ personProto ]---------------------------------------
+  //
+  personProto = {
+	// オブジェクトが現在のuserである場合、true
+	get_is_user : function () {
+	  return this.cid === stateMap.user.cid;
+	},
+	// オブジェクトが匿名userである場合、true
+	get_is_anon : function () {
+	  return this.cid === stateMap.anon_user.cid;
+	}
+  };
 
-    //--[ makeCid ]--------------------------------------------
-    //
-    makeCid = function () {
-      return 'c' + String( stateMap.cid_serial++ );
-    };
+  //--[ makeCid ]--------------------------------------------
+  //
+  makeCid = function () {
+	return 'c' + String( stateMap.cid_serial++ );
+  };
 
-    //--[ clearPeopleDb ]--------------------------------------
-    // stateMap.peope_db を初期化する
-    // stateMap.people_cid_map を初期化する
-    // 現在のユーザがあれば、そのユーザのみデータベースに加える。
-    // 
-    clearPeopleDb = function () {
-      var user = stateMap.user;
-      stateMap.people_db = TAFFY();
-      stateMap.people_cid_map = {};
-      if (user) {
-        stateMap.people_db.insert( user );
-        stateMap.people_cid_map[ user.cid ] = user;
-      }
-    };
+  //--[ clearPeopleDb ]--------------------------------------
+  // stateMap.peope_db を初期化する
+  // stateMap.people_cid_map を初期化する
+  // 現在のユーザがあれば、そのユーザのみデータベースに加える。
+  // 
+  clearPeopleDb = function () {
+	var user = stateMap.user;
+	stateMap.people_db = TAFFY();
+	stateMap.people_cid_map = {};
+	if (user) {
+	  stateMap.people_db.insert( user );
+	  stateMap.people_cid_map[ user.cid ] = user;
+	}
+  };
 
-    //--[ completeLogin ]-----------------------------------
-    // ログイン処理
-    //   ログインしたら、stateMap.userを確定する。
-    // @param:
-    //   user_list -- Array
-    //                [{ _id:--, css_map:{top:--,left:--,background-color:--} }]
-    //
-    completeLogin = function ( user_list ) {
-      var user_map = user_list[0];
-      
-      delete stateMap.people_cid_map[ user_map.cid ];
-      stateMap.user.cid = user_map._id;
-      stateMap.user.id = user_map._id;
-      stateMap.user.css_map = user_map.css_map;
-      stateMap.people_cid_map[ user_map._id ] = stateMap.user;
+  //--[ completeLogin ]-----------------------------------
+  // ログイン処理
+  //   ログインしたら、stateMap.userを確定する。
+  // @param:
+  //   user_list -- Array
+  //                [{ _id:--, css_map:{top:--,left:--,background-color:--} }]
+  //
+  completeLogin = function ( user_list ) {
+	var user_map = user_list[0];
+	
+	delete stateMap.people_cid_map[ user_map.cid ];
+	stateMap.user.cid = user_map._id;
+	stateMap.user.id = user_map._id;
+	stateMap.user.css_map = user_map.css_map;
+	stateMap.people_cid_map[ user_map._id ] = stateMap.user;
 
-      chat.join();                                              // <--- add
+	chat.join();                                              // <--- add
 
-      // チャットに参加するイベント発火
-      jQuery.gevent.publish( 'billiesChatcorner-login', [ stateMap.user ] );
-    };
+	// チャットに参加するイベント発火
+	jQuery.gevent.publish( 'billiesChatcorner-login', [ stateMap.user ] );
+  };
 
-    //--[ makePerson ]-----------------------------------
-    // @param:
-    //   person_map -- { cid : ------ ,
-    //                   id  : ------,
-    //                   name : ------,
-    //                   css_map : { top : ---, left : ---,
-    //                              background-color : --- } }
-    //
-    makePerson = function ( person_map ) {
-      var person,
-          cid = person_map.cid,
-          css_map = person_map.css_map,
-          id = person_map.id,
-          name = person_map.name;
+  //--[ makePerson ]-----------------------------------
+  // @param:
+  //   person_map -- { cid : ------ ,
+  //                   id  : ------,
+  //                   name : ------,
+  //                   css_map : { top : ---, left : ---,
+  //                              background-color : --- } }
+  //
+  makePerson = function ( person_map ) {
+	var person,
+		cid = person_map.cid,
+		css_map = person_map.css_map,
+		id = person_map.id,
+		name = person_map.name;
 
-      if ( cid === undefined || ! name ) {
-        throw 'client id and name required';
-      }
+	if ( cid === undefined || ! name ) {
+	  throw 'client id and name required';
+	}
 
-      person = Object.create( personProto );
+	person = Object.create( personProto );
 
-      person.cid = cid;
-      person.name = name;
-      person.css_map = css_map;
+	person.cid = cid;
+	person.name = name;
+	person.css_map = css_map;
 
-      if ( id ) { person.id = id; }
+	if ( id ) { person.id = id; }
 
-      stateMap.people_cid_map[ cid ] = person;
+	stateMap.people_cid_map[ cid ] = person;
 
-      stateMap.people_db.insert( person );
-      
-      return person;
-    };
+	stateMap.people_db.insert( person );
+	
+	return person;
+  };
 
-    //--[ removePerson ]------------------------------------
-    // @param:
-    //   person -- このpersonを削除する。
-    //             つまり、person.cidをもつデータを削除する。
-    //
-    removePerson = function (person) {
-      if ( ! person ) { return false; }
+  //--[ removePerson ]------------------------------------
+  // @param:
+  //   person -- このpersonを削除する。
+  //             つまり、person.cidをもつデータを削除する。
+  //
+  removePerson = function (person) {
+	if ( ! person ) { return false; }
 
-      // 'a0'は削除できない
-      if ( person.id === configMap.anon_id ) {
-        return false;
-      }
+	// 'a0'は削除できない
+	if ( person.id === configMap.anon_id ) {
+	  return false;
+	}
 
-      // cidが person.cid であるデータを削除
-      stateMap.people_db({ cid : person.cid }).remove();
-      if ( person.cid ) {
-        delete stateMap.people_cid_map[ person.cid ];
-      }
-      return true;
-    };
+	// cidが person.cid であるデータを削除
+	stateMap.people_db({ cid : person.cid }).remove();
+	if ( person.cid ) {
+	  delete stateMap.people_cid_map[ person.cid ];
+	}
+	return true;
+  };
 
-    //--[ people ]---------------------------------------------
-    // get_db() -- TAFFY()
-    // get_cid_map() -- { top:--, left:--, background-color:-- }
-    //
-    people = (function () {
-      var get_by_cid, get_db, get_user, login, logout, is_removed;
+  //--[ people ]---------------------------------------------
+  // get_db() -- TAFFY()
+  // get_cid_map() -- { top:--, left:--, background-color:-- }
+  //
+  people = (function () {
+	var get_by_cid, get_db, get_user, login, logout, is_removed;
 
-      get_by_cid = function ( cid ) {
-        return stateMap.people_cid_map[ cid ];
-      };
-      
-      get_db = function () { return stateMap.people_db; };
+	get_by_cid = function ( cid ) {
+	  return stateMap.people_cid_map[ cid ];
+	};
+	
+	get_db = function () { return stateMap.people_db; };
 
-      get_user = function () { return stateMap.user; };
+	get_user = function () { return stateMap.user; };
 
-      login = function ( name ) {
-        var sio = isFakeData
-                ? billiesChatcorner.fake.mockSio
-                : billiesChatcorner.data.getSio();
+	login = function ( name ) {
+	  var sio = isFakeData
+			  ? billiesChatcorner.fake.mockSio
+			  : billiesChatcorner.data.getSio();
 
-        stateMap.user = makePerson({
-          cid     : makeCid(),
-          css_map : { top: 25, left: 25, 'background-color': '#8f8' },
-          name    : name
-        });
+	  stateMap.user = makePerson({
+		cid     : makeCid(),
+		css_map : { top: 25, left: 25, 'background-color': '#8f8' },
+		name    : name
+	  });
 
-        // 'userupdate'に completeLogin をひもづける 
-        sio.on( 'userupdate', completeLogin );
+	  // 'userupdate'に completeLogin をひもづける 
+	  sio.on( 'userupdate', completeLogin );
 
-        // 'adduser' を発行
-        sio.emit( 'adduser', {
-          cid     : stateMap.user.cid,
-          css_map : stateMap.user.css_map,
-          name    : stateMap.user.name
-        });
-      };
+	  // 'adduser' を発行
+	  sio.emit( 'adduser', {
+		cid     : stateMap.user.cid,
+		css_map : stateMap.user.css_map,
+		name    : stateMap.user.name
+	  });
+	};
 
-      logout = function () {
-        var user = stateMap.user;
+	logout = function () {
+	  var user = stateMap.user;
 
-        chat._leave();                                  // <--- add
-        // @param  -- user -- [{  }]
-        // @return -- true
-        is_removed = removePerson( user );
-        stateMap.user = stateMap.anon_user;
-        clearPeopleDb();
+	  chat._leave();                                  // <--- add
+	  // @param  -- user -- [{  }]
+	  // @return -- true
+	  is_removed = removePerson( user );
+	  stateMap.user = stateMap.anon_user;
+	  clearPeopleDb();
 
-        jQuery.gevent.publish( 'billiesChatcorner-logout', [ user ] );
+	  jQuery.gevent.publish( 'billiesChatcorner-logout', [ user ] );
+
+	  if ( billiesChatcorner_page_mode.mode === 'admin-page' ) {
+		  jQuery.gevent.publish( 'billiesChatcorner-chatLogout' );
+		}
       };
 
       return {
