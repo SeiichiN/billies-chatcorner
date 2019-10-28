@@ -199,7 +199,7 @@ billiesChatcorner.model = (function () {
 	  jQuery.gevent.publish( 'billiesChatcorner-logout', [ user ] );
 
 	  if ( billiesChatcorner_page_mode.mode === 'admin-page' ) {
-		  jQuery.gevent.publish( 'billiesChatcorner-chatLogout' );
+		  jQuery.gevent.publish( 'billiesChatcorner-chatLogout', [ user ] );
 		}
       };
 

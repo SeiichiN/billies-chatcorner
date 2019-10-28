@@ -138,9 +138,9 @@ jQuery( function ($) {
     //--[ writeAlert ]--------------------------------------------------
     //
     writeAlert = function ( alert_text ) {
-      jquetyMap.$msg_log_a.append(
+      jqueryMap.$msg_log_a.append(
         '<div class="billiesChatcorner-admin-chat-msg-log-alert">'
-        + billiesChatcorner.util_b.endoceHtml( alert_text )
+        + billiesChatcorner.util_b.encodeHtml( alert_text )
         + '</div>'
       );
       scrollChat();
@@ -205,14 +205,60 @@ jQuery( function ($) {
 
     //--[ setChatee ]-----------------------------------------------------
     //
-    onSetchatee = function () {
+    onSetchatee = function ( event, arg_map ) {
+      var new_chatee = arg_map.new_chatee,
+          old_chatee = arg_map.old_chatee;
 
+      jqueryMap.$input_a.focus();
+      if ( ! new_chatee ) {
+        if ( old_chatee ) {
+          writeAlert( old_chatee.name + ' has left the chat' );
+        }
+        else {
+          writeAlert( 'Your friend has left the chat' );
+        }
+        jqueryMap.$title_a.text( 'CHAT' );
+        return false;
+      }
+
+      jqueryMap.$list_box_a
+               .find( '.billiesChatcorner-chat-list-name' )
+               .removeClass( 'billiesChatcorner-x-select' )
+               .end()
+               .find( '[data-id=' + arg_map.new_chatee.id + ']' )
+               .addClass( 'billiesChatcorner-x-select' );
+
+      writeAlert( 'Now chatting with ' + arg_map.new_chatee.name );
+      jqueryMap.$title_a.text( 'Chat with ' + arg_map.new_chatee.name );
+      return true;
     };
 
     //--[ onUpdatachat ]-------------------------------------------------
     //
-    onUpdatechat = function () {
+    onUpdatechat = function ( event, msg_map ) {
+      var is_user,
+          sender_id = msg_map.sender_id,
+          msg_text = msg_map.msg_text,
+          chatee = configMap.chat_model.get_chatee() || {},
+          sender = configMap.people_model.get_by_cid( sender_id );
+      
+      if ( ! sender ) {
+        writeAlert( msg_text );
+        return false;
+      }
 
+      is_user = sender.get_is_user();
+
+      if ( ! ( is_user || sender_id === chatee.id )) {
+        configMap.chat_model.set_chatee( sender_id );
+      }
+
+      writeChat( sender.name, msg_text, is_user );
+
+      if ( is_user ) {
+        jqueryMap.$input_a.val('');
+        jqueryMap.$input_a.focus();
+      }
     };
 
     //--[ onTapList ]---------------------------------------------------
@@ -245,8 +291,8 @@ jQuery( function ($) {
 
     //--[ onChatLogout ]-----------------------------------------------------
     //
-    onChatLogout = function (event) {
-      // console.log(logout_user.name + ' さんがログアウトしました。');
+    onChatLogout = function (event, logout_user) {
+      console.log(logout_user.name + ' さんがログアウトしました。');
       clearChat();
 	  console.log('ClearChat!');
     };
