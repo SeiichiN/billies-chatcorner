@@ -4,7 +4,7 @@
  */
 
 /** リセット開始 */
-* {
+#billiesChatcorner-admin {
 	margin: 0;
 	padding: 0;
 	-webkit-box-sizing: border-box;
@@ -12,16 +12,24 @@
 	box-sizing: border-box;
 }
 
-h1, h2, h3, h4, h5, h6, p {
+#billiesChatcorner-admin h1,
+#billiesChatcorner-admin h2,
+#billiesChatcorner-admin h3,
+#billiesChatcorner-admin h4,
+#billiesChatcorner-admin h5,
+#billiesChatcorner-admin h6,
+#billiesChatcorner-admin p {
 	margin-bottom: 6pt;
 }
 
-ol, ul, dl {
+#billiesChatcorner-admin ol,
+#billiesChatcorner-admin ul,
+#billiesChatcorner-admin dl {
 	list-style-position: inside;
 }
 
 /* ユーザーが文章を範囲選択できないようにする */
-* {
+#billiesChatcorner-admin {
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: -moz-none;
@@ -39,8 +47,8 @@ ol, ul, dl {
 }
 
 /* ユーザーが文章を範囲選択できるようにする */
-input,
-textarea,
+#billiesChatcorner-admin input,
+#billiesChatcorner-admin  textarea,
 .billiesChatcorner-x-user-select {
   -webkit-user-select: text;
   -khtml-user-select: text;
@@ -53,7 +61,6 @@ textarea,
 
 /**** 標準セレクタ開始 ****************/
 body {
-	font: 14px 'メイリオ', 'ヒラギノ角ゴ', 'Trebuchet MS', Verdana, Helvetica, Arial, sans-serif;
 }
 
 #billiesChatcorner-admin-wrap {
@@ -73,4 +80,5 @@ body {
 
   background-color: #fff;
   border-radius: 0 8px 0 8px;
+  font: 14px 'メイリオ', 'ヒラギノ角ゴ', 'Trebuchet MS', Verdana, Helvetica, Arial, sans-serif;
 }
