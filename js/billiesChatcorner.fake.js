@@ -97,6 +97,7 @@ billiesChatcorner.fake = (function () {
           };
           peopleList.push( person_map );
           callback_map.userupdate( [person_map] );
+          console.log('emit_sio in');
         }, 3000);
       }
 
