@@ -25,13 +25,18 @@ jQuery( function ($) {
                   + '<div class="billiesChatcorner-chat-acct"></div>'
                   + '<div class="billiesChatcorner-chat-closer">X</div>'
                   + '<div class="billiesChatcorner-chat-sizer">'
-                    + '<div class="billiesChatcorner-chat-msgs"></div>'
-                    + '<div class="billiesChatcorner-chat-box">'
-                      + '<input type="text">'
-                      + '<div class="submit">発言</div>'
-                    + '</div>'
-                  + '</div>'
-                + '</div>',
+                    + '<div class="billiesChatcorner-chat-msg">'
+                      + '<div class="billiesChatcorner-chat-msg-log"></div>'
+                      + '<div class="billiesChatcorner-chat-msg-in">'
+                        + '<form class="billiesChatcorner-chat-msg-form">'
+                          + '<input type="text">'
+                          + '<input type="submit" style="display:none">'
+                          + '<div class="billiesChatcorner-chat-msg-send">発言</div>'
+                        + '</form>'
+                      + '</div>'  // .billiesChatcorner-chat-msg-in
+                    + '</div>'  // .billiesChatcorner-chat-msg
+                  + '</div>'   // .billiesChatcorner-chat-sizer
+                + '</div>',  // .billiesChatcorner-chat
       settable_map : {
         slider_open_time : true,
         slider_close_time : true,
@@ -95,15 +100,19 @@ jQuery( function ($) {
           $slider = $append_target.find( '.billiesChatcorner-chat' );
       
       jqueryMap = {
-        $slider : $slider,
-        $head : $slider.find( '.billiesChatcorner-chat-head' ),
-        $toggle : $slider.find( '.billiesChatcorner-chat-head-toggle' ),
-        $title  : $slider.find( '.billiesChatcorner-chat-head-title' ),
-        $sizer  : $slider.find( '.billiesChatcorner-chat-sizer' ),
-        $msgs   : $slider.find( '.billiesChatcorner-chat-msgs' ),
-        $box    : $slider.find( '.billiesChatcorner-chat-box' ),
-        $input  : $slider.find( '.billiesChatcorner-chat-box input[type="text"]' ),
-        $acct   : $slider.find( '.billiesChatcorner-chat-acct' )
+        $slider  : $slider,
+        $head    : $slider.find( '.billiesChatcorner-chat-head' ),
+        $toggle  : $slider.find( '.billiesChatcorner-chat-head-toggle' ),
+        $title   : $slider.find( '.billiesChatcorner-chat-head-title' ),
+        $sizer   : $slider.find( '.billiesChatcorner-chat-sizer' ),
+        $msg     : $slider.find( '.billiesChatcorner-chat-msg' ),
+        $msg_log : $slider.find( '.billiesChatcorner-chat-msg-log' ),
+        $msg_in  : $slider.find( '.billiesChatcorner-chat-msg-in' ),
+        $input   : $slider.find( '.billiesChatcorner-chat-msg-in input[type="text"]' ),
+        $send    : $slider.find( '.billiesChatcorner-chat-msg-send' ),
+        $form    : $slider.find( '.billiesChatcorner-chat-msg-form' ),
+        $acct    : $slider.find( '.billiesChatcorner-chat-acct' ),
+        $window  : jQuery(window)
       };
     };
 

@@ -367,6 +367,7 @@ billiesChatcorner.model = (function () {
       get_chatee = function () { return chatee; };
       
       //--[ join_chat ]-------------------------------------
+      //
       join_chat = function () {
         var sio;
 
