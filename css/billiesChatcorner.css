@@ -19,10 +19,40 @@ ol, ul, dl {
 	list-style-position: inside;
 }
 
+/* ユーザーが文章を範囲選択できないようにする */
+* {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: -moz-none;
+
+  -o-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+
+  -webkit-user-drag: none;
+  -moz-user-drag: none;
+  user-drag: none;
+
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+/* ユーザーが文章を範囲選択できるようにする */
+input,
+textarea,
+.billiesChatcorner-x-user-select {
+  -webkit-user-select: text;
+  -khtml-user-select: text;
+  -moz-user-select: -moz-text;
+
+  -o-user-select: text;
+  -ms-user-select: text;
+  user-select: text;
+}
+
 /**** 標準セレクタ開始 ****************/
 body {
-	font: 10px 'Trebuchet MS', Verdana, Helvetica, Arial, sans-serif;
+	font: 14px 'メイリオ', 'ヒラギノ角ゴ', 'Trebuchet MS', Verdana, Helvetica, Arial, sans-serif;
 }
 
 /**** billiesChatcorner 名前空間セレクタ開始 *************/
-#billiesChatcorner
