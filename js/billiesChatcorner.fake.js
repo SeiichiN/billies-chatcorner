@@ -9,7 +9,7 @@
   regexp  : true, sloppy  : true, vars     : true,
   white   : true
   */
-/*global jQuery, $, billiesChatcorner */
+/*global jQuery, $, billiesChatcorner, billiesChatcorner_page_mode */
 
 billiesChatcorner.fake = (function () {
   'use strict';
@@ -100,7 +100,7 @@ billiesChatcorner.fake = (function () {
         }, 3000);
       }
 
-      if ( msg_type === 'updatechat' && callback_map.upatechat ) {
+      if ( msg_type === 'updatechat' && callback_map.updatechat ) {
         setTimeout( function () {
           var user = billiesChatcorner.model.people.get_user();
           callback_map.updatechat(
@@ -130,7 +130,7 @@ billiesChatcorner.fake = (function () {
       if ( msg_type === 'updateavator' && callback_map.listchange ) {
         for ( i = 0; i < peopleList.length; i++) {
           if ( peopleList[ i ]._id === data.person_id ) {
-            peopleList[ i ].css_map = data.css_map
+            peopleList[ i ].css_map = data.css_map;
             break;
           }
         }

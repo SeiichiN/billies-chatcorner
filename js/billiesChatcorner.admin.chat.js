@@ -1,6 +1,6 @@
 /*
- * billiesChatcornerAdmin.chat.js
- * billiesChatcornerAdmin のチャットモジュール
+ * billiesChatcorner.admin.chat.js
+ * billiesChatcorner.admin のチャットモジュール
  */
 
 /*jslint          browser : true, continue : true,
@@ -9,7 +9,7 @@
    regexp  : true, sloppy  : true, vars     : true,
    white   : true
  */
-/*global $, jQuery, billiesChatcornerAdmin */
+/*global $, jQuery, billiesChatcorner */
 
 jQuery( function ($) {
   billiesChatcorner.admin.chat = (function () {
@@ -219,7 +219,7 @@ jQuery( function ($) {
         else {
           writeAlert( 'Your friend has left the chat' );
         }
-        jqueryMap.$title_a.text( 'CHAT' );
+        jqueryMap.$title_a.text( 'チャット' );
         return false;
       }
 
@@ -231,7 +231,7 @@ jQuery( function ($) {
                .addClass( 'billiesChatcorner-x-select' );
 
       writeAlert( 'Now chatting with ' + arg_map.new_chatee.name );
-      jqueryMap.$title_a.text( 'Chat with ' + arg_map.new_chatee.name );
+      jqueryMap.$title_a.text( 'チャット相手 ' + arg_map.new_chatee.name );
       return true;
     };
 
@@ -305,6 +305,7 @@ jQuery( function ($) {
     //
     onChatLogout = function (event, logout_user) {
       console.log(logout_user.name + ' さんがログアウトしました。');
+	  jqueryMap.$title_a.text( 'チャット' );
       clearChat();
 	  console.log('ClearChat!');
     };
