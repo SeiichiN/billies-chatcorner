@@ -65,20 +65,22 @@ jQuery( function ($) {
       people_model : null,
       set_chat_anchor : null
     },
-        stateMap = {
-          $append_target : null,
-          position_type : 'closed',
-          px_per_em : 0,
-          slider_hidden_px : 0,
-          slider_closed_px : 0,
-          slider_opened_px : 0
-        },
-        jqueryMap = {},
+	  stateMap = {
+		$append_target : null,
+		position_type : 'closed',
+		px_per_em : 0,
+		slider_hidden_px : 0,
+		slider_closed_px : 0,
+		slider_opened_px : 0
+	  },
+	  jqueryMap = {},
 
-        setJqueryMap, configModule, initModule,
-        setSliderPosition, getEmSize, setPxSizes,
-        onClickToggle, removeSlider, handleResize,
-        onTapAcct, onLogin, onLogout
+	  setJqueryMap, configModule, initModule,
+	  setSliderPosition, getEmSize, setPxSizes,
+	  onClickToggle, removeSlider, handleResize,
+	  onTapAcct, onLogin, onLogout,
+	  scrollChat, writeChat, writeAlert, clearChat,
+	  onSubmitMsg
     ;
 
     //--[ getEmSize ]-----( utility )---------------------------------
@@ -282,6 +284,75 @@ jQuery( function ($) {
     onLogout = function ( event, logout_user ) {
       jqueryMap.$acct.text( 'ログイン' );
     };
+
+	//--[ scrollChat ]-----------------------------------------------
+	// メッセージをスクロールする
+	//
+	scrollChat = function () {
+	  var $msg_log = jqueryMap.$msg_log;
+
+	  $msg_log.animate(
+		{ scrollTop : $msg_log.prop( 'scrollHeight' ) - $msg_log.height() },
+		150
+	  );
+	};
+
+	//--[ writeChat ]--------------------------------------------------
+	// ログ領域にチャット文字列を表示する
+	// @param:
+	//   person_name -- チャット相手の名前
+	//   text        -- チャット文字列
+	//   is_user     -- 自分の発言かどうか true / false
+	writeChat = function ( person_name, text, is_user ) {
+	  var msg_class = is_user
+		? 'billiesChatcorner-chat-msg-log-me'
+		: 'billiesChatcorner-chat-msg-log-msg';
+	  
+	  jqueryMap.$msg_log.append(
+		'<div class="' + msg_class + '">'
+		+ billiesChatcorner.util_b.encodeHtml( person_name ) + ': '
+		+ billiesChatcorner.util_b.encodeHtml( text )
+		+ '</div>'
+	  );
+
+	  scrollChat();
+	};
+
+	//--[ writeAlert ]-----------------------------------------------------
+	// 発言以外の出力を表示する
+	//
+	writeAlert = function ( alert_text ) {
+	  jqueryMap.$msg_log.append(
+		'<div class="billiesChatcorner-chat-msg-log-alert">'
+		+ billiesChatcorner.util_b.encodeHtml( alert_text )
+		+ '</div>'
+	  );
+	  scrollChat();
+	};
+
+	//--[ clearChat ]-----------------------------------------------------
+	// ログ領域を初期化する
+	//
+	clearChat = function () {
+	  jqueryMap.$msg_log.empty();
+	};
+
+	//--[ onSubmitMsg ]---------------------------------------------------
+	//
+	onSubmitMsg = function ( event ) {
+	  var msg_text = jqueryMap.$input.val();
+
+	  if ( msg_text.trim() === '') { return false; }
+
+	  configMap.chat_model.send_msg( msg_text );
+	  jqueryMap.$input.focus();
+	  jqueryMap.$send.addClass( 'billiesChatcorner-x-select' );
+	  setTimeout(
+		function () { jqueryMap.$send.remoceClass('billiesChatcorner-x-select'); },
+		250
+	  );
+	  return false;
+	};
 
 
     //--[ configModule ]-----------------------------
