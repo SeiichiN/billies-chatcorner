@@ -1,6 +1,6 @@
 /*
  * billiesChatcorner.chat.js
- * billiesChatcorner のチャット機能モジュール
+ billiesChatcorner のチャット機能モジュール
  */
 
 /*jslint          browser : true, continue : true,
@@ -80,7 +80,7 @@ jQuery( function ($) {
 	  onClickToggle, removeSlider, handleResize,
 	  onTapAcct, onLogin, onLogout,
 	  scrollChat, writeChat, writeAlert, clearChat,
-	  onSubmitMsg
+	  onSubmitMsg, onListchange, onSetchatee, onUpdatechat
     ;
 
     //--[ getEmSize ]-----( utility )---------------------------------
@@ -352,6 +352,99 @@ jQuery( function ($) {
 		250
 	  );
 	  return false;
+	};
+
+	//--[ onListchange ]---------------------------------------------------
+	//
+	onListchange = function ( event ) {
+	  var list_html = String(),
+		people_db = configMap.people_model.get_db(),
+		chatee = configMap.chat_model.get_chatee();
+
+	  people_db().each( function (person, idx) {
+		var select_class = '';
+
+		if ( person.get_is_anon() || person.get_is_user() ) { return true; }
+
+		if ( chatee && chatee.id === person.id ) {
+		  select_class = ' billiesChatcorner-x-select';
+		}
+
+		list_html = list_html
+		  + '<div class="billiesChatcorner-chat-list-name'
+		  + select_class + '" data-id="' + person.id + '">'
+		  + billiesChatcorner.util_b.encodeHtml( person.name )
+		  + '</div>';
+		
+		if ( ! list_html ) {
+		  list_html = String()
+		  + '<div class="billiesChatcorner-chat-list-note">'
+		  + 'To chat alone is the fate of all great souls...<br><br>'
+		  + 'No one is online'
+		  + '</div>';
+		  clearChat();
+		}
+		jqueryMap.$list_box.html( list_html );
+	  });
+  
+	};
+
+	//--[ onSetChatee ]---------------------------------------------------
+	//
+	onSetchatee = function ( event, arg_map ) {
+	  var new_chatee = arg_map.new_chatee,
+		old_chatee = arg_map.old_chatee;
+
+	  jqueryMap.$input.focus();
+	  if ( ! new_chatee ) {
+		if ( old_chatee ) {
+		  writeAlert( old_chatee.name + ' has left the chat' );
+		}
+		else {
+		  writeAlert( 'Your friend has left the chat' );
+		}
+		jqueryMap.$title.text( 'チャット' );
+		return false;
+	  }
+
+	  jqueryMap.$list_box
+		.find( '.billiesChatcorner-chat-list-name' )
+		.removeClass( 'billiesChatcorner-x-select' )
+		.end()
+		.find( '[data-id=' + arg_map.new_chatee.id + ']' )
+		.addClass( 'billiesChatcorner-x-select' );
+
+	  writeAlert( 'Now chatting with ' + arg_map.new_chatee.name );
+	  jqueryMap.$title.text( 'チャット相手 ' + arg_map.new_chatee.name );
+	  return true;
+	};
+
+	//--[ onUpdatacat ]----------------------------------------------------
+	//
+	onUpdatechat = function ( event, msg_map ) {
+	  var is_user,
+		sender_id = msg_map.sender_id,
+		msg_text = msg_map.msg_text,
+		chatee = configMap.chat_model.get_chatee() || {},
+		sender = configMap.people_model.get_by_cid( sender_id );
+
+	  if ( ! sender ) {
+		writeAlert( msg_text );
+		return false;
+	  }
+
+	  is_user = sender.get_is_user();
+
+	  if ( ! ( is_user || sender_id === chatee.id )) {
+		configMap.chat_model.set_chatee( sender_id );
+	  }
+
+	  writeChat( sender.name, msg_text, is_user );
+
+	  if ( is_user ) {
+		jqueryMap.$input.val('');
+		jqueryMap.$input.focus();
+	  }
 	};
 
 

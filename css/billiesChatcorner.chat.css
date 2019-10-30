@@ -84,19 +84,44 @@
   right: 0;
 }
 
-.billiesChatcorner-chat-msgs {
+.billiesChatcorner-chat-msg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
+.billiesChatcorner-chat-msg-log {
   position: absolute;
   top: 1em;
+  overflow-x: hidden;
   left: 1em;
   right: 1em;
   bottom: 4em;
   padding: 0.5em;
-  border: solid thin #888;
-  overflow-x: hidden;
+  border: solid 1px #888;
   overflow-y: scroll;
 }
 
-.billiesChatcorner-chat-box {
+.billiesChatcorner-chat-msg-log-msg {
+  background-color: #eee;
+}
+
+.billiesChatcorner-chat-msg-log-me {
+  font-weight: bold;
+  color: #484;
+  text-align: right;
+}
+
+.billiesChatcorner-chat-msg-log-alert {
+  font-style: italic;
+  background: #a88;
+  color: #fff;
+}
+
+
+.billiesChatcorner-chat-msg-in {
   position: absolute;
   height: 2em;
   left: 1em;
@@ -106,24 +131,28 @@
   background: #888;
 }
 
-.billiesChatcorner-chat-box input[type="text"] {
-  float: left;
+.billiesChatcorner-chat-msg-in input[type="text"] {
+  position: absolute;
   width: 75%;
   height: 100%;
-  padding: 0.5em;
+  padding: 0 0.5em;
   border: 0;
   background: #ddd;
   color: #404040;
+  box-sizing: border-box;
 }
 
-.billiesChatcorner-chat-box input[type="text"]:focus {
-  background: #fff;
+.billiesChatcorner-chat-msg-in input[type="text"]:focus {
+  background: #ff8;
+  color: #222;
 }
 
-.billiesChatcorner-chat-box div {
-  float: left;
+.billiesChatcorner-chat-msg-send {
+  position: absolute;
+  top: 0;
+  right: 0;
   width: 25%;
-  height: 2em;
+  height: 100%;
   line-height: 1.9em;
   text-align: center;
   color: #fff;
@@ -131,7 +160,7 @@
   cursor: pointer;
 }
 
-.billliesChatcorner-chat-box div:hover {
+.billliesChatcorner-chat-msg-send:hover {
   background-color: #444;
   color: #ff0;
 }
