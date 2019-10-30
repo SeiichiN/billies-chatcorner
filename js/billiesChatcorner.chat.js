@@ -348,7 +348,7 @@ jQuery( function ($) {
 	  jqueryMap.$input.focus();
 	  jqueryMap.$send.addClass( 'billiesChatcorner-x-select' );
 	  setTimeout(
-		function () { jqueryMap.$send.remoceClass('billiesChatcorner-x-select'); },
+		function () { jqueryMap.$send.removeClass('billiesChatcorner-x-select'); },
 		250
 	  );
 	  return false;
@@ -384,7 +384,7 @@ jQuery( function ($) {
 		  + '</div>';
 		  clearChat();
 		}
-		jqueryMap.$list_box.html( list_html );
+		// jqueryMap.$list_box.html( list_html );
 	  });
   
 	};
@@ -407,12 +407,12 @@ jQuery( function ($) {
 		return false;
 	  }
 
-	  jqueryMap.$list_box
-		.find( '.billiesChatcorner-chat-list-name' )
-		.removeClass( 'billiesChatcorner-x-select' )
-		.end()
-		.find( '[data-id=' + arg_map.new_chatee.id + ']' )
-		.addClass( 'billiesChatcorner-x-select' );
+	  // jqueryMap.$list_box
+	// 	.find( '.billiesChatcorner-chat-list-name' )
+	// 	.removeClass( 'billiesChatcorner-x-select' )
+	// 	.end()
+	// 	.find( '[data-id=' + arg_map.new_chatee.id + ']' )
+	// 	.addClass( 'billiesChatcorner-x-select' );
 
 	  writeAlert( 'Now chatting with ' + arg_map.new_chatee.name );
 	  jqueryMap.$title.text( 'チャット相手 ' + arg_map.new_chatee.name );
@@ -503,10 +503,19 @@ jQuery( function ($) {
       jqueryMap.$head.click( onClickToggle );
       stateMap.position_type = 'closed';
 
+      // 各種ログイン後のイベントを登録する
+      jQuery.gevent.subscribe( $append_target, 'billiesChatcorner-listchange', onListchange );
+      jQuery.gevent.subscribe( $append_target, 'billiesChatcorner-setchatee', onSetchatee );
+      jQuery.gevent.subscribe( $append_target, 'billiesChatcorner-updatechat', onUpdatechat );
+
       // ログイン処理
       jQuery.gevent.subscribe( $append_target, 'billiesChatcorner-login', onLogin );
       jQuery.gevent.subscribe( $append_target, 'billiesChatcorner-logout', onLogout );
       jqueryMap.$acct.text('ログイン').bind( 'utap', onTapAcct);
+
+      // 発言ボタンの処理
+      jqueryMap.$send.bind( 'utap', onSubmitMsg );
+      jqueryMap.$form.bind( 'submit', onSubmitMsg );
       
       return true;
     };
