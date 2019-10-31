@@ -189,6 +189,8 @@ billiesChatcorner.model = (function () {
 	logout = function () {
 	  var user = stateMap.user;
 
+      console.log('NOW model.js - logout');
+      
 	  chat._leave();                                  // <--- add
 	  // @param  -- user -- [{  }]
 	  // @return -- true

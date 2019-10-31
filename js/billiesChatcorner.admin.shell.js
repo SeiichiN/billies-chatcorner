@@ -79,6 +79,9 @@ jQuery( function ($) {
       var acct_text, user_name,
           user = billiesChatcorner.model.people.get_user();
 
+      console.log('NOW admin.shell.js -- onTapAcct');
+      console.log(user);
+        
       if (user.get_is_anon()) {
         user_name = prompt('ログイン');
         billiesChatcorner.model.people.login( user_name );
@@ -99,6 +102,7 @@ jQuery( function ($) {
     //--[ onLogout ]--------------------------------------------------
     //
     onLogout = function ( event, logout_user ) {
+      console.log('NOW admin.shell.js -- onLogout');
       jqueryMap.$acct.text( 'ログイン' );
     };
 

@@ -297,9 +297,9 @@ jQuery( function ($) {
 
     //--[ onChatLogin ]------------------------------------------------------
     //
-//    onChatLogin = function ( event, login_user ) {
-//      console.log( login_user.name + ' さんがログインしました。' );
-    //    };
+    onChatLogin = function ( event, login_user ) {
+      console.log( login_user.name + ' さんがログインしました。' );
+    };
 
     //--[ onChatLogout ]-----------------------------------------------------
     //
@@ -331,7 +331,7 @@ jQuery( function ($) {
       jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-listchange', onListchange );
       jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-setchatee' , onSetchatee );
       jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-updatechat', onUpdatechat );
-//      jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-chatLogin', onChatLogin );
+      jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-chatLogin', onChatLogin );
       jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-chatLogout', onChatLogout );
 
       jqueryMap.$list_box_a.on( 'utap', onTapList );

@@ -97,7 +97,10 @@ billiesChatcorner.fake = (function () {
           };
           peopleList.push( person_map );
           callback_map.userupdate( [person_map] );
-          console.log('emit_sio in');
+          
+          console.log('NOW fake.js emit_sio msg_type="adduser"');
+          console.log(callback_map);
+          
         }, 3000);
       }
 
