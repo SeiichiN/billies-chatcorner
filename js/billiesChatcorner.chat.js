@@ -9,7 +9,7 @@
    regexp  : true, sloppy  : true, vars     : true,
    white   : true
  */
-/*global $, jQuery, billiesChatcorner */
+/*global $, jQuery, event, billiesChatcorner */
 
 jQuery( function ($) {
   billiesChatcorner.chat = (function () {
@@ -76,23 +76,13 @@ jQuery( function ($) {
 	  jqueryMap = {},
 
 	  setJqueryMap, configModule, initModule,
-	  setSliderPosition, getEmSize, setPxSizes,
+	  setSliderPosition, setPxSizes,
 	  onClickToggle, removeSlider, handleResize,
 	  onTapAcct, onLogin, onLogout,
 	  scrollChat, writeChat, writeAlert, clearChat,
 	  onSubmitMsg, onListchange, onSetchatee, onUpdatechat
     ;
 
-    //--[ getEmSize ]-----( utility )---------------------------------
-    // 要素elemのfontsizeを取得する
-    // 引数：要素
-    // 戻り値：数値
-    //
-    getEmSize = function ( elem ) {
-      return Number(
-        getComputedStyle( elem, '').fontSize.match(/\d*\.?\d*/)[0]
-      );
-    };
 
     //--[ setJqueryMap ]----------------------------------------------
     // stateMap.$container を jqueryMap にセットする
@@ -125,7 +115,7 @@ jQuery( function ($) {
 
       // .billiesChatcorner-chatのフォントサイズはデフォルトでは 16
       // つまり、1emあたり16px
-      px_per_em = getEmSize( jqueryMap.$slider.get(0) );
+      px_per_em = billiesChatcorner.util_b.getEmSize( jqueryMap.$slider.get(0) );
       
       // windowの高さを em換算で求める
       // $(window).height() -- windowの高さ
@@ -415,7 +405,7 @@ jQuery( function ($) {
 	// 	.addClass( 'billiesChatcorner-x-select' );
 
 	  writeAlert( 'Now chatting with ' + arg_map.new_chatee.name );
-	  jqueryMap.$title.text( 'チャット相手 ' + arg_map.new_chatee.name );
+	  jqueryMap.$title.text( '> ' + arg_map.new_chatee.name );
 	  return true;
 	};
 
