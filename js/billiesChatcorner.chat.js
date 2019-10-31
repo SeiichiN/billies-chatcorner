@@ -273,6 +273,7 @@ jQuery( function ($) {
     //
     onLogout = function ( event, logout_user ) {
       jqueryMap.$acct.text( 'ログイン' );
+	  clearChat();  // ログ領域の消去
     };
 
 	//--[ scrollChat ]-----------------------------------------------
