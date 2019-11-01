@@ -356,10 +356,11 @@ billiesChatcorner.model = (function () {
       //
       _leave_chat = function () {
         var sio = isFakeData
-                ? billiesChatcorner.fake.mocksio
+                ? billiesChatcorner.fake.mockSio
                 : billiesChatcorner.data.getSio();
 
         stateMap.is_connected = false;
+		console.log(sio);
         if ( sio ) { sio.emit( 'leavechat' ); }
       };
 

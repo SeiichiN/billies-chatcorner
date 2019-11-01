@@ -127,6 +127,8 @@ billiesChatcorner.fake = (function () {
           clearTimeout( listchange_idto );
           listchange_idto = undefined;
         }
+		
+		console.log('NOW fake.js msg_type=leavechat');
 
         send_listchange();
       }
