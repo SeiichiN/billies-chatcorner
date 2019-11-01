@@ -360,7 +360,9 @@ billiesChatcorner.model = (function () {
                 : billiesChatcorner.data.getSio();
 
         stateMap.is_connected = false;
-		console.log(sio);
+
+		console.log('model.js  chat._leave_chat' );
+
         if ( sio ) { sio.emit( 'leavechat' ); }
       };
 

@@ -112,7 +112,7 @@ billiesChatcorner.fake = (function () {
               dest_id   : user.id,
               dest_name : user.name,
               sender_id : data.dest_id,
-              msg_text  : '発言ありがとうございます、 ' + user.name + ' さん。'
+              msg_text  : 'メッセージありがとうございます、 ' + user.name + ' さん。'
             }]
           );
         }, 2000);
@@ -129,6 +129,7 @@ billiesChatcorner.fake = (function () {
         }
 		
 		console.log('NOW fake.js msg_type=leavechat');
+		console.log(listchange_idto);
 
         send_listchange();
       }
