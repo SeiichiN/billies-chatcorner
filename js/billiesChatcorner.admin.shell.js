@@ -19,7 +19,7 @@ jQuery( function ($) {
                 + '<div class="billiesChatcorner-admin-shell-head">'
                   + '<div class="billiesChatcorner-admin-shell-head-logo">'
                     + '<h1>Billies Chatcorner</h1>'
-                    + '<p>JavaScript</p>'
+                   //  + '<p>JavaScript</p>'
                   + '</div>'
                   + '<div class="billiesChatcorner-admin-shell-head-acct"></div>'
                 + '</div>'

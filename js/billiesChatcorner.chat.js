@@ -301,7 +301,7 @@ jQuery( function ($) {
 	  
 	  jqueryMap.$msg_log.append(
 		'<div class="' + msg_class + '">'
-		+ billiesChatcorner.util_b.encodeHtml( person_name ) + ': '
+		+ billiesChatcorner.util_b.encodeHtml( person_name ) + '> '
 		+ billiesChatcorner.util_b.encodeHtml( text )
 		+ '</div>'
 	  );
@@ -405,7 +405,7 @@ jQuery( function ($) {
 	// 	.find( '[data-id=' + arg_map.new_chatee.id + ']' )
 	// 	.addClass( 'billiesChatcorner-x-select' );
 
-	  writeAlert( 'Now chatting with ' + arg_map.new_chatee.name );
+	  writeAlert( 'チャット相手> ' + arg_map.new_chatee.name );
 	  jqueryMap.$title.text( '> ' + arg_map.new_chatee.name );
 	  return true;
 	};

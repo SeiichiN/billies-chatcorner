@@ -94,11 +94,6 @@ jQuery( function ($) {
       window_height_em = Math.floor(
         ( jqueryMap.$window.height() / px_per_em ) + 0.5
       );
-      /*
-      jqueryMap.$chatArea.css({
-        height: (window_height_em - 2) * px_per_em
-      });
-      */
     };
 
     //--[ scrollChat ]---------------------------------------------------
@@ -127,7 +122,7 @@ jQuery( function ($) {
 
       jqueryMap.$msg_log_a.append(
         '<div class="' + msg_class + '">'
-        + billiesChatcorner.util_b.encodeHtml(person_name) + ': '
+        + billiesChatcorner.util_b.encodeHtml(person_name) + '> '
         + billiesChatcorner.util_b.encodeHtml(text)
         + '</div>'
       );
@@ -230,7 +225,7 @@ jQuery( function ($) {
                .find( '[data-id=' + arg_map.new_chatee.id + ']' )
                .addClass( 'billiesChatcorner-x-select' );
 
-      writeAlert( 'Now chatting with ' + arg_map.new_chatee.name );
+      writeAlert( 'チャット相手> ' + arg_map.new_chatee.name );
       jqueryMap.$title_a.text( 'チャット相手 ' + arg_map.new_chatee.name );
       return true;
     };
@@ -352,19 +347,3 @@ jQuery( function ($) {
   }());
 });
 
-/*
-jqueryMap = {
-        $chatArea : $chatArea,
-        $head_a : $chatArea.find( '.billiesChatcorner-admin-chat-head' ),
-        $title_a : $chatArea.find( '.billiesChatcorner-admin-chat-head-title' ),
-        $sizer_a : $chatArea.find( '.billiesChatcorner-admin-chat-sizer' ),
-        $list_box_a : $chatArea.find( '.billiesChatcorner-admin-chat-list-box' ),
-        $msg_a : $chatArea.find( '.billiesChatcorner-admin-chat-msg' ),
-        $msg_log_a : $chatArea.find( '.billiesChatcorner-admin-chat-msg-log' ),
-        $msg_in_a : $chatArea.find( '.billiesChatcorner-admin-chat-msg-in'),
-        $input_a : $chatArea.find( '.billiesChatcorner-admin-chat-msg-in input[type="text"]' ),
-        $send_a : $chatArea.find( '.billiesChatcorner-admin-chat-msg-send' ),
-        $form_a : $chatArea.find( '.billiesChatcorner-admin-chat-msg-form' ),
-        $window : jQuery(window)
-  */
-  
