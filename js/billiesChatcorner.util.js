@@ -64,8 +64,31 @@ billiesChatcorner.util = (function () {
     }
   };
 
+  //--[ deleteArray ]-------------------------------------
+  // オブジェクトの配列の中で、あるオブジェクトを削除する。
+  // たとえば、peopleList = [ {id:'xxx', name:'xxx'},{....},....]
+  // という配列が合った場合、
+  // remakeArray( peopleList, 'name', 'sarry' ); で、
+  // name が sarry であるオブジェクトを配列から削除できる。
+  //
+  // @param:
+  //   arr -- 対象となるオブジェクトの配列
+  //   objKey -- この検索キーで探す
+  //   objVal -- この値をもつオブジェクトを削除する
+  //
+  deleteArray = function ( arr, objKey, objVal ) {
+    var newArray = [];
+    
+    newArray =  arr.filter( function ( target ) {
+      return target[objKey] !== objVal;
+    });
+
+    return newArray;
+  };
+
   return {
     makeError : makeError,
-    setConfigMap : setConfigMap
+    setConfigMap : setConfigMap,
+    deleteArray : deleteArray
   };
 }());

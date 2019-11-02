@@ -98,9 +98,6 @@ billiesChatcorner.fake = (function () {
           peopleList.push( person_map );
           callback_map.userupdate( [person_map] );
           
-          console.log('NOW fake.js emit_sio msg_type="adduser"');
-          console.log(callback_map);
-          
         }, 3000);
       }
 
@@ -119,6 +116,11 @@ billiesChatcorner.fake = (function () {
       }
 
       if ( msg_type === 'leavechat' ) {
+        // この時点では、peopleList は以前のままである。
+        var user = billiesChatcorner.model.people.get_user();
+
+        peopleList = billiesChatcorner.util.deleteArray( peopleList, '_id', user.id );
+        
         // ログイン状態をリセットする
         delete callback_map.listchange;
         delete callback_map.updatechat;
@@ -128,9 +130,6 @@ billiesChatcorner.fake = (function () {
           listchange_idto = undefined;
         }
 		
-		console.log('NOW fake.js msg_type=leavechat');
-		console.log(listchange_idto);
-
         send_listchange();
       }
 
@@ -176,7 +175,7 @@ billiesChatcorner.fake = (function () {
         if ( callback_map.listchange ) {
           callback_map.listchange([ peopleList ]);
           emit_mock_msg();
-          listchange_idto = undefined;
+          listchange_idto = undefined;  // 成功したら止める
         }
         else {
           send_listchange();
