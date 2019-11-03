@@ -52,7 +52,8 @@ jQuery( function ($) {
         $container : $container,
         $chat : $container.find('.billiesChatcorner-admin-shell-main-content-chat'),
         $modal : $container.find('.billiesChatcorner-admin-shell-modal'),
-        $acct  : $container.find('.billiesChatcorner-admin-shell-head-acct')
+        $acct  : $container.find('.billiesChatcorner-admin-shell-head-acct'),
+        $nav   : $container.find('.billiesChatcorner-admin-shell-main-nav')
       };
     };
 
@@ -136,6 +137,12 @@ jQuery( function ($) {
 	  });
 	  billiesChatcorner.admin.chat.initModule( jqueryMap.$chat );
 
+      billiesChatcorner.admin.avtr.configModule({
+        chat_model : billiesChatcorner.model.chat,
+        people_model : billiesChatcorner.model.people
+      });
+      billiesChatcorner.admin.avtr.initModule( jqueryMap.$nav );
+      
       // ログイン処理
       jQuery.gevent.subscribe( $container, 'billiesChatcorner-login', onLogin);
       jQuery.gevent.subscribe( $container, 'billiesChatcorner-logout', onLogout);

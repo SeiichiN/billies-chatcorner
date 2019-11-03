@@ -38,7 +38,7 @@ jQuery( function ($) {
 	  getRandRgb,
 	  setJqueryMap,
 	  updateAvatar,
-	  onTapNav, onHeldStartNav,
+	  onTapNav, onHeldstartNav,
 	  onHeldmoveNav, onHeldendNav,
 	  onSetchatee, onListchange,
 	  onLogou,
@@ -69,12 +69,14 @@ jQuery( function ($) {
 	  var css_map, person_id;
 
 	  css_map = {
-		top : perseInt( $target.css( 'top' ), 10 ),
-		left : perseInt( $target.css( 'left' ), 10 ),
+		top : parseInt( $target.css( 'top' ), 10 ),
+		left : parseInt( $target.css( 'left' ), 10 ),
 		'background-color' : $target.css( 'background-color' )
 	  };
 	  person_id = $target.attr( 'data-id' );
 
+      console.log(configMap.chat_model);
+      
 	  configMap.chat_model.update_avatar({
 		person_id : person_id, css_map : css_map
 	  });
@@ -82,7 +84,7 @@ jQuery( function ($) {
 
 	//--[ onTapNav ]-----------------------------------------
 	//
-	onTapNav = funtion ( event ) {
+	onTapNav = function ( event ) {
 	  var css_map,
 		$target = $( event.elem_target ).closest( '.billiesChatcorner-avtr-box' );
 
@@ -94,7 +96,7 @@ jQuery( function ($) {
 
 	//--[ onHeldstartNav ]-------------------------------------
 	//
-	onHeldstargNav = function ( event ) {
+	onHeldstartNav = function ( event ) {
 	  var offset_target_map, offset_nav_map,
 		$target = $( event.elem_target ).closest( '.billiesChatcorner-avtr-box' );
 
@@ -114,6 +116,144 @@ jQuery( function ($) {
 		.css( 'background-color', '' );
 	};
 
+    //--[ onHeldmoveNav ]-----------------------------------------
+    //
+    onHeldmoveNav = function ( event ) {
+      var drag_map = stateMap.drag_map;
+
+      if ( ! drag_map ) { return false; }
+
+      // event.px_delta_y -- jquery.event.ue
+      // https://github.com/mmikowski/jquery.event.ue
+      drag_map.top += event.px_delta_y;
+      drag_map.left += event.px_delta_x;
+
+      stateMap.$drag_target.css ({
+        top  : drag_map.top,
+        left : drag_map.left
+      });
+    };
+
+    //--[ onHeldendNav ]----------------------------------------
+    //
+    onHeldendNav = function ( event ) {
+      var $drag_target = stateMap.$drag_target;
+
+      if ( ! $drag_target ) { return false; }
+
+      $drag_target
+        .removeClass( 'billiesChatcorner-x-is-drag' )
+        .css( 'background-color', stateMap.drag_bg_color );
+
+      stateMap.drag_bg_color = undefined;
+      stateMap.$drag_target = null;
+      stateMap.drag_map = null;
+      updateAvatar( $drag_target );
+    };
+
+    //--[ onSetchatee ]------------------------------------------
+    //
+    onSetchatee = function ( event, arg_map ) {
+      var $nav = $(this),
+          new_chatee = arg_map.new_chatee,
+          old_chatee = arg_map.old_chatee;
+
+      // アバターの強調表示
+      // new_chatee.name, old_chatee.name 参照。
+      // old_chatee アバターの強調表示を削除
+      if ( old_chatee ) {
+        $nav
+          .find( 'billiesChatcorner-avtr-box[data-id=' + old_chatee.cid + ']' )
+          .removeClass( 'billiesChatcorner-x-is-chatee' );
+      }
+
+      // new_chatee アバターに強調表示
+      if ( new_chatee ) {
+        $nav
+          .find( 'billiesChatcorner-avtr-box[data-id=' + new_chatee.cid + ']' )
+          .addClass( 'billiesChatcorner-x-is-chatee' );
+      }
+    };
+
+    //--[ onListchange ]----------------------------------------
+    //
+    onListchange = function ( event ) {
+      var $nav = jQuery(this),
+          people_db = configMap.people_model.get_db(),
+          user = configMap.people_model.get_user(),
+          chatee = configMap.chat_model.get_chatee() || {},
+          $box;
+
+      $nav.empty();
+      // ユーザーがログアウトしていたら描画しない
+      if ( user.get_is_anon() ) { return false; }
+
+      people_db().each( function ( person, idx ) {
+        var class_list;
+
+        if ( person.get_is_anon() ) { return true; }
+        class_list = [ 'billiesChatcorner-avtr-box' ];
+
+        if ( person.id === chatee.id ) {
+          class_list.push( 'billiesChatcorner-x-is-chatee' );
+        }
+        if ( person.get_is_user() ) {
+          class_list.push( 'billiesChatcorner-x-is-user' );
+        }
+
+        $box = jQuery('<div>')
+          .addClass( class_list.join(' '))
+          .css( person.css_map )
+          .attr( 'data-id', String( person.id ) )
+          .prop( 'title', billiesChatcorner.util_b.encodeHtml( person.name ))
+          .text( person.name )
+          .appendTo( $nav );
+      });
+    };
+
+    //--[ onLogout ]------------------------------------------
+    //
+    onLogout = function () {
+      jqueryMap.$container.empty();
+    };
+
+    //--[ configModule ]--------------------------------------
+    //
+    configModule = function ( input_map ) {
+      billiesChatcorner.util.setConfigMap({
+        input_map    : input_map,
+        settable_map : configMap.settable_map,
+        config_map   : configMap
+      });
+      return true;
+    };
+
+    //--[ initModule ]---------------------------------------
+    //
+    initModule = function ( $container ) {
+      setJqueryMap( $container );
+
+      console.log( $container );
+      
+      jQuery.gevent.subscribe( $container, 'billiesChatcorner-setchatee', onSetchatee );
+      jQuery.gevent.subscribe( $container, 'billiesChatcorner-listchange', onListchange );
+      jQuery.gevent.subscribe( $container, 'billiesChatcorner-logout', onLogout );
+
+      $container
+        .bind( 'utap', onTapNav )
+        .bind( 'uheldstart', onHeldstartNav )
+        .bind( 'uheldmove', onHeldmoveNav )
+        .bind( 'uheldend', onHeldendNav);
+
+      return true;
+    };
+
+    //--[ return ]---------------------------------------------
+    //
+    return {
+      configModule : configModule,
+      initModule   : initModule
+    };
   }());
 });
 

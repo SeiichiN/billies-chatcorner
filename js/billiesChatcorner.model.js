@@ -265,7 +265,7 @@ jQuery( function ($) {
           
           join_chat,
           get_chatee, send_msg, set_chatee,                    // <-- add
-          update_avator,
+          update_avatar,
 
           chatee = null       // <-- add ... ユーザがチャットしている相手   
       ;
@@ -445,21 +445,21 @@ jQuery( function ($) {
         return true;
       };
       
-      //--[ update_avator ]-------------------------------------
+      //--[ update_avatar ]-------------------------------------
       // @param:
-      //   avator_upate_map
+      //   avatar_upate_map
       //     { person_id : <string>,
       //       css_map   : { top                : <int>,
       //                     left               : <int>,
       //                     'background-color' : <string> }}
       //
-      update_avator = function ( avator_update_map ) {
+      update_avatar = function ( avatar_update_map ) {
         var sio = isFakeData
                 ? billiesChatcorner.fake.mockSio
                 : billiesChatcorner.data.getSio();
 
         if ( sio ) {
-          sio.emit( 'updateavator', avator_update_map );
+          sio.emit( 'updateavatar', avatar_update_map );
         }
       };
       
@@ -469,7 +469,7 @@ jQuery( function ($) {
         get_chatee    : get_chatee,                             // <-- add
         send_msg      : send_msg,                               // <-- add
         set_chatee    : set_chatee,                             // <-- add
-        update_avator : update_avator
+        update_avatar : update_avatar
       };
     }());
 
