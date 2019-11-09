@@ -17,9 +17,12 @@ var billiesChatcorner = {
 };
 
 billiesChatcorner.admin = (function () {
+  'use strict';
+  
   var initModule = function ($container) {
     billiesChatcorner.model.initModule( $container );
     billiesChatcorner.admin.shell.initModule( $container );
+    data_js_url + '/initModule()';
   };
 
   return { initModule : initModule };

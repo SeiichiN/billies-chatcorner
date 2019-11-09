@@ -75,7 +75,7 @@ jQuery( function ($) {
 	  };
 	  person_id = $target.attr( 'data-id' );
 
-      console.log(configMap.chat_model);
+      // console.log(configMap.chat_model);
       
 	  configMap.chat_model.update_avatar({
 		person_id : person_id, css_map : css_map

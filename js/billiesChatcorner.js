@@ -11,7 +11,10 @@
 /*global jQuery, $, billiesChatcorner:true */
 
 var billiesChatcorner = (function () {
+  'use strict';
+  
   var initModule = function ($container) {
+    data_js_url + '/initModule()';
     billiesChatcorner.model.initModule( $container );
     billiesChatcorner.shell.initModule( $container );
   };

@@ -32,7 +32,7 @@ jQuery( function ($) {
 		  is_connected   : false
 	    },
 
-	    isFakeData = true,
+	    isFakeData = false,
 
 	    personProto, makePerson, people, chat, initModule,
 	    makeCid, clearPeopleDb, completeLogin, removePerson
@@ -168,7 +168,7 @@ jQuery( function ($) {
 	  login = function ( name ) {
 	    var sio = isFakeData
 			    ? billiesChatcorner.fake.mockSio
-			    : billiesChatcorner.data.getSio();
+			    : data_js_url + '/getSio()';
 
 	    stateMap.user = makePerson({
 		  cid     : makeCid(),
@@ -191,7 +191,7 @@ jQuery( function ($) {
 	    var user = stateMap.user,
             sio = isFakeData
                 ? billiesChatcorner.fake.mockSio
-                : billiesChatcorner.data.getSio();
+                : data_js_url + '/getSio()';
 
 	    chat._leave();                                  // <--- add
 
@@ -363,7 +363,7 @@ jQuery( function ($) {
       _leave_chat = function () {
         var sio = isFakeData
                 ? billiesChatcorner.fake.mockSio
-                : billiesChatcorner.data.getSio();
+                : data_js_url + '/getSio()';
 
         stateMap.is_connected = false;
 
@@ -389,7 +389,7 @@ jQuery( function ($) {
 
         sio = isFakeData
             ? billiesChatcorner.fake.mockSio
-            : billiesChatcorner.data.getSio();
+            : data_js_url + '/getSio()';
         // イベント待受 -- listchange が来れば、
         // _publish_listchange を実行
         sio.on( 'listchange', _publish_listchange );
@@ -404,7 +404,7 @@ jQuery( function ($) {
         var msg_map,
             sio = isFakeData
                 ? billiesChatcorner.fake.mockSio
-                : billiesChatcorner.data.getSio();
+                : data_js_url + '/getSio()';
 
         if ( ! sio ) { return false; }   // 接続できていない場合
         // チャット相手が設定されていない場合
@@ -456,7 +456,7 @@ jQuery( function ($) {
       update_avatar = function ( avatar_update_map ) {
         var sio = isFakeData
                 ? billiesChatcorner.fake.mockSio
-                : billiesChatcorner.data.getSio();
+                : data_js_url + '/getSio()';
 
         if ( sio ) {
           sio.emit( 'updateavatar', avatar_update_map );
@@ -492,5 +492,5 @@ jQuery( function ($) {
       people     : people,
       chat       : chat
     };
-  }());  // billiesChatcorner.admin.model
+  }());  // billiesChatcorner.model
 });  // jQuery

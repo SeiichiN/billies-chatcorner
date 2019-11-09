@@ -11,9 +11,12 @@
 require_once('billies-chatcorner-admin.php');
 
 function billies_chatcorner_add_files () {
+  $dataJsUrl = 'http://localhost:3000/billiesChatcorner.data.js';
+
   wp_enqueue_style('css-billies-chatcorner-chat', plugins_url('css/billiesChatcorner.chat.css', __FILE__));
   wp_enqueue_style('css-billies-chatcorner-shell', plugins_url('css/billiesChatcorner.shell.css', __FILE__));
   
+  wp_enqueue_script('js-billies-chatcorner-socket', plugins_url('socket.io/socket.io.js', __FILE__), array(), false, false);
   wp_enqueue_script('js-billies-chatcorner-jq-taffy',     plugins_url('js/jq/taffy.js', __FILE__), array(), false, false);
   wp_enqueue_script('js-billies-chatcorner-jq-uriAnchor', plugins_url('js/jq/jquery.uriAnchor.js', __FILE__), array('jquery'), false, false);
   wp_enqueue_script('js-billies-chatcorner-jq-gevent',    plugins_url('js/jq/jquery.event.gevent.js', __FILE__), array('jquery'), false, false);
@@ -21,7 +24,7 @@ function billies_chatcorner_add_files () {
   
   wp_enqueue_script('js-billies-chatcorner', plugins_url('js/billiesChatcorner.js', __FILE__), array('jquery'), false, false);
   wp_enqueue_script('js-billies-chatcorner-util', plugins_url('js/billiesChatcorner.util.js', __FILE__), array('jquery'), false, false);
-  wp_enqueue_script('js-billies-chatcorner-data', plugins_url('js/billiesChatcorner.data.js', __FILE__), array('jquery'), false, false);
+  wp_enqueue_script('js-billies-chatcorner-data', $dataJsUrl, array('jquery'), false, false);
   wp_enqueue_script('js-billies-chatcorner-fake', plugins_url('js/billiesChatcorner.fake.js', __FILE__), array('jquery'), false, false);
   wp_enqueue_script('js-billies-chatcorner-model', plugins_url('js/billiesChatcorner.model.js', __FILE__), array('jquery'), false, false);
   wp_enqueue_script('js-billies-chatcorner-util_b', plugins_url('js/billiesChatcorner.util_b.js', __FILE__), array('jquery'), false, false);
@@ -29,8 +32,13 @@ function billies_chatcorner_add_files () {
   wp_enqueue_script('js-billies-chatcorner-chat', plugins_url('js/billiesChatcorner.chat.js', __FILE__), array('jquery'), false, false);
 
   // Client Page
-  $pageMode = ['mode' => 'client-page'];
-  wp_localize_script('js-billies-chatcorner-fake', 'billiesChatcorner_page_mode', $pageMode);
+  $billiesChatcorner_pageMode = ['mode' => 'client-page'];
+  wp_localize_script('js-billies-chatcorner-fake', 'billiesChatcorner_page_mode', $billiesChatcorner_pageMode);
+  
+  $billiesChatcorner_dataJsUrl = ['data_js_url' => $dataJsUrl ];
+  wp_localize_script('js-billies-chatcorner', 'data_js_url', $billiesChatcorner_dataJsUrl);
+  wp_localize_script('js-billies-chatcorner-model', 'data_js_url', $billiesChatcorner_dataJsUrl);
+  wp_localize_script('js-billies-chatcorner-chat', 'data_js_url', $billiesChatcorner_dataJsUrl);
   
   wp_enqueue_script('js-billies-chatcorner-start', plugins_url('js/billiesChatcorner.start.js', __FILE__), array('jquery'), false, true);
   // wp_enqueue_script('js-gevent-test', plugins_url('js/gevent.test.js', __FILE__), array('jquery'), false, true);
