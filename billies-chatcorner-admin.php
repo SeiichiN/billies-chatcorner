@@ -25,6 +25,10 @@ function billies_chatcorner_admin_add_files () {
   wp_enqueue_script('js-billies-chatcorner-jq-taffy', plugins_url('js/jq/taffy.js', __FILE__), array(), false, false);
   wp_enqueue_script('js-billies-chatcorner-jq-gevent', plugins_url('js/jq/jquery.event.gevent.js', __FILE__), array('jquery'), false, false);
   wp_enqueue_script('js-billies-chatcorner-jq-event-ue', plugins_url('js/jq/jquery.event.ue.js', __FILE__), array('jquery'), false, false);
+
+  // これはエラーが出る
+  // クロスオリジン要求をブロックしました: 同一生成元ポリシーにより、http://loalhost:3000/socket.io/?EIO=3&transport=polling&t=MvNap4L にあるリモートリソースの読み込みは拒否されます (理由: CORS 要求が成功しなかった)。
+  // wp_enqueue_script('js-billies-chatcorner-jq-socket', plugins_url('js/jq/sockets.io/socket.io.slim.js', __FILE__), array(), false, false);
   
   wp_enqueue_script('js-billies-chatcorner-admin', plugins_url('js/billiesChatcorner.admin.js', __FILE__), array('jquery'), false, false);
   wp_enqueue_script('js-billies-chatcorner-util', plugins_url('js/billiesChatcorner.util.js', __FILE__), array(), false, false);
