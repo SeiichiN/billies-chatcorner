@@ -168,7 +168,7 @@ jQuery( function ($) {
 	  login = function ( name ) {
 	    var sio = isFakeData
 			    ? billiesChatcorner.fake.mockSio
-			    : data_js_url + '/getSio()';
+			    : billiesChatcorner.data.getSio();
 
 	    stateMap.user = makePerson({
 		  cid     : makeCid(),
@@ -191,7 +191,7 @@ jQuery( function ($) {
 	    var user = stateMap.user,
             sio = isFakeData
                 ? billiesChatcorner.fake.mockSio
-                : data_js_url + '/getSio()';
+                : billiesChatcorner.data.getSio();
 
 	    chat._leave();                                  // <--- add
 
@@ -363,7 +363,7 @@ jQuery( function ($) {
       _leave_chat = function () {
         var sio = isFakeData
                 ? billiesChatcorner.fake.mockSio
-                : data_js_url + '/getSio()';
+                : billiesChatcorner.data.getSio();
 
         stateMap.is_connected = false;
 
@@ -404,7 +404,7 @@ jQuery( function ($) {
         var msg_map,
             sio = isFakeData
                 ? billiesChatcorner.fake.mockSio
-                : data_js_url + '/getSio()';
+                : billiesChatcorner.data.getSio();
 
         if ( ! sio ) { return false; }   // 接続できていない場合
         // チャット相手が設定されていない場合
@@ -456,7 +456,7 @@ jQuery( function ($) {
       update_avatar = function ( avatar_update_map ) {
         var sio = isFakeData
                 ? billiesChatcorner.fake.mockSio
-                : data_js_url + '/getSio()';
+                : billiesChatcorner.data.getSio();
 
         if ( sio ) {
           sio.emit( 'updateavatar', avatar_update_map );

@@ -19,7 +19,8 @@ jQuery( function ($) {
         makeSio, getSio, initModule;
 
     makeSio = function () {
-      var socket = io.connect( '/chat' );
+      // var socket = io.connect( '/chat' );
+      var socket = io.connect( 'http://loalhost:3000/chat' );
 
       return {
         emit : function ( event_name, data ) {
