@@ -389,7 +389,8 @@ jQuery( function ($) {
 
         sio = isFakeData
             ? billiesChatcorner.fake.mockSio
-            : data_js_url + '/getSio()';
+            : billiesChatcorner.data.getSio();
+
         // イベント待受 -- listchange が来れば、
         // _publish_listchange を実行
         sio.on( 'listchange', _publish_listchange );
