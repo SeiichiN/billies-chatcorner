@@ -273,6 +273,7 @@ jQuery( function ($) {
     //
     onLogout = function ( event, logout_user ) {
       jqueryMap.$acct.text( 'ログイン' );
+      jqueryMap.$title.text( configMap.slider_opened_title_text );
 	  clearChat();  // ログ領域の消去
     };
 
@@ -331,11 +332,17 @@ jQuery( function ($) {
 	//--[ onSubmitMsg ]---------------------------------------------------
 	//
 	onSubmitMsg = function ( event ) {
-	  var msg_text = jqueryMap.$input.val();
+	  var msg_text = jqueryMap.$input.val(),
+          send_msg_ok;
 
 	  if ( msg_text.trim() === '') { return false; }
 
-	  configMap.chat_model.send_msg( msg_text );
+	  send_msg_ok = configMap.chat_model.send_msg( msg_text );
+      console.log('send_msg : client -> admin %s ', msg_text);
+      if ( ! send_msg_ok ) {
+        writeAlert( chatee.name + ' は席をはずしています。');
+      }
+      
 	  jqueryMap.$input.focus();
 	  jqueryMap.$send.addClass( 'billiesChatcorner-x-select' );
 	  setTimeout(

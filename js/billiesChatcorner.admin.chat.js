@@ -60,7 +60,7 @@ jQuery( function ($) {
 
         setJqueryMap, configModule, setPxSizes, initModule,
         scrollChat, writeChat, writeAlert, clearChat,
-        onSubmitMsg, onListchange, onSetchatee, onUpdatechat,
+        onSubmitMsg, onListchange, onSetchatee, onAdminUpdatechat,
         onTapList, onChatLogin, onChatLogout
     ;
 
@@ -232,7 +232,7 @@ jQuery( function ($) {
 
     //--[ onUpdatachat ]-------------------------------------------------
     //
-    onUpdatechat = function ( event, msg_map ) {
+    onAdminUpdatechat = function ( event, msg_map ) {
       var is_user,
           sender_id = msg_map.sender_id,
           msg_text = msg_map.msg_text,
@@ -327,7 +327,7 @@ jQuery( function ($) {
       console.log('admin.chat.js -- $list_box'); console.log($list_box);
       jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-listchange', onListchange );
       jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-setchatee' , onSetchatee );
-      jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-updatechat', onUpdatechat );
+      jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-updatechat', onAdminUpdatechat );
       jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-adminLogin', onChatLogin );
       jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-adminLogout', onChatLogout );
 
