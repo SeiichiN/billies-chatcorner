@@ -32,7 +32,7 @@ jQuery( function ($) {
 		  is_connected   : false
 	    },
 
-	    isFakeData = true,
+	    isFakeData = false,
 
 	    personProto, makePerson, people, chat, initModule,
 	    makeCid, clearPeopleDb, completeLogin, removePerson
