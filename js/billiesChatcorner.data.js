@@ -20,7 +20,8 @@ jQuery( function ($) {
 
     makeSio = function () {
       // var socket = io.connect( '/chat' );
-      var socket = io.connect( 'http://localhost:3000/chat' );
+      // var socket = io.connect( 'http://localhost:3000/chat' );
+      var socket = io.connect( 'http://billieschatcorner.herokuapp.com/chat' );
 
       return {
         emit : function ( event_name, data ) {
