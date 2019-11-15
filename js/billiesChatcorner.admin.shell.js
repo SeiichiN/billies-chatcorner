@@ -53,7 +53,8 @@ jQuery( function ($) {
         $chat : $container.find('.billiesChatcorner-admin-shell-main-content-chat'),
         $modal : $container.find('.billiesChatcorner-admin-shell-modal'),
         $acct  : $container.find('.billiesChatcorner-admin-shell-head-acct'),
-        $nav   : $container.find('.billiesChatcorner-admin-shell-main-nav')
+        $nav   : $container.find('.billiesChatcorner-admin-shell-main-nav'),
+        $head  : $container.find('.billiesChatcorner-admin-shell-head')
       };
     };
 
@@ -97,13 +98,14 @@ jQuery( function ($) {
     //--[ onLogin ]---------------------------------------------------
     //
     onLogin = function ( event, login_user ) {
+      console.log('NOW admin.shell.js -- adminLogin');
       jqueryMap.$acct.text( login_user.name );
     };
 
     //--[ onLogout ]--------------------------------------------------
     //
     onLogout = function ( event, logout_user ) {
-      console.log('NOW admin.shell.js -- onLogout');
+      console.log('NOW admin.shell.js -- adminLogout');
       jqueryMap.$acct.text( 'ログイン' );
     };
 
@@ -122,6 +124,8 @@ jQuery( function ($) {
     // 例外発行：なし
     //
     initModule = function ( $container ) {
+      var $head;
+      
 	  stateMap.$container = $container;
 	  $container.html( configMap.main_html );
       setJqueryMap();
@@ -143,9 +147,13 @@ jQuery( function ($) {
       });
       billiesChatcorner.admin.avtr.initModule( jqueryMap.$nav );
       
-      // ログイン処理
-      jQuery.gevent.subscribe( $container, 'billiesChatcorner-login', onLogin);
-      jQuery.gevent.subscribe( $container, 'billiesChatcorner-logout', onLogout);
+      // ログイン・ログアウト処理
+      $head = jqueryMap.$head;
+      jQuery.gevent.subscribe( $head, 'billiesChatcorner-adminLogin', onLogin);
+      console.log('admin.shell.js -- adminLogin SET!');
+      jQuery.gevent.subscribe( $head, 'billiesChatcorner-adminLogout', onLogout);
+      console.log('admin.shell.js -- adminLogout SET!');
+
       // utap -- jquery.event.ue.js
       jqueryMap.$acct.text('ログイン').bind( 'utap', onTapAcct );
       

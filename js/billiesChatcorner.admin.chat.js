@@ -226,7 +226,7 @@ jQuery( function ($) {
                .addClass( 'billiesChatcorner-x-select' );
 
       writeAlert( 'チャット相手> ' + arg_map.new_chatee.name );
-      jqueryMap.$title_a.text( 'チャット相手 ' + arg_map.new_chatee.name );
+      jqueryMap.$title_a.text( '> ' + arg_map.new_chatee.name );
       return true;
     };
 
@@ -299,6 +299,7 @@ jQuery( function ($) {
     //--[ onChatLogout ]-----------------------------------------------------
     //
     onChatLogout = function (event, logout_user) {
+      console.log('NOW admin.chat.js -- adminLogout');
       console.log(logout_user.name + ' さんがログアウトしました。');
 	  jqueryMap.$title_a.text( 'チャット' );
       clearChat();
@@ -323,11 +324,12 @@ jQuery( function ($) {
       jqueryMap.$title_a.text( configMap.chatArea_title );
 
       $list_box = jqueryMap.$list_box_a;
+      console.log('admin.chat.js -- $list_box'); console.log($list_box);
       jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-listchange', onListchange );
       jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-setchatee' , onSetchatee );
       jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-updatechat', onUpdatechat );
-      jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-chatLogin', onChatLogin );
-      jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-chatLogout', onChatLogout );
+      jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-adminLogin', onChatLogin );
+      jQuery.gevent.subscribe( $list_box, 'billiesChatcorner-adminLogout', onChatLogout );
 
       jqueryMap.$list_box_a.on( 'utap', onTapList );
       jqueryMap.$send_a.bind( 'utap', onSubmitMsg );

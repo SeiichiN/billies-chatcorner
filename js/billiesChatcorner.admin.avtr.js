@@ -41,7 +41,7 @@ jQuery( function ($) {
 	  onTapNav, onHeldstartNav,
 	  onHeldmoveNav, onHeldendNav,
 	  onSetchatee, onListchange,
-	  onLogou,
+	  onAvtrLogout,
 	  configModule, initModule;
 
 	//--[ ユーティリティメソッド ]---------------
@@ -211,9 +211,10 @@ jQuery( function ($) {
       });
     };
 
-    //--[ onLogout ]------------------------------------------
+    //--[ onAvtrLogout ]------------------------------------------
     //
-    onLogout = function () {
+    onAvtrLogout = function () {
+      console.log('NOW admin.avtr.js -- adminLogout');
       jqueryMap.$container.empty();
     };
 
@@ -233,11 +234,12 @@ jQuery( function ($) {
     initModule = function ( $container ) {
       setJqueryMap( $container );
 
+      console.log('admin.avtr.js -- $container');
       console.log( $container );
       
       jQuery.gevent.subscribe( $container, 'billiesChatcorner-setchatee', onSetchatee );
       jQuery.gevent.subscribe( $container, 'billiesChatcorner-listchange', onListchange );
-      jQuery.gevent.subscribe( $container, 'billiesChatcorner-logout', onLogout );
+      jQuery.gevent.subscribe( $container, 'billiesChatcorner-adminLogout', onAvtrLogout );
 
       $container
         .bind( 'utap', onTapNav )

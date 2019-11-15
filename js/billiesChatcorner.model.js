@@ -91,7 +91,12 @@ jQuery( function ($) {
 	  chat.join();                                              // <--- add
 
 	  // チャットに参加するイベント発火
-	  jQuery.gevent.publish( 'billiesChatcorner-login', [ stateMap.user ] );
+	  if ( billiesChatcorner_page_mode.mode === 'admin-page' ) {
+	    jQuery.gevent.publish( 'billiesChatcorner-adminLogin', [ stateMap.user ] );
+      }
+      else {
+	    jQuery.gevent.publish( 'billiesChatcorner-login', [ stateMap.user ] );
+      }
     };
 
     //--[ makePerson ]-----------------------------------
@@ -205,12 +210,13 @@ jQuery( function ($) {
         
         sio.emit('listchange');
 
-        // $acct の表示を「ログイン」に変える
-	    jQuery.gevent.publish( 'billiesChatcorner-logout', [ user ] );
-
+        // ログアウトの発行
 	    if ( billiesChatcorner_page_mode.mode === 'admin-page' ) {
-		  jQuery.gevent.publish( 'billiesChatcorner-chatLogout', [ user ] );
+		  jQuery.gevent.publish( 'billiesChatcorner-adminLogout', [ user ] );
 	    }
+        else {
+	      jQuery.gevent.publish( 'billiesChatcorner-logout', [ user ] );
+        }
       };
 
       return {
