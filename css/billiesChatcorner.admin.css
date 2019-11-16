@@ -68,17 +68,29 @@ body {
 }
 
 /**** billiesChatcorner 名前空間セレクタ開始 *************/
+
 #billiesChatcorner-admin {
   position: absolute;
-  top: 24px;
-  right: 8px;
-  bottom: 8px;
-  left: 8px;
+  top: 0;
+  right: 5px;
+  bottom: 5px;
+  left: 5px;
 
-  min-width: 360px;
+  min-width: 300px;
   min-height: 600px;
-
+  
   background-color: #fff;
   border-radius: 0 8px 0 8px;
   font: 14px 'メイリオ', 'ヒラギノ角ゴ', 'Trebuchet MS', Verdana, Helvetica, Arial, sans-serif;
+}
+
+@media screen and (min-width: 768px) {
+  #billiesChatcorner-admin {
+    top: 24px;
+    right: 8px;
+    bottom: 8px;
+    left: 8px;
+
+    min-width: 360px;
+  }
 }

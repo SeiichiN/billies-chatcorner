@@ -12,15 +12,15 @@
   top: 0;
   left: 0;
   right: 0;
-  height: 40px;
+  height: 70px;
 }
 
 .billiesChatcorner-admin-shell-head-logo {
   position: absolute;
   top: 4px;
-  left: 8px;
-  height: 32px;
-  width: 400px;
+  left: 5px;
+  height: 64px;
+  width: 100%;
 }
 
 .billiesChatcorner-admin-shell-head-logo h1 {
@@ -35,7 +35,7 @@
 
 .billiesChatcorner-admin-shell-head-acct {
   position: absolute;
-  top: 4px;
+  top: 30px;
   right: 0;
   line-height: 32px;
   width: 210px;
@@ -50,7 +50,7 @@
 
 .billiesChatcorner-admin-shell-main {
   position: absolute;
-  top: 40px;
+  top: 70px;
   left: 0;
   bottom: 40px;
   right: 0;
@@ -58,19 +58,21 @@
 
 .billiesChatcorner-admin-shell-main-nav,
 .billiesChatcorner-admin-shell-main-content {
-  position: absolute;
+  position: relative;
   top: 0;
   bottom: 0;
 }
 
 .billiesChatcorner-admin-shell-main-nav {
-  width: 250px;
+  width: 100%;
+  height: 100px;
   background: #eee;
+  overflow: scroll-y;
 }
 
 .billiesChatcorner-admin-shell-main-content {
-  left: 250px;
   right: 0;
+  height: 100%;
   background: #ddd;
 }
 
@@ -93,6 +95,8 @@
   background: #eee;
 }
 
+/*
+
 .billiesChatcorner-admin-shell-modal {
   position: absolute;
   margin-top: -200px;
@@ -106,3 +110,67 @@
   z-index: 2;
 }
 
+*/
+
+@media screen and (min-width: 768px) {
+  .billiesChatcorner-admin-shell-head {
+    height: 40px;
+  }
+
+  .billiesChatcorner-admin-shell-head-logo {
+    left: 8px;
+    height: 32px;
+    width: 400px;
+  }
+
+  .billiesChatcorner-admin-shell-head-logo h1 {
+  }
+
+  .billiesChatcorner-admin-shell-head-logo p {
+  }
+
+  .billiesChatcorner-admin-shell-head-acct {
+    top: 4px;
+  }
+
+  .billiesChatcorner-admin-shell-main {
+    top: 40px;
+  }
+
+  .billiesChatcorner-admin-shell-main-nav,
+  .billiesChatcorner-admin-shell-main-content {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+  }
+
+  .billiesChatcorner-admin-shell-main-nav {
+    width: 250px;
+    height: 100%;
+    background: #eee;
+  }
+
+  .billiesChatcorner-admin-shell-main-content {
+    left: 250px;
+  }
+
+  .billiesChatcorner-admin-shell-main-content-chat {
+  }
+
+  .billiesChatcorner-admin-shell-foot {
+  }
+
+  .billiesChatcorner-admin-shell-modal {
+    position: absolute;
+    margin-top: -200px;
+    margin-left: -200px;
+    top: 50%;
+    left: 50%;
+    width: 400px;
+    height: 400px;
+    background: #fff;
+    border-radius: 3px;
+    z-index: 2;
+  }
+
+}

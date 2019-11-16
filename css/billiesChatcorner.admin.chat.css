@@ -6,7 +6,7 @@
 
 
 .billiesChatcorner-admin-shell-main-content-chat {
-  position: absolute;
+  position: relative;
   /* width: 300px; */
   background-color: #cff293;
   bottom: 0;
@@ -31,9 +31,6 @@
   font-family: Meiryo, 'ヒラギノ角ゴ', sans-serif;
   font-weight: bold;
   text-align: center;
-}
-
-.billiesChatcorner-admin-chat-head {
   left: 0;
   right: 0;
   border-radius: 5px 0 0 0;
@@ -56,9 +53,9 @@
 
 .billiesChatcorner-admin-chat-list {
   position: absolute;
-  width: 10em;
+  width: 6em;
   top: 0;
-  bottom: 0;
+  bottom: 4em;
   left: 0;
 }
 
@@ -66,7 +63,7 @@
 .billiesChatcorner-admin-chat-msg {
   position: absolute;
   top: 0;
-  left: 10em;
+  left: 6em;
   bottom: 0;
   right: 0;
 }
@@ -74,13 +71,13 @@
 .billiesChatcorner-admin-chat-msg-log,
 .billiesChatcorner-admin-chat-list-box {
   position: absolute;
-  top: 1em;
+  top: 0;
   overflow-x: hidden;
 }
 
 .billiesChatcorner-admin-chat-msg-log {
   left: 0;
-  right: 1em;
+  right: 0;
   bottom: 4em;
   padding: 0.5em;
   border: solid 1px #888;
@@ -104,9 +101,9 @@
 }
 
 .billiesChatcorner-admin-chat-list-box {
-  left: 1em;
-  right: 1em;
-  bottom: 1em;
+  left: 0;
+  right: 0;
+  bottom: 0;
   overflow-y: auto;
   border-width: thin 0 thin thin;
   border-style: solid;
@@ -139,7 +136,7 @@
 .billiesChatcorner-admin-chat-msg-in {
   position: absolute;
   height: 2em;
-  left: 0;
+  left: -5em;
   right: 1em;
   bottom: 1em;
   border: solid thin #888;
@@ -185,3 +182,88 @@
   background: #aaa;
 }
 
+/*************************************************
+   画面が幅768px以上のサイズ
+**************************************************/
+
+@media screen and (min-width: 368px) {
+  .billiesChatcorner-admin-shell-main-content-chat {
+    position: absolute;
+  }
+
+  .billiesChatcorner-admin-chat-head  {
+  }
+
+  .billiesChatcorner-admin-chat-head-title {
+  }
+
+  .billiesChatcorner-admin-chat-sizer {
+  }
+
+  .billiesChatcorner-admin-chat-list {
+    width: 10em;
+    bottom: 0;
+  }
+
+
+  .billiesChatcorner-admin-chat-msg {
+    left: 10em;
+  }
+
+  .billiesChatcorner-admin-chat-msg-log,
+  .billiesChatcorner-admin-chat-list-box {
+    top: 1em;
+  }
+
+  .billiesChatcorner-admin-chat-msg-log {
+    right: 1em;
+  }
+
+  .billiesChatcorner-admin-chat-msg-log-msg {
+  }
+
+  .billiesChatcorner-admin-chat-msg-log-me {
+  }
+
+  .billiesChatcorner-admin-chat-msg-log-alert {
+  }
+
+  .billiesChatcorner-admin-chat-list-box {
+    left: 1em;
+    right: 1em;
+    bottom: 1em;
+  }
+
+  .billiesChatcorner-admin-chat-list-name,
+  .billiesChatcorner-admin-chat-list-note {
+  }
+
+  .billiesChatcorner-admin-chat-list-name {
+  }
+
+  .billiesChatcorner-admin-chat-list-name:hover {
+  }
+
+  .billiesChatcorner-admin-chat-list-name.billiesChatcorner-x-select {
+  }
+
+  .billiesChatcorner-admin-chat-msg-in {
+    left: 0;
+  }
+
+  .billiesChatcorner-admin-chat-msg-in input[type="text"] {
+  }
+
+  .billiesChatcorner-admin-chat-msg-in input[type="text"]:focus {
+  }
+
+  .billiesChatcorner-admin-chat-msg-send {
+  }
+
+  .billliesChatcorner-admin-chat-msg-send:hover {
+  }
+
+  .billiesChatcorner-admin-chat-head:hover  {
+  }
+
+}
