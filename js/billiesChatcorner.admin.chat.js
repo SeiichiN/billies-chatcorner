@@ -122,8 +122,12 @@ jQuery( function ($) {
 
       jqueryMap.$msg_log_a.append(
         '<div class="' + msg_class + '">'
-        + billiesChatcorner.util_b.encodeHtml(person_name) + '> '
+        + '<span class="' + msg_class + '-name">'
+        + billiesChatcorner.util_b.encodeHtml(person_name) + ':'
+        + '</span>'
+        + '<span class="' + msg_class + '-body">'
         + billiesChatcorner.util_b.encodeHtml(text)
+        + '</span>'
         + '</div>'
       );
 

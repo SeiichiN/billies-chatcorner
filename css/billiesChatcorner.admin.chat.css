@@ -84,14 +84,80 @@
   overflow-y: scroll;
 }
 
-.billiesChatcorner-admin-chat-msg-log-msg {
-  background-color: #eee;
-}
-
 .billiesChatcorner-admin-chat-msg-log-me {
   font-weight: bold;
   color: #484;
   text-align: right;
+  margin: 2px 0;
+}
+
+.billiesChatcorner-admin-chat-msg-log-msg {
+  margin: 2px 0;
+}
+
+/*** 吹き出しの形をつくる                ***/
+.billiesChatcorner-admin-chat-msg-log-msg-body,
+.billiesChatcorner-admin-chat-msg-log-me-body {
+  display: inline-block;
+  padding: 2px;
+  min-height: 1em;
+  border-radius: 4px;
+  border: solid 1px #757575;
+  position: relative;
+}
+
+.billiesChatcorner-admin-chat-msg-log-msg-body {
+  margin: 0 0 0 5px;
+  background-color: #eee;
+}
+
+.billiesChatcorner-admin-chat-msg-log-me-body {
+  margin: 0 5px 0 0;
+}
+
+.billiesChatcorner-admin-chat-msg-log-msg-body:before,
+.billiesChatcorner-admin-chat-msg-log-msg-body:after,
+.billiesChatcorner-admin-chat-msg-log-me-body:before,
+.billiesChatcorner-admin-chat-msg-log-me-body:after {
+  position: absolute;
+  top: 6px;
+  content: '';
+}
+
+.billiesChatcorner-admin-chat-msg-log-msg-body:before {
+  border: solid 5px transparent;
+  border-right-color: #757575;
+}
+
+.billiesChatcorner-admin-chat-msg-log-msg-body:before {
+  left: -10px;
+}
+
+.billiesChatcorner-admin-chat-msg-log-msg-body:after {
+  left: -9px;
+  border: solid 5px transparent;
+  border-right-color: #eee;
+}
+
+.billiesChatcorner-admin-chat-msg-log-me-body:before {
+  border: solid 5px transparent;
+  border-left-color: #757575;
+}
+
+.billiesChatcorner-admin-chat-msg-log-me-body:before {
+  right: -10px;
+}
+
+.billiesChatcorner-admin-chat-msg-log-me-body:after {
+  right: -9px;
+  border: solid 5px transparent;
+  border-left-color: #cff293;
+}
+/*** 吹き出しの形をつくる・ここまで           ***/
+
+.billiesChatcorner-admin-chat-msg-log-msg-name,
+.billiesChatcorner-admin-chat-msg-log-me-name {
+  font-size: 0.7em;
 }
 
 .billiesChatcorner-admin-chat-msg-log-alert {
