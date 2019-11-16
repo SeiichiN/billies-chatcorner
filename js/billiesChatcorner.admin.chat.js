@@ -173,29 +173,53 @@ jQuery( function ($) {
           people_db = configMap.people_model.get_db(),
           chatee = configMap.chat_model.get_chatee();
 
+      console.log('NOW onListchange!');
+      
       people_db().each( function ( person, idx ) {
         var select_class = '';
 
-        if ( person.get_is_anon() || person.get_is_user() ) { return true; }
+        // if ( person.get_is_anon() || person.get_is_user() ) { return true; }
+        if ( person.get_is_anon() ) {
+          if ( people_db().count() === 1) {
+            list_html = String()
+                      + '<div class="billiesChatcorner-admin-chat-list-note">'
+                      + '誰もいない'
+                      + '</div>';
+            clearChat();
+          }
+          else {
+            list_html = String()
+                      + '<div class="billiesChatcorner-admin-chat-list-note">'
+                      + '管理人不在'
+                      + '</div>';
+          
+            return true;
+            }
+        }
+        else {
+          if ( chatee && chatee.id === person.id ) {
+            select_class = ' billiesChatcorner-x-select';
+          }
 
-        if ( chatee && chatee.id === person.id ) {
-          select_class = ' billiesChatcorner-x-select';
+          if ( ! person.get_is_user() ) {
+            list_html = list_html
+                      + '<div class="billiesChatcorner-admin-chat-list-name'
+                      + select_class + '" data-id="' + person.id + '">'
+                      + billiesChatcorner.util_b.encodeHtml( person.name )
+                      + '</div>';
+          }
+
+          if ( people_db().count() === 1 && person.get_is_user() ) {
+            list_html = String()
+                      + '<div class="billiesChatcorner-admin-chat-list-note">'
+                      + '崇高な孤独<br><br>'
+                      + '誰もいない'
+                      + '</div>';
+            clearChat();
+          }
         }
 
-        list_html = list_html
-                  + '<div class="billiesChatcorner-admin-chat-list-name'
-                  + select_class + '" data-id="' + person.id + '">'
-                  + billiesChatcorner.util_b.encodeHtml( person.name )
-                  + '</div>';
-
-        if ( ! list_html ) {
-          list_html = String()
-                    + '<div class="billiesChatcorner-admin-chat-list-note">'
-                    + 'To chat alone is the fate of all great souls...<br><br>'
-                    + 'No one is online'
-                    + '</div>';
-          clearChat();
-        }
+        
         jqueryMap.$list_box_a.html( list_html );
       });
     };
@@ -209,10 +233,10 @@ jQuery( function ($) {
       jqueryMap.$input_a.focus();
       if ( ! new_chatee ) {
         if ( old_chatee ) {
-          writeAlert( old_chatee.name + ' has left the chat' );
+          writeAlert( old_chatee.name + ' さんが退出しました' );
         }
         else {
-          writeAlert( 'Your friend has left the chat' );
+          writeAlert( '相手はもういません' );
         }
         jqueryMap.$title_a.text( 'チャット' );
         return false;
