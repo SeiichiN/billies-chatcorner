@@ -396,10 +396,10 @@ jQuery( function ($) {
 	  jqueryMap.$input.focus();
 	  if ( ! new_chatee ) {
 		if ( old_chatee ) {
-		  writeAlert( old_chatee.name + ' has left the chat' );
+		  writeAlert( old_chatee.name + ' さんが退出しました' );
 		}
 		else {
-		  writeAlert( 'Your friend has left the chat' );
+		  writeAlert( 'チャット相手はもういません' );
 		}
 		jqueryMap.$title.text( 'チャット' );
 		return false;
