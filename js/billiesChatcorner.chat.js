@@ -38,6 +38,18 @@ jQuery( function ($) {
                     + '</div>'  // .billiesChatcorner-chat-msg
                   + '</div>'   // .billiesChatcorner-chat-sizer
                 + '</div>',  // .billiesChatcorner-chat
+      
+      help_html : String()
+                + '<div class="billiesChatcorner-help">'
+                + '<div class="billiesChatcorner-help-closer">X</div>'
+                + '<p>'
+                + 'このチャットでは、管理人のビリーとチャットができます。<br>'
+                + '管理人がログインしていればの話ですが(^_^;<br>'
+                + 'もし、管理人がログインしていない場合は、<br>'
+                + '左のメールボタンからメールで連絡をお願いします。<br>'
+                + '</p>'
+                + '</div>',
+
       settable_map : {
         slider_open_time : true,
         slider_close_time : true,
@@ -293,6 +305,17 @@ jQuery( function ($) {
 	  clearChat();  // ログ領域の消去
     };
 
+    //--[ onTapHelp ]------------------------------------------------
+    //
+    onTapHelp = function ( event ) {
+      var $area = stateMap.$append_target,
+          $modal = $area.append( configMap.help_html );
+          
+
+      console.log( $modal );
+      
+    };
+
 	//--[ scrollChat ]-----------------------------------------------
 	// メッセージをスクロールする
 	//
@@ -523,6 +546,7 @@ jQuery( function ($) {
       jqueryMap.$help.css('display', 'block');
       jqueryMap.$help.text( configMap.slider_help_text );
       jqueryMap.$acct.css('display', 'none');
+      jqueryMap.$help.click( onTapHelp );
 
       // 各種ログイン後のイベントを登録する
       jQuery.gevent.subscribe( $append_target, 'billiesChatcorner-listchange', onListchange );
