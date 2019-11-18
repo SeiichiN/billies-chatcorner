@@ -22,6 +22,7 @@ jQuery( function ($) {
                     + '<div class="billiesChatcorner-chat-head-toggle">+</div>'
                     + '<div class="billiesChatcorner-chat-head-title"></div>'
                   + '</div>'
+                  + '<div class="billiesChatcorner-chat-help"></div>'
                   + '<div class="billiesChatcorner-chat-acct"></div>'
                   + '<div class="billiesChatcorner-chat-closer">X</div>'
                   + '<div class="billiesChatcorner-chat-sizer">'
@@ -60,6 +61,8 @@ jQuery( function ($) {
 	  slider_closed_title_text : 'チャット開始',
       slider_opened_min_em : 10,
       window_height_min_em : 20,
+      slider_acct_text : 'ログイン',
+      slider_help_text : '使い方',
 
       chat_model : null,
       people_model : null,
@@ -104,6 +107,7 @@ jQuery( function ($) {
         $send    : $slider.find( '.billiesChatcorner-chat-msg-send' ),
         $form    : $slider.find( '.billiesChatcorner-chat-msg-form' ),
         $acct    : $slider.find( '.billiesChatcorner-chat-acct' ),
+        $help    : $slider.find( '.billiesChatcorner-chat-help' ),
         $window  : jQuery(window)
       };
     };
@@ -177,7 +181,8 @@ jQuery( function ($) {
     // 例外発行：なし
     //
     setSliderPosition = function ( position_type, callback ) {
-      var height_px, animate_time, slider_title, toggle_text, slider_title_text;
+      var height_px, animate_time, slider_title, toggle_text, slider_title_text,
+          acct_text, help_text;
 
       // スライダーがすでに要求された位置にある場合は true を返す
       if ( stateMap.position_type === position_type ) {
@@ -192,6 +197,9 @@ jQuery( function ($) {
           slider_title = configMap.slider_opened_title;
 		  slider_title_text = configMap.slider_opened_title_text;
           toggle_text = '=';
+          acct_text = configMap.slider_acct_text;
+          jqueryMap.$help.css('display', 'none');
+          jqueryMap.$acct.css('display', 'block');
           break;
 
         case 'hidden':
@@ -200,6 +208,8 @@ jQuery( function ($) {
           slider_title = '';
 		  slider_title_text = '';
           toggle_text = '+';
+          acct_text = '';
+          help_text = '';
           break;
 
         case 'closed':
@@ -208,6 +218,10 @@ jQuery( function ($) {
           slider_title = configMap.slider_closed_title;
 		  slider_title_text = configMap.slider_closed_title_text;
           toggle_text = '+';
+          help_text = configMap.slider_help_text;
+          acct_text = '';
+          jqueryMap.$help.css('display', 'block');
+          jqueryMap.$acct.css('display', 'none');
           break;
 
           // 未知のposition_typeに対処する
@@ -224,6 +238,8 @@ jQuery( function ($) {
           jqueryMap.$toggle.prop( 'title', slider_title );
           jqueryMap.$toggle.text( toggle_text );
 		  jqueryMap.$title.text( slider_title_text );
+          jqueryMap.$acct.text( acct_text );
+          jqueryMap.$help.text( help_text );
           stateMap.position_type = position_type;
           if ( callback ) { callback( jqueryMap.$slider ); }
         }
@@ -253,7 +269,7 @@ jQuery( function ($) {
           user = billiesChatcorner.model.people.get_user();
 
       if (user.get_is_anon()) {
-        user_name = prompt('ログイン');
+        user_name = prompt(configMap.slider_acct_text);
         billiesChatcorner.model.people.login( user_name );
         jqueryMap.$acct.text( '...処理中...' );
       }
@@ -272,7 +288,7 @@ jQuery( function ($) {
     //--[ onLogout ]--------------------------------------------------
     //
     onLogout = function ( event, logout_user ) {
-      jqueryMap.$acct.text( 'ログイン' );
+      jqueryMap.$acct.text( configMap.slider_acct_text );
       jqueryMap.$title.text( configMap.slider_opened_title_text );
 	  clearChat();  // ログ領域の消去
     };
@@ -504,6 +520,9 @@ jQuery( function ($) {
 	  jqueryMap.$title.text( configMap.slider_closed_title_text );
       jqueryMap.$head.click( onClickToggle );
       stateMap.position_type = 'closed';
+      jqueryMap.$help.css('display', 'block');
+      jqueryMap.$help.text( configMap.slider_help_text );
+      jqueryMap.$acct.css('display', 'none');
 
       // 各種ログイン後のイベントを登録する
       jQuery.gevent.subscribe( $append_target, 'billiesChatcorner-listchange', onListchange );
@@ -513,7 +532,7 @@ jQuery( function ($) {
       // ログイン処理
       jQuery.gevent.subscribe( $append_target, 'billiesChatcorner-login', onLogin );
       jQuery.gevent.subscribe( $append_target, 'billiesChatcorner-logout', onLogout );
-      jqueryMap.$acct.text('ログイン').bind( 'utap', onTapAcct);
+      jqueryMap.$acct.text(configMap.slider_acct_text).bind( 'utap', onTapAcct);
 
       // 発言ボタンの処理
       jqueryMap.$send.bind( 'utap', onSubmitMsg );

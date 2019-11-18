@@ -21,6 +21,7 @@
 
 .billiesChatcorner-chat-head,
 .billiesChatcorner-chat-acct,
+.billiesChatcorner-chat-help,
 .billiesChatcorner-chat-closer {
   position: absolute;
   top: 0;
@@ -49,6 +50,18 @@
 }
 
 .billiesChatcorner-chat-acct:hover {
+  text-shadow: 0 1px 1px #cff293;
+  background-color: #a8a8a8;
+}
+
+.billiesChatcorner-chat-help {
+  right: 2em;
+  left: 10.5em;
+  background-color: #aaa;
+  color: #5aa518;
+}
+
+.billiesChatcorner-chat-help:hover {
   text-shadow: 0 1px 1px #cff293;
   background-color: #a8a8a8;
 }
