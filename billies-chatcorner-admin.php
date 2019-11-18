@@ -14,15 +14,15 @@ add_action('admin_menu', 'billiesChatcorner_admin_menu');
 
 function billies_chatcorner_admin_add_files () {
   $testUrl = 'http://localhost:3000/js/question.js';
-  $socketUrl = 'http://localhost:3000/socket.io/socket.io.js';
-  $socketHeroku = 'http://billieschatcorner.herokuapp.com/socket.io/socket.io.js';
+  // $socketUrl = 'http://localhost:3000/socket.io/socket.io.js';
+  $socketUrl = 'http://billieschatcorner.herokuapp.com/socket.io/socket.io.js';
   
   wp_enqueue_style('css-billies-chatcorner-admin', plugins_url('css/billiesChatcorner.admin.css', __FILE__));
   wp_enqueue_style('css-billies-chatcorner-admin-shell', plugins_url('css/billiesChatcorner.admin.shell.css', __FILE__));
   wp_enqueue_style('css-billies-chatcorner-admin-chat', plugins_url('css/billiesChatcorner.admin.chat.css', __FILE__));
   wp_enqueue_style('css-billies-chatcorner-admin-avtr', plugins_url('css/billiesChatcorner.admin.avtr.css', __FILE__));
 
-  wp_enqueue_script('js-billies-chatcorner-socket', $socketHeroku, array(), false, false);
+  wp_enqueue_script('js-billies-chatcorner-socket', $socketUrl, array(), false, false);
   wp_enqueue_script('js-billies-chatcorner-jq-taffy', plugins_url('js/jq/taffy.js', __FILE__), array(), false, false);
   wp_enqueue_script('js-billies-chatcorner-jq-gevent', plugins_url('js/jq/jquery.event.gevent.js', __FILE__), array('jquery'), false, false);
   wp_enqueue_script('js-billies-chatcorner-jq-event-ue', plugins_url('js/jq/jquery.event.ue.js', __FILE__), array('jquery'), false, false);
