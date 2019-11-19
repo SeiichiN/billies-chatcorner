@@ -348,7 +348,9 @@ jQuery( function ($) {
 	  var msg_class = is_user
 		? 'billiesChatcorner-chat-msg-log-me'
 		: 'billiesChatcorner-chat-msg-log-msg';
-	  
+
+      console.log('chat.js -- writeChat');
+      
 	  jqueryMap.$msg_log.append(
 		'<div class="' + msg_class + '">'
         + '<span class="' + msg_class + '-name">'

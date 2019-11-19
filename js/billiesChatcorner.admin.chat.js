@@ -120,6 +120,8 @@ jQuery( function ($) {
                     ? 'billiesChatcorner-admin-chat-msg-log-me'
                     : 'billiesChatcorner-admin-chat-msg-log-msg';
 
+      console.log('admin.chat.js -- writeChat');
+      
       jqueryMap.$msg_log_a.append(
         '<div class="' + msg_class + '">'
         + '<span class="' + msg_class + '-name">'
