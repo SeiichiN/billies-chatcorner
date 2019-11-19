@@ -251,13 +251,14 @@
 
 /*****  help  **************************************/
 .billiesChatcorner-help {
-  position: absolute;
+  position: fixed;
   bottom: 100px;
   right: 100px;
   background-color: #eee;
   padding: 1em;
   font-size: 12px;
   overflow: hidden;
+  z-index: 1020;
 }
 
 .billiesChatcorner-help p {

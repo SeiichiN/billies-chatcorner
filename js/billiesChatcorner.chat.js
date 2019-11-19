@@ -312,12 +312,9 @@ jQuery( function ($) {
     onTapHelp = function ( event ) {
       var $area = stateMap.$append_target,
           $modal = $area.append( configMap.help_html ),
-		$help_closer = $modal.find( 'billiesChatcorner-help-closer' );
+		  $help_closer = $modal.find( '.billiesChatcorner-help-closer' );
 		  
-
-      console.log( $modal );
-	  console.log( $help_closer );
-      
+      $help_closer.bind('utap', onTapHelpClose);
     };
 
 	//--[ onTapHelpClose ]-------------------------------------------
