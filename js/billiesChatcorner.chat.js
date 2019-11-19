@@ -43,7 +43,8 @@ jQuery( function ($) {
                 + '<div class="billiesChatcorner-help">'
                 + '<div class="billiesChatcorner-help-closer">X</div>'
                 + '<p>'
-                + 'このチャットでは、管理人のビリーとチャットができます。<br>'
+                + 'このチャットでは、<br>'
+				+ '管理人のビリーとチャットができます。<br>'
                 + '管理人がログインしていればの話ですが(^_^;<br>'
                 + 'もし、管理人がログインしていない場合は、<br>'
                 + '左のメールボタンからメールで連絡をお願いします。<br>'
@@ -95,7 +96,8 @@ jQuery( function ($) {
 	  onClickToggle, removeSlider, handleResize,
 	  onTapAcct, onLogin, onLogout,
 	  scrollChat, writeChat, writeAlert, clearChat,
-	  onSubmitMsg, onListchange, onSetchatee, onUpdatechat
+	  onSubmitMsg, onListchange, onSetchatee, onUpdatechat,
+	  onTapHelp, onTapHelpClose
     ;
 
 
@@ -309,12 +311,23 @@ jQuery( function ($) {
     //
     onTapHelp = function ( event ) {
       var $area = stateMap.$append_target,
-          $modal = $area.append( configMap.help_html );
-          
+          $modal = $area.append( configMap.help_html ),
+		$help_closer = $modal.find( 'billiesChatcorner-help-closer' );
+		  
 
       console.log( $modal );
+	  console.log( $help_closer );
       
     };
+
+	//--[ onTapHelpClose ]-------------------------------------------
+	//
+	onTapHelpClose = function ( event ) {
+	  var $helpArea = stateMap.$append_target.find( '.billiesChatcorner-help' );
+
+	  $helpArea.css('display', 'none');
+
+	};
 
 	//--[ scrollChat ]-----------------------------------------------
 	// メッセージをスクロールする
