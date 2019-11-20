@@ -424,6 +424,8 @@ jQuery( function ($) {
           msg_text  : msg_text
         };
         
+		console.log('model.js -- send_msg -- msg_map'); console.log(msg_map);
+
         _publish_updatechat( [ msg_map ] );
         sio.emit( 'updatechat', msg_map );
         return true;

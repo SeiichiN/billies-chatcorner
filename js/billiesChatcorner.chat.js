@@ -354,7 +354,7 @@ jQuery( function ($) {
 	  jqueryMap.$msg_log.append(
 		'<div class="' + msg_class + '">'
         + '<span class="' + msg_class + '-name">'
-		+ billiesChatcorner.util_b.encodeHtml( person_name ) + '> '
+		+ billiesChatcorner.util_b.encodeHtml( person_name ) + ':'
         + '</span>'
         + '<span class="' + msg_class + '-body">'
 		+ billiesChatcorner.util_b.encodeHtml( text )
@@ -480,6 +480,8 @@ jQuery( function ($) {
 		msg_text = msg_map.msg_text,
 		chatee = configMap.chat_model.get_chatee() || {},
 		sender = configMap.people_model.get_by_cid( sender_id );
+
+	  console.log('chat.js -- onUpdatachat');
 
 	  if ( ! sender ) {
 		writeAlert( msg_text );
