@@ -11,8 +11,8 @@
 require_once('billies-chatcorner-admin.php');
 
 function billies_chatcorner_add_files () {
-  // $socketUrl = 'http://localhost:3000/socket.io/socket.io.js';
-  $socketUrl = 'http://billieschatcorner.herokuapp.com/socket.io/socket.io.js';
+  $socketUrl = 'http://localhost:3000/socket.io/socket.io.js';
+  // $socketUrl = 'http://billieschatcorner.herokuapp.com/socket.io/socket.io.js';
   
   wp_enqueue_style('css-billies-chatcorner-chat', plugins_url('css/billiesChatcorner.chat.css', __FILE__));
   wp_enqueue_style('css-billies-chatcorner-shell', plugins_url('css/billiesChatcorner.shell.css', __FILE__));

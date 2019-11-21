@@ -361,6 +361,8 @@ jQuery( function ($) {
           set_chatee( msg_map.sender_id );
         }
 
+        console.log('_publish_updatechat!');
+
         jQuery.gevent.publish( 'billiesChatcorner-updatechat', [ msg_map ] );
       };
 
@@ -413,6 +415,8 @@ jQuery( function ($) {
                 ? billiesChatcorner.fake.mockSio
                 : billiesChatcorner.data.getSio();
 
+        console.log('snd_msg NOW!');
+        
         if ( ! sio ) { return false; }   // 接続できていない場合
         // チャット相手が設定されていない場合
         if ( ! ( stateMap.user && chatee ) ) { return false; }

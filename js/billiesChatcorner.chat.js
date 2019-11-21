@@ -350,6 +350,7 @@ jQuery( function ($) {
 		: 'billiesChatcorner-chat-msg-log-msg';
 
       console.log('chat.js -- writeChat');
+      console.log(jqueryMap.$msg_log);
       
 	  jqueryMap.$msg_log.append(
 		'<div class="' + msg_class + '">'
@@ -481,7 +482,8 @@ jQuery( function ($) {
 		chatee = configMap.chat_model.get_chatee() || {},
 		sender = configMap.people_model.get_by_cid( sender_id );
 
-	  console.log('chat.js -- onUpdatachat');
+	  console.log('chat.js -- onUpdatachat -- msg_map');
+		console.log( msg_map );
 
 	  if ( ! sender ) {
 		writeAlert( msg_text );

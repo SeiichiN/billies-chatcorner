@@ -13,9 +13,9 @@ add_action('admin_menu', 'billiesChatcorner_admin_menu');
 
 
 function billies_chatcorner_admin_add_files () {
-  $testUrl = 'http://localhost:3000/js/question.js';
-  // $socketUrl = 'http://localhost:3000/socket.io/socket.io.js';
-  $socketUrl = 'http://billieschatcorner.herokuapp.com/socket.io/socket.io.js';
+  // $testUrl = 'http://localhost:3000/js/question.js';
+  $socketUrl = 'http://localhost:3000/socket.io/socket.io.js';
+  // $socketUrl = 'http://billieschatcorner.herokuapp.com/socket.io/socket.io.js';
   
   wp_enqueue_style('css-billies-chatcorner-admin', plugins_url('css/billiesChatcorner.admin.css', __FILE__));
   wp_enqueue_style('css-billies-chatcorner-admin-shell', plugins_url('css/billiesChatcorner.admin.shell.css', __FILE__));
